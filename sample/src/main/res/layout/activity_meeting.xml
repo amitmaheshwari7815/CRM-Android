@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/project_color"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:scrollbars="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <TextView
+                style="@style/text_view_style"
+                android:layout_gravity="left"
+                android:text="When"
+                android:textSize="15dp"
+                android:textColor="@color/text_color"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="2dp">
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/text_color">
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/meeting_date"
+                        android:ems="10"
+                        android:hint="Date"
+                        android:inputType="date"
+                        android:drawableRight="@drawable/ic_date"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/text_color">
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/meeting_time"
+                        android:ems="10"
+                        android:hint="Time"
+                        android:inputType="time"
+                        android:drawableRight="@drawable/ic_time"/>
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+            <TextView
+                style="@style/text_view_style"
+                android:layout_gravity="left"
+                android:text="Internal People"
+                android:textSize="15dp"
+                android:textColor="@color/text_color"/>
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                >
+
+                <com.pchmn.materialchips.ChipsInput
+                    android:id="@+id/chips_input_ip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hint="Internal People"
+                    app:maxRows="3" />
+
+                <TextView
+                    android:id="@+id/chip_list_ip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"/>
+
+            </LinearLayout>
+            <TextView
+                style="@style/text_view_style"
+                android:layout_gravity="left"
+                android:text="Within CRM"
+                android:textSize="15dp"
+                android:textColor="@color/text_color"/>
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                >
+
+                <com.pchmn.materialchips.ChipsInput
+                    android:id="@+id/chips_input_crm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hint="Within CRM"
+                    app:maxRows="3" />
+
+                <TextView
+                    android:id="@+id/chip_list_crm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"/>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp">
+
+                <ImageView
+                    android:id="@+id/decrease_duration"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_arrow_drop_down" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/til_meeting_duration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:textColorHint="@color/text_color"
+                    android:layout_toEndOf="@+id/decrease_duration">
+
+                    <EditText
+                        android:id="@+id/meeting_duration"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:ems="4"
+                        android:text="0"
+                        android:hint="Duration"
+                        android:inputType="numberDecimal" />
+                </android.support.design.widget.TextInputLayout>
+
+                <ImageView
+                    android:id="@+id/increase_duration"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/til_meeting_duration"
+                    android:src="@drawable/ic_arrow_drop_up" />
+
+            </RelativeLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/text_color">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/meeting_place"
+                    android:ems="10"
+                    android:hint="Place"
+                    android:inputType="text"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                style="@style/text_view_style"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:text="Comments"
+                android:textColor="@color/text_color"
+                android:textSize="15dp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:background="@color/white"
+                android:layout_marginTop="?attr/actionBarSize"
+                android:layout_height="match_parent">
+
+
+                <!-- Begin Editor toolbar -->
+
+                <HorizontalScrollView android:id="@+id/tools"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#e6e6e6"
+                    android:layout_alignParentBottom="true"
+                    android:scrollbars="none">
+
+                    <include layout="@layout/editor_toolbar_linearlayout_horizontal" />
+
+
+                </HorizontalScrollView>
+                <!--End of Editor toolbar -->
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:scrollbars="vertical"
+                    android:layout_alignParentTop="true"
+                    android:layout_height="match_parent"
+                    >
+                    <com.github.irshulx.Editor
+                        android:layout_width="match_parent"
+                        android:id="@+id/meeting_editor"
+                        app:render_type="Editor"
+                        app:placeholder="Start writing here..."
+
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:layout_height="match_parent"
+                        android:paddingBottom="100dp" />
+                </ScrollView>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        >
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
+            <Button
+                android:layout_width="match_parent"
+                android:text="Save"
+                android:id="@+id/meeting_save"
+                style="@style/button_style"
+                />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

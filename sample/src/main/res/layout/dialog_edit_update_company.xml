@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ScrollView android:id="@+id/contacts_form"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="outsideOverlay"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/company_details_optional"
+                style="@style/text_view_style"
+                android:textSize="15dp"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:id="@+id/dialog_new_telephone"
+                    android:hint="Telephone"
+                    android:inputType="phone"
+                    style="@style/edit_text_style"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:hint="About"
+                    android:id="@+id/dialog_new_about"
+                    android:inputType="text"
+                    style="@style/edit_text_style"/>
+            </android.support.design.widget.TextInputLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/dialog_arrow_drop_up"
+                android:text="@string/hide_advance_options"
+                style="@style/text_view_style"
+                android:drawableTop="@drawable/ic_arrow_drop_up"
+                android:visibility="gone"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/dialog_arrow_drop_down"
+                android:text="@string/show_advance_options"
+                style="@style/text_view_style"
+                android:drawableBottom="@drawable/ic_arrow_drop_down"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/dialog_show_advance_ll"
+                android:visibility="gone">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:id="@+id/dialog_new_mob"
+                        android:hint="Mobile"
+                        android:inputType="phone"
+                        android:maxLength="10"
+                        style="@style/edit_text_style"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Address"
+                    style="@style/text_view_style"
+                    />
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:hint="Street"
+                        android:id="@+id/dialog_new_street"
+                        android:inputType="textEmailAddress"
+                        style="@style/edit_text_style"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:id="@+id/dialog_new_city"
+                            android:hint="City"
+                            android:inputType="text"
+                            style="@style/edit_text_style"/>
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:id="@+id/dialog_new_state"
+                            android:hint="State"
+                            android:inputType="text"
+                            style="@style/edit_text_style"/>
+                    </android.support.design.widget.TextInputLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:id="@+id/dialog_new_pincode"
+                            android:hint="pincode"
+                            android:inputType="number"
+                            style="@style/edit_text_style"/>
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:id="@+id/dialog_new_country"
+                            android:hint="Country"
+                            android:inputType="text"
+                            style="@style/edit_text_style"/>
+                    </android.support.design.widget.TextInputLayout>
+                </LinearLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:hint="CIN"
+                        android:id="@+id/dialog_new_cin"
+                        android:inputType="textEmailAddress"
+                        style="@style/edit_text_style"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:hint="TIN"
+                    android:id="@+id/dialog_new_tin"
+                    android:inputType="textEmailAddress"
+                    style="@style/edit_text_style"/>
+            </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:hint="Logo"
+                    android:id="@+id/dialog_new_logo"
+                    android:inputType="textEmailAddress"
+                    style="@style/edit_text_style"/>
+            </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:hint="web"
+                    android:id="@+id/dialog_new_web"
+                    android:inputType="textEmailAddress"
+                    style="@style/edit_text_style"/>
+            </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0">
+        <Button
+            android:text="Save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/button_style"
+            android:id="@+id/dialog_new_save"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:onClick="saveDialogDetails"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+</LinearLayout>

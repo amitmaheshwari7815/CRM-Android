@@ -1,0 +1,190 @@
+<ScrollView android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        xmlns:android="http://schemas.android.com/apk/res/android" >
+
+        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/buttonContacts"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:onClick="buttonContacts"
+            app:cardBackgroundColor="@color/project_color"
+            app:cardUseCompatPadding="true"
+            app:cardCornerRadius="1dp"
+            app:cardElevation="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/contacts_image"
+                    android:layout_width="180dp"
+                    android:layout_height="200dp"
+                    android:src="@drawable/contacts_logo" />
+                <!--<Button-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Contacts"-->
+                <!--android:onClick="buttonContacts"-->
+                <!--android:id="@+id/contacts"/>-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:gravity="left"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/contacts_name"
+                        style="@style/text_view_style"
+                        android:text="240 contacts"
+                        android:textColor="@color/text_color"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:id="@+id/contacts_designation"
+                        style="@style/text_view_style"
+                        android:text="1 recent added"
+                        android:textColor="#3c4650"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/contacts_company"
+                        style="@style/text_view_style"
+                        android:text="3 calls"
+                        android:textColor="#3C4650"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/browse_cardView"
+            android:onClick="buttonOpportunities"
+            app:cardBackgroundColor="@color/project_color"
+            app:cardCornerRadius="1dp"
+            app:cardElevation="1dp"
+            app:cardUseCompatPadding="true"
+
+            xmlns:android="http://schemas.android.com/apk/res/android">
+            <!--<Button-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Opportunities"-->
+                <!--android:onClick="buttonOpportunities"-->
+                <!--android:id="@+id/opportunities"/>-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/opportunities_image"
+                    android:layout_width="180dp"
+                    android:layout_height="200dp"
+                    android:src="@drawable/ic_opportunity" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:gravity="left"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/opportunities_name"
+                        style="@style/text_view_style"
+                        android:text="2 won today"
+                        android:textColor="@color/text_color"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:id="@+id/opportunities_designation"
+                        style="@style/text_view_style"
+                        android:text="4 adder today"
+                        android:textColor="#3c4650"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/opportunities_company"
+                        style="@style/text_view_style"
+                        android:text="Good day for you"
+                        android:textColor="#3C4650"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/buttonRelationships"
+            android:onClick="buttonRelationships"
+            app:cardBackgroundColor="@color/project_color"
+            app:cardUseCompatPadding="true"
+            app:cardCornerRadius="1dp"
+            app:cardElevation="1dp"
+            xmlns:android="http://schemas.android.com/apk/res/android">
+            <!--<Button-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Relationships"-->
+                <!--android:onClick="buttonRelationships"-->
+                <!--android:id="@+id/relationships"/>-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/relationships_image_browse"
+                    android:layout_width="180dp"
+                    android:layout_height="200dp"
+                    android:src="@drawable/relationship" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:layout_margin="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/relationships_name"
+                        style="@style/text_view_style"
+                        android:text="4 active deals"
+                        android:textColor="@color/text_color"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:id="@+id/relationships_designation"
+                        style="@style/text_view_style"
+                        android:text="7 pages recent added"
+                        android:textColor="#3c4650"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/relationships_company"
+                        style="@style/text_view_style"
+                        android:text="Have a great day"
+                        android:textColor="#3C4650"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+</ScrollView>

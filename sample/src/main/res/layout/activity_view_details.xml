@@ -1,0 +1,130 @@
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <!--<ImageView-->
+                <!--android:id="@+id/view_image"-->
+                <!--android:layout_width="100dp"-->
+                <!--android:layout_height="100dp"-->
+                <!--android:src="@drawable/male" />-->
+
+            <TextView
+                android:id="@+id/view_d_name"
+                style="@style/text_view_style"
+                android:text="Samuel D. Pollock"
+                android:textColor="#000"
+                android:textSize="15dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="5dp"/>
+
+            <TextView
+                android:id="@+id/view_d_comapany"
+                style="@style/text_view_style"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/view_d_name"
+                android:text="ABC Pvt Ltd"
+                android:layout_margin="5dp"/>
+
+            <TextView
+                android:id="@+id/view_d_designation"
+                style="@style/text_view_style"
+                android:layout_toEndOf="@id/view_d_comapany"
+                android:layout_below="@+id/view_d_name"
+                android:layout_marginStart="15dp"
+                android:text="System Engineer"
+                android:layout_margin="5dp"/>
+
+            <RelativeLayout android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/view_d_comapany"
+                android:id="@+id/rl_view_mob_no">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_smartphone"
+                    android:id="@+id/imageView" />
+
+                <TextView
+                    android:id="@+id/view_mob_no"
+                    style="@style/text_view_style"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="3dp"
+                    android:layout_toEndOf="@+id/imageView"
+                    android:text="9781342197"
+                    android:textColor="#3c4650"
+                    />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_email"
+                    android:id="@+id/email_icon"
+                    android:layout_toEndOf="@id/view_mob_no"
+                    android:layout_marginStart="5dp"/>
+
+                <TextView
+                    style="@style/text_view_style"
+                    android:id="@+id/view_email"
+                    android:text="SamuelDPollock@teleworm.us"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="3dp"
+                    android:layout_toEndOf="@+id/email_icon"
+                    android:textColor="#3c4650"
+                    />
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/text_color"
+            android:layout_marginTop="2dp"/>
+
+
+
+        <android.support.design.widget.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tl_view">
+
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ti_timeline"
+                android:text="Timeline"/>
+
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ti_active"
+                android:text="Info"/>
+
+        </android.support.design.widget.TabLayout>
+
+
+
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/view_fg"
+            class="com.woxthebox.draglistview.sample.TimelineFragment"/>
+    </LinearLayout>
+
+    <include layout="@layout/layout_fab_viewdetails"/>
+
+</RelativeLayout>

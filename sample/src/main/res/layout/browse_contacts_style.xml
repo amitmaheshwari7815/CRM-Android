@@ -1,0 +1,126 @@
+<android.support.v7.widget.CardView android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/browse_cardView"
+    android:layout_marginTop="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginLeft="5dp"
+    app:cardBackgroundColor="@color/project_color"
+    app:cardElevation="2dp"
+    app:cardCornerRadius="1dp"
+    app:cardUseCompatPadding="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="5dp"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/contacts_image_browse"
+                android:src="@drawable/ic_launcher_background"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="left"
+                android:layout_margin="5dp">
+                <TextView
+                    android:id="@+id/contacts_name_browse"
+                    style="@style/text_view_style"
+                    android:text="Samuel D. Pollock"
+                    android:textColor="#000"
+                    android:textSize="15dp"/>
+
+                <TextView
+                    android:id="@+id/contacts_designation_browse"
+                    style="@style/text_view_style"
+                    android:text="Information systems management"
+                    android:textColor="#3c4650"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:id="@+id/contacts_company_browse"
+                    style="@style/text_view_style"
+                    android:text="First Choice Yard Help"
+                    android:textColor="#3C4650"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_smartphone"
+                android:id="@+id/imageView" />
+
+            <TextView
+                android:id="@+id/contacts_no_browse"
+                style="@style/text_view_style"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="3dp"
+                android:layout_toEndOf="@+id/imageView"
+                android:text="9781342197"
+                android:textColor="#3c4650"
+               />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/edit_profile"
+                android:src="@drawable/ic_edit"
+                android:layout_gravity="left"
+                android:layout_alignParentRight="true"
+                android:paddingRight="20dp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_email"
+                android:id="@+id/email_icon"/>
+
+            <TextView
+                style="@style/text_view_style"
+                android:id="@+id/contacts_email_browse"
+                android:text="SamuelDPollock@teleworm.us"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="3dp"
+                android:layout_toEndOf="@+id/email_icon"
+                android:textColor="#3c4650"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/view_details"
+                android:src="@drawable/ic_details"
+                android:layout_gravity="left"
+                android:layout_alignParentRight="true"
+                android:paddingRight="20dp"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
+
+

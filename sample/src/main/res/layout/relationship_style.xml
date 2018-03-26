@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ralationship_cardView"
+    android:layout_margin="2dp"
+    app:cardBackgroundColor="@color/project_color"
+    app:cardElevation="2dp"
+    app:cardUseCompatPadding="true"
+    app:cardCornerRadius="2dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Account_photo"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/ic_account"
+            />
+        <TextView
+            style="@style/text_view_style"
+            android:id="@+id/account"
+            android:layout_toRightOf="@+id/Account_photo"
+            android:layout_alignParentTop="true"
+            android:text="Account"
+            android:layout_marginStart="3dp"/>
+        <TextView
+            style="@style/text_view_style"
+            android:id="@+id/company_name"
+            android:layout_toRightOf="@+id/Account_photo"
+            android:layout_below="@+id/account"
+            android:layout_marginStart="3dp"
+            android:text="CIOC FMCG Pvt Ltd"
+            android:textColor="#000"
+            />
+
+        <TextView
+            style="@style/text_view_style"
+            android:id="@+id/active_deal"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@+id/account"
+            android:text="Active Deals"
+            android:textColor="#000"/>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

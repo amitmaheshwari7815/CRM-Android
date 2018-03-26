@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ScrollView android:id="@+id/contacts_form"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="outsideOverlay"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+        <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+        <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <!-- TODO: Update blank fragment layout -->
+            <TextView
+                android:text="@string/create_a_new_contact"
+                style="@style/text_view_style"
+                android:textSize="15dp"
+                />
+
+            <RelativeLayout android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                >
+
+                <TextView
+                    android:id="@+id/mrs."
+                    style="@style/text_view_style"
+                    android:text="Mrs."
+                    android:textColor="#3c4650"
+                    android:layout_centerVertical="true"/>
+
+                <Switch
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/gender_sw"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="3dp"
+                    android:layout_toEndOf="@+id/mrs."
+                    android:checked="true"/>
+
+                <TextView
+                    android:id="@+id/mr."
+                    style="@style/text_view_style"
+                    android:text="Mr."
+                    android:textColor="#3c4650"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="3dp"
+                    android:layout_toEndOf="@+id/gender_sw" />
+
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/switch_profile"
+                    android:src="@drawable/male"
+                    android:layout_gravity="left"
+                    android:layout_alignParentRight="true"
+                    />
+
+            </RelativeLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:id="@+id/contacts_full_name"
+                    android:hint="Full Name"
+                    android:inputType="textCapWords"
+                    style="@style/edit_text_style"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    android:id="@+id/contacts_email"
+                    style="@style/edit_text_style"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:id="@+id/contacts_mobile"
+                    android:hint="Mobile"
+                    android:inputType="phone"
+                    style="@style/edit_text_style"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:layout_width="match_parent"
+                        android:id="@+id/contacts_company"
+                        android:hint="Company"
+                        android:inputType="textCapWords"
+                        style="@style/edit_text_style"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/add_new_company"
+                    android:text="@string/new_company"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:textAllCaps="false"
+                    android:drawableLeft="@drawable/ic_add_company"
+                    android:drawablePadding="@dimen/vertical_padding"
+                    android:visibility="gone"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/update_company"
+                    android:text="@string/update_company"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:textAllCaps="false"
+                    android:drawableLeft="@drawable/ic_edit"
+                    android:drawablePadding="@dimen/vertical_padding"
+                    android:onClick="updateNewCompany"
+                    android:visibility="gone"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/arrow_drop_up"
+                    android:text="@string/hide_advance_options"
+                    style="@style/text_view_style"
+                    android:drawableTop="@drawable/ic_arrow_drop_up"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/arrow_drop_down"
+                    android:text="@string/show_advance_options"
+                    style="@style/text_view_style"
+                    android:drawableBottom="@drawable/ic_arrow_drop_down"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/show_advance_ll"
+                android:visibility="gone">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:hint="Email (Secondary)"
+                        android:id="@+id/contacts_email_secondary"
+                        android:inputType="textEmailAddress"
+                        style="@style/edit_text_style"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:id="@+id/contacts_mobile_secondary"
+                        android:hint="Mobile (Secondary)"
+                        android:inputType="phone"
+                        style="@style/edit_text_style"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:id="@+id/contacts_designation"
+                        android:hint="Designation"
+                        android:inputType="text"
+                        style="@style/edit_text_style"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:id="@+id/contacts_notes"
+                        android:hint="Notes"
+                        android:inputType="text"
+                        style="@style/edit_text_style"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:id="@+id/contacts_linkedin"
+                        android:hint="Linkedin"
+                        android:inputType="text"
+                        style="@style/edit_text_style"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:id="@+id/contacts_facebook"
+                        android:hint="Facebook"
+                        android:inputType="text"
+                        style="@style/edit_text_style"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <TextView
+                    android:text="Profile Photo"
+                    style="@style/text_view_style"
+                    android:layout_margin="5dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_margin="5dp"
+                    >
+
+                    <TextView
+                        android:text="Browse..."
+                        android:id="@+id/contact_profile_photo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/project_color"
+                        android:textAllCaps="false"
+                        android:textColor="@color/text_color"
+                        android:layout_margin="5dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/dp_attached"
+                        android:background="@color/project_color"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/holo_green_dark"
+                        android:layout_margin="5dp"
+                        android:text="attached"
+                        android:textStyle="italic"
+                        android:visibility="gone"/>
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0">
+        <Button
+            android:text="Save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/button_style"
+            android:id="@+id/save_newContacts"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:onClick="saveDetails"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+</LinearLayout>

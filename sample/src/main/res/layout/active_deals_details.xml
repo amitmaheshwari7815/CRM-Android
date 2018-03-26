@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:context=".ActiveDealsActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="40dp"
+            android:src="@drawable/ic_account" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingVertical="@dimen/activity_vertical_margin"
+            android:layout_marginStart="15dp"
+            android:layout_toEndOf="@+id/imageView2"
+            android:text="CIOC FMCG Pvt Ltd"
+            android:textColor="#000"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Address :"
+            android:layout_marginStart="40dp"
+            android:textColor="#000"
+            android:textSize="15dp"/>
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_address"
+            android:layout_marginStart="12dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="BLR 580001 KA, India"
+            android:layout_marginStart="5dp"/>
+
+    </LinearLayout>
+    <view
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/text_color"
+      />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Web :"
+            android:textColor="#000"
+            android:layout_marginStart="65dp"
+            android:textSize="15dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="www.cioc.co.in"
+            android:textSize="15dp"
+            android:layout_marginStart="12dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text=" CIN :"
+            android:textColor="#000"
+            android:layout_marginStart="67dp"
+            android:textSize="15dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="0123"
+            android:textSize="15dp"
+            android:layout_marginStart="12dp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text=" TIN :"
+            android:textColor="#000"
+            android:layout_marginStart="67dp"
+            android:textSize="15dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="0123"
+            android:textSize="15dp"
+            android:layout_marginStart="12dp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Mobile :"
+            android:textColor="#000"
+            android:layout_marginStart="48dp"
+            android:textSize="15dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="9876543210"
+            android:textSize="15dp"
+            android:layout_marginStart="12dp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Telephone :"
+            android:textColor="#000"
+            android:layout_marginStart="22dp"
+            android:textSize="15dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="014-241587"
+            android:textSize="15dp"
+            android:layout_marginStart="12dp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="About :"
+            android:textColor="#000"
+            android:layout_marginStart="52dp"
+            android:textSize="15dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="9876543210"
+            android:textSize="15dp"
+            android:layout_marginStart="12dp"/>
+
+    </LinearLayout>
+    <view
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/text_color"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:text="External Stakeholder"
+            android:textColor="#000"
+            android:textSize="20dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="66dp"
+        android:layout_margin="5dp">
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="40dp"
+            android:src="@drawable/ic_owner" />
+
+        <RelativeLayout
+            android:layout_width="250dp"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:text="Samuel D"
+                android:textColor="#000"
+                android:id="@+id/textView2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/textView2"
+                android:layout_below="@+id/textView2"
+                android:text="Information System manager"
+                android:textColor="#000" />
+        </RelativeLayout>
+
+
+
+
+    </LinearLayout>
+</LinearLayout>
