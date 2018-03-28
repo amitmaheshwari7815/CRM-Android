@@ -32,4 +32,6 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxjava:2.0.8'
     compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.3@aar'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    compile 'com.loopj.android:android-async-http:1.4.9'
+
 }
