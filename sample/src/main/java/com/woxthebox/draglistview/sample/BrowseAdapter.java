@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,7 +39,7 @@ import cz.msebera.android.httpclient.Header;
  * Created by Ashish on 3/7/2018.
  */
 
-public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.MyHolder> {
+public class BrowseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 //    private String TAG = BrowseAdapter.class.getSimpleName();
 //    private ProgressDialog pDialog;
@@ -46,23 +47,13 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.MyHolder> 
 //    private static String serverURL = "http://10.0.2.2:8000/api/clientRelationships/contact/?format=json";
 //    private AsyncHttpClient client;
 //    ArrayList<HashMap<String, String>> contactList;
-//    private final int VIEW_TYPE_ITEM = 0;
-//    private final int VIEW_TYPE_LOADING = 1;
+    private final int VIEW_TYPE_ITEM = 0;
+    private final int VIEW_TYPE_LOADING = 1;
+    private OnLoadMoreListener mOnLoadMoreListener;
 
-
-
-
-//    public static int contact_images[] = {R.drawable.male, R.drawable.woman, R.drawable.male, R.drawable.woman, R.drawable.male,
-//            R.drawable.woman,R.drawable.male, R.drawable.woman};
-//    public static String contact_names[] = {"Samuel D. Pollock", "Rita Stith", "Ronald Allen", "Veronica Woods", "Robert Y. Griffin","Purity Supreme", "P. Madhawa", "Shweta Stith",
-//            "Robert H. Peebles","Lorie T. Morales"};
-//    public static String contact_companies[] = {"First Choice Yard Help", "Foxmoor", "First Choice Yard Help ", "Foxmoor", "First Choice Yard Help ","Purity Supreme", "Pomeroy's",
-//            "First Choice Yard Help ","Purity Supreme","Pomeroy's"};
-//    public static String contact_designations[] = {"Information systems manager", "Sales Manager", "General Manager", "Sales Manager", "Information systems manager","Sales Manager",
-//            "Sales executive","Sales Manager","Sales executive","Sales Manager"};
-//    public static String contact_cnos[] = {"7854211505", "8542120007", "8542450070", "854214512", "8542191345","95854218454", "8458542121","788542145","7215485421","8285421145"};
-//    public static String contact_emails[] = {"SamuelDPollock@teleworm.us", "RitaOStith@jourrapide.com", "RonaldSAllen@jourrapide.com", "VeronicaJWoods@armyspy.com", "JamesMPacheco@teleworm.us",
-//            "PPMadhawa@jourrapide.com", "RobertYGriffin@teleworm.us","ShwetaOStith@jourrapide.com","RobertHPeebles@armyspy.com","LorieTMorales@jourrapide.com"};
+    private boolean isLoading;
+    private int visibleThreshold = 5;
+    private int lastVisibleItem, totalItemCount;
 
     Context context;
 
@@ -70,47 +61,101 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.MyHolder> 
 
     public BrowseAdapter(Context context){
         this.context = context;
+        final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) ContactsActivity.browse_rv.getLayoutManager();
+        ContactsActivity.browse_rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                totalItemCount = linearLayoutManager.getItemCount();
+                lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
+
+                if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
+                    if (mOnLoadMoreListener != null) {
+                        mOnLoadMoreListener.onLoadMore();
+                    }
+                    isLoading = true;
+                }
+            }
+        });
+    }
+
+    public void setOnLoadMoreListener(OnLoadMoreListener mOnLoadMoreListener) {
+        this.mOnLoadMoreListener = mOnLoadMoreListener;
     }
 
     @NonNull
     @Override
-    public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View v = layoutInflater.inflate(R.layout.browse_contacts_style, parent, false);
-
-
-        BrowseAdapter.MyHolder myHolder = new BrowseAdapter.MyHolder(v);
-        return myHolder;
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if (viewType == VIEW_TYPE_ITEM) {
+            View view = LayoutInflater.from(context).inflate(R.layout.browse_contacts_style, parent, false);
+            return new MyHolder(view);
+        } else if (viewType == VIEW_TYPE_LOADING) {
+            View view = LayoutInflater.from(context).inflate(R.layout.layout_loading_item, parent, false);
+            return new LoadingViewHolder(view);
+        }
+        return null;
 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyHolder holder, final int position) {
-        HashMap hm = (HashMap) ContactsActivity.contactList.get(position);
-         name  = (String) hm.get("name");
-         company = (String) hm.get("company");
-//         Cname  = (String) hm.get("Cname");
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof MyHolder) {
+//            User user = mUsers.get(position);
+            MyHolder myHolder = (MyHolder) holder;
+            HashMap hm = (HashMap) ContactsActivity.contactList.get(position);
+            name  = (String) hm.get("name");
+            company = (String) hm.get("company");
 //         street  = (String) hm.get("street");
 //         city = (String) hm.get("city");
 //         state = (String) hm.get("state");
 //         pincode = (String) hm.get("pincode");
 //         country = (String) hm.get("country");
 //         telephone = (String) hm.get("telephone");
-         email = (String) hm.get("email");
-         mobile = (String) hm.get("mobile");
-         designation = (String) hm.get("designation");
+            email = (String) hm.get("email");
+            mobile = (String) hm.get("mobile");
+            designation = (String) hm.get("designation");
 
 //        holder.browseImage.setImageResource(contact_images[position]);
-        holder.browseName.setText(name);
-        holder.browseDesignation.setText(designation);
-        holder.browseCompany.setText(company);
-        holder.browseMob.setText(mobile);
-        holder.browseEmail.setText(email);
+            myHolder.browseName.setText(name);
+            myHolder.browseDesignation.setText(designation);
+            myHolder.browseCompany.setText(company);
+            myHolder.browseMob.setText(mobile);
+            myHolder.browseEmail.setText(email);
+
+        } else if (holder instanceof LoadingViewHolder) {
+            LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
+            loadingViewHolder.progressBar.setIndeterminate(true);
+        }
     }
+
+//    @Override
+//    public void onBindViewHolder(@NonNull MyHolder holder, final int position) {
+//        HashMap hm = (HashMap) ContactsActivity.contactList.get(position);
+//         name  = (String) hm.get("name");
+//         company = (String) hm.get("company");
+////         Cname  = (String) hm.get("Cname");
+////         street  = (String) hm.get("street");
+////         city = (String) hm.get("city");
+////         state = (String) hm.get("state");
+////         pincode = (String) hm.get("pincode");
+////         country = (String) hm.get("country");
+////         telephone = (String) hm.get("telephone");
+//         email = (String) hm.get("email");
+//         mobile = (String) hm.get("mobile");
+//         designation = (String) hm.get("designation");
+//
+////        holder.browseImage.setImageResource(contact_images[position]);
+//        holder.browseName.setText(name);
+//        holder.browseDesignation.setText(designation);
+//        holder.browseCompany.setText(company);
+//        holder.browseMob.setText(mobile);
+//        holder.browseEmail.setText(email);
+//    }
 
     @Override
     public int getItemCount() {
-        Log.e("caslnasnxnx", "sdffs"+ContactsActivity.contactList.size());
+//        Log.e("caslnasnxnx", "sdffs"+ContactsActivity.contactList.size());
         return  ContactsActivity.contactList.size();
     }
 
@@ -162,7 +207,18 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.MyHolder> 
         }
     }
 
+    public static class LoadingViewHolder extends RecyclerView.ViewHolder {
+        public ProgressBar progressBar;
 
+        public LoadingViewHolder(View itemView) {
+            super(itemView);
+            progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar1);
+        }
+    }
+
+    public void setLoaded() {
+        isLoading = false;
+    }
 }
 
 

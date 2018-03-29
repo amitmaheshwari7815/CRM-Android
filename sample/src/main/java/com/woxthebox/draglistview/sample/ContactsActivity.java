@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Browser;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
@@ -17,6 +18,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -36,17 +38,19 @@ import cz.msebera.android.httpclient.Header;
 public class ContactsActivity extends FragmentActivity {
 
     FloatingActionButton fab, fabImport, fabNew;
-    RecyclerView browse_rv;
+    public static RecyclerView browse_rv;
+    BrowseAdapter browseAdapter;
     private boolean fabExpanded = false;
     //    private FloatingActionButton fabSettings;
     private LinearLayout layoutFabImport;
     private LinearLayout layoutFabNew;
     //    private LinearLayout layoutFabPhoto;
 //    private String TAG = ContactsActivity.class.getSimpleName();
-//    private ProgressDialog pDialog;
+//    private ProgressBar pDialog;
 //    private ListView lv;
     public static ArrayList contactList;
     public AsyncHttpClient client;
+
 
 
     Animation rotate_forward, rotate_Backward, fab_open, fab_close;
@@ -64,6 +68,7 @@ public class ContactsActivity extends FragmentActivity {
         fab = findViewById(R.id.fab);
         fabImport = findViewById(R.id.fab_import);
         fabNew = findViewById(R.id.fab_new);
+//        pDialog = findViewById(R.id.progressBar1);
 
         layoutFabImport = (LinearLayout) this.findViewById(R.id.layoutFabImport);
         layoutFabNew = (LinearLayout) this.findViewById(R.id.layoutFabNew);
@@ -153,20 +158,27 @@ public class ContactsActivity extends FragmentActivity {
         String serverURL = "http://10.0.2.2:8000/api/clientRelationships/contact/?format=json";
         client.get(serverURL, new JsonHttpResponseHandler() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                for (int s = 0; s < response.length(); s++) {
-                    JSONObject usrObj = null;
+            public void onSuccess(int statusCode, Header[] headers, final JSONArray response) {
+//                for (int i =0; i < 10 ;i++) {
+//                    pDialog.setVisibility(View.VISIBLE);
 
-                    try {
-                        usrObj = response.getJSONObject(s);
+                final int res = response.length();
+//                int a=10;
+//                if (0<res)
+                int s;
+                for (s = 0; s < 10; s++) {
+
+                        JSONObject usrObj = null;
+                        try {
+                            usrObj = response.getJSONObject(s);
 //                        String user = usrObj.getString("user");
-                        String name = usrObj.getString("name");
-                        String email = usrObj.getString("email");
-                        String mobile = usrObj.getString("mobile");
-                        String designation = usrObj.getString("designation");
+                            String name = usrObj.getString("name");
+                            String email = usrObj.getString("email");
+                            String mobile = usrObj.getString("mobile");
+                            String designation = usrObj.getString("designation");
 
-                        JSONObject company = usrObj.getJSONObject("company");
-                        String companyName = company.getString("name");
+                            JSONObject company = usrObj.getJSONObject("company");
+                            String companyName = company.getString("name");
 //
 //                        JSONArray comapany = usrObj.getJSONArray("company");
 //                        for (int j = 0; j < comapany.length(); j++) {
@@ -189,38 +201,131 @@ public class ContactsActivity extends FragmentActivity {
 //                                String telephone = a.getString("telephone");
 
 
-                        // tmp hash map for single contact
-                        HashMap pk = new HashMap();
+                            // tmp hash map for single contact
+                            HashMap pk = new HashMap();
 
 
-                        // adding each child node to HashMap key => value
+                            // adding each child node to HashMap key => value
 //                            pk.put("user", user);
-                        pk.put("name", name);
-                        pk.put("company",companyName);
-                        pk.put("mobile", mobile);
-                        pk.put("email", email);
-                        pk.put("designation", designation);
+                            pk.put("name", name);
+                            pk.put("company", companyName);
+                            pk.put("mobile", mobile);
+                            pk.put("email", email);
+                            pk.put("designation", designation);
 
 
-
-                        // adding contact to contact list
-                        contactList.add(pk);
+                            // adding contact to contact list
+                            contactList.add(pk);
 
 //                            }
 
 //                        }
-                    } catch (org.json.JSONException e) {
-                        e.printStackTrace();
-                        Log.e("JSONException", "123456");
-                    }
+                        } catch (org.json.JSONException e) {
+                            e.printStackTrace();
+                            Log.e("JSONException", "123456");
+                        }
                 }
-                Log.e("caslnasnxnx", ""+contactList.size());
+                Log.e("JSONExceptionresponse", ""+res);
+
                 browse_rv.setLayoutManager(new LinearLayoutManager(ContactsActivity.this));
-
-                BrowseAdapter browseAdapter = new BrowseAdapter(ContactsActivity.this);
+                browseAdapter = new BrowseAdapter(ContactsActivity.this);
                 browse_rv.setAdapter(browseAdapter);
-            }
 
+                browseAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
+                    @Override
+                    public void onLoadMore() {
+
+
+                        Log.e("haint", "Load More");
+                        contactList.add(null);
+                        browseAdapter.notifyItemInserted(contactList.size() - 1);
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Log.e("haint", "Load More 2");
+
+                                //Remove loading item
+                                contactList.remove(contactList.size() - 1);
+                                browseAdapter.notifyItemRemoved(contactList.size());
+
+                                //Load data
+//                            pDialog.setVisibility(View.VISIBLE);
+                                int index = contactList.size();
+                                int in = index + 9;
+                                if (in < res) {
+                                    for (int i = index; i < in; i++) {
+//                                pDialog.setVisibility(View.GONE);
+                                        JSONObject usrObj = null;
+                                        try {
+                                            usrObj = response.getJSONObject(i);
+//                        String user = usrObj.getString("user");
+                                            String name = usrObj.getString("name");
+                                            String email = usrObj.getString("email");
+                                            String mobile = usrObj.getString("mobile");
+                                            String designation = usrObj.getString("designation");
+
+                                            JSONObject company = usrObj.getJSONObject("company");
+                                            String companyName = company.getString("name");
+//
+//                        JSONArray comapany = usrObj.getJSONArray("company");
+//                        for (int j = 0; j < comapany.length(); j++) {
+//                            JSONObject innerElem = comapany.getJSONObject(j);
+//
+//                            String user1 = innerElem.getString("name");
+////                        String pk1 = innerElem.getString("pk");
+//
+//
+//                            JSONArray address = usrObj.getJSONArray("address");
+//                            for (int k = 0; k < address.length(); k++) {
+//                                JSONObject a = address.getJSONObject(k);
+//
+//                                String street = a.getString("street");
+//                                String city = a.getString("city");
+//                                String state = a.getString("state");
+//                                String pincode = a.getString("pincode");
+//                                String g = String.valueOf(pincode);
+//                                String country = a.getString("country");
+//                                String telephone = a.getString("telephone");
+
+
+                                            // tmp hash map for single contact
+                                            HashMap pk = new HashMap();
+
+
+                                            // adding each child node to HashMap key => value
+//                            pk.put("user", user);
+                                            pk.put("name", name);
+                                            pk.put("company", companyName);
+                                            pk.put("mobile", mobile);
+                                            pk.put("email", email);
+                                            pk.put("designation", designation);
+
+
+                                            // adding contact to contact list
+                                            contactList.add(pk);
+
+//                            }
+
+//                        }
+                                        } catch (org.json.JSONException e) {
+                                            e.printStackTrace();
+                                            Log.e("JSONException", "123456");
+                                        }
+                                    }
+                                    browseAdapter.notifyDataSetChanged();
+                                    browseAdapter.setLoaded();
+                                }else
+                                    Toast.makeText(ContactsActivity.this, "JSONException", Toast.LENGTH_SHORT).show();
+                            }
+                        }, 5000);
+//
+                    }
+                });
+
+//                Log.e("caslnasnxnx", ""+contactList.size());
+
+            }
             @Override
             public void onFinish() {
                 System.out.println("finished 001");
