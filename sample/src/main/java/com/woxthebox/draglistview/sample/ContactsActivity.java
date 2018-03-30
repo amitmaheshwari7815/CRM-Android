@@ -300,7 +300,7 @@ public class ContactsActivity extends FragmentActivity {
                                 }else
                                     Toast.makeText(ContactsActivity.this, "JSONException", Toast.LENGTH_SHORT).show();
                             }
-                        }, 3g000);
+                        }, 3000);
 //
                     }
                 });
