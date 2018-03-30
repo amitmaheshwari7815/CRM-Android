@@ -1,5 +1,6 @@
 package com.woxthebox.draglistview.sample;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +14,7 @@ import android.widget.Toast;
  * Created by amit on 10/3/18.
  */
 
-public class ActiveDealsActivity extends AppCompatActivity {
+public class ActiveDealsActivity extends Activity {
     RecyclerView rv1;
     TextView companyname;
 

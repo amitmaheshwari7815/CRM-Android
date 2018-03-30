@@ -137,7 +137,7 @@ public class ContactsActivity extends FragmentActivity {
     }
 
     protected void getUser(){
-        String serverURL = "http://192.168.43.9:8000/api/clientRelationships/contact/?format=json";
+        String serverURL = "http://10.0.2.2:8000/api/clientRelationships/contact/?format=json";
         client.get(serverURL, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, final JSONArray response) {
@@ -300,7 +300,7 @@ public class ContactsActivity extends FragmentActivity {
                                 }else
                                     Toast.makeText(ContactsActivity.this, "JSONException", Toast.LENGTH_SHORT).show();
                             }
-                        }, 5000);
+                        }, 3g000);
 //
                     }
                 });

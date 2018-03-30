@@ -1,5 +1,6 @@
 package com.woxthebox.draglistview.sample;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -7,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
  * Created by amit on 14/3/18.
  */
 
-public class ActiveDealsDetailsActivity extends AppCompatActivity{
+public class ActiveDealsDetailsActivity extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

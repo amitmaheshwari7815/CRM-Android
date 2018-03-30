@@ -9,12 +9,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.HashMap;
+
 public class RelationshipsAdapter extends RecyclerView.Adapter<RelationshipsAdapter.MyHolder> {
 
-    public static int account_images[] = {R.drawable.ic_account, R.drawable.ic_account, R.drawable.ic_account, R.drawable.ic_account,
-            R.drawable.ic_account, R.drawable.ic_account};
-    public static String account_names[] = {"Account", "Account", "Account", "Account", "Account"};
-    public static String company_names[] = {"CIOC FMCG Pvt Ltd", "ABC pvt Ltd", "XYZ solution", "Apple Corp.", "Google"};
+    public static String name, street, city, state, pincode, country, logo, mobile, web, address;
+
+//    public static int account_images[] = {R.drawable.ic_account, R.drawable.ic_account, R.drawable.ic_account, R.drawable.ic_account,
+//            R.drawable.ic_account, R.drawable.ic_account};
+//    public static String account_names[] = {"Account", "Account", "Account", "Account", "Account"};
+//    public static String company_names[] = {"CIOC FMCG Pvt Ltd", "ABC pvt Ltd", "XYZ solution", "Apple Corp.", "Google"};
 
     Context context;
 
@@ -33,27 +37,39 @@ public class RelationshipsAdapter extends RecyclerView.Adapter<RelationshipsAdap
 
     @Override
     public void onBindViewHolder(@NonNull RelationshipsAdapter.MyHolder holder, int position) {
-        holder.accountimage.setImageResource(account_images[position]);
-        holder.accountname.setText(account_names[position]);
-        holder.companyname.setText(company_names[position]);
+        if (holder instanceof MyHolder) {
+            MyHolder myHolder =(MyHolder) holder;
+            HashMap hm = (HashMap) RelationshipActivity.relationship.get(position);
+//        holder.accountimage.setImageResource(account_images[position]);
+            name  = (String) hm.get("name");
+            logo  = (String) hm.get("logo");
+            mobile  = (String) hm.get("mobile");
+            web  = (String) hm.get("web");
+//            address  = (String) hm.get("name");
+            street  = (String) hm.get("street");
+//            state  = (String) hm.get("state");
+//            pincode  = (String) hm.get("pincode");
+//            country  = (String) hm.get("country");
+            myHolder.companyname.setText(name);
+            myHolder.accountdeal.setText("Active Deals \n"+1);
 
     }
-
+}
     @Override
     public int getItemCount() {
-        return account_names.length;
+        return RelationshipActivity.relationship.size();
     }
 
     public class MyHolder extends RecyclerView.ViewHolder {
 
         ImageView accountimage, viewDetails;
-        TextView accountname, companyname;
+        TextView accountdeal, companyname;
 
         public MyHolder(View itemView) {
             super(itemView);
-            accountimage = itemView.findViewById(R.id.Account_photo);
-            accountname = itemView.findViewById(R.id.account);
+//            accountimage = itemView.findViewById(R.id.Account_photo);
             companyname = itemView.findViewById(R.id.company_name);
+            accountdeal = itemView.findViewById(R.id.active_deal);
         }
 
     }
