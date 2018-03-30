@@ -11,22 +11,22 @@
         style="@style/text_view_style"
         android:layout_gravity="left"
         android:textAlignment="gravity"
-        android:textSize="15dp"
+        android:textSize="16dp"
         android:textColor="@color/text_color"
         android:layout_marginBottom="1dp"
         xmlns:android="http://schemas.android.com/apk/res/android" />
 
-    <TextView android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:text="Dummy"
-        android:id="@+id/contact_company_name"
-        style="@style/text_view_style"
-        android:layout_gravity="left"
-        android:textAlignment="gravity"
-        android:textSize="15dp"
-        android:layout_marginBottom="1dp"
-        android:textColor="@color/text_color"
-        xmlns:android="http://schemas.android.com/apk/res/android" />
+    <!--<TextView android:layout_height="wrap_content"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:text="Dummy"-->
+        <!--android:id="@+id/contact_company_name"-->
+        <!--style="@style/text_view_style"-->
+        <!--android:layout_gravity="left"-->
+        <!--android:textAlignment="gravity"-->
+        <!--android:textSize="15dp"-->
+        <!--android:layout_marginBottom="1dp"-->
+        <!--android:textColor="@color/text_color"-->
+        <!--xmlns:android="http://schemas.android.com/apk/res/android" />-->
 
     <TextView android:layout_height="wrap_content"
         android:layout_width="match_parent"
@@ -40,16 +40,16 @@
         android:textColor="@color/text_color"
         xmlns:android="http://schemas.android.com/apk/res/android" />
 
-    <TextView android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:text="Dummy"
-        android:id="@+id/contact_email"
-        style="@style/text_view_style"
-        android:layout_gravity="left"
-        android:textAlignment="gravity"
-        android:textSize="15dp"
-        android:layout_marginBottom="1dp"
-        android:textColor="@color/text_color"
-        xmlns:android="http://schemas.android.com/apk/res/android" />
+    <!--<TextView android:layout_height="wrap_content"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:text="Dummy"-->
+        <!--android:id="@+id/contact_email"-->
+        <!--style="@style/text_view_style"-->
+        <!--android:layout_gravity="left"-->
+        <!--android:textAlignment="gravity"-->
+        <!--android:textSize="15dp"-->
+        <!--android:layout_marginBottom="1dp"-->
+        <!--android:textColor="@color/text_color"-->
+        <!--xmlns:android="http://schemas.android.com/apk/res/android" />-->
 
 </LinearLayout>

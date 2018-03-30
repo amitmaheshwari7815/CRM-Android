@@ -1,23 +1,27 @@
 package com.woxthebox.draglistview.sample;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class InfoFragment extends Fragment {
+    ImageView searchLocImage;
+    TextView searchLocTv;
 
-    Spinner typeSpinner;
-    String types[] = {"Email", "Meeting", "Call"};
-    ArrayAdapter arrayAdapter;
+
 
     public InfoFragment() {
         // Required empty public constructor
@@ -30,12 +34,37 @@ public class InfoFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_info, container, false);
 
-//        typeSpinner = v.findViewById(R.id.type_spinner);
-//
-//        arrayAdapter = new ArrayAdapter(getActivity(), R.layout.layout_type_spinner, types);
-//        typeSpinner.setAdapter(arrayAdapter);
+        searchLocImage = v.findViewById(R.id.info_iv_address);
+        searchLocTv = v.findViewById(R.id.info_tv_address);
+
+        clickMethods();
 
         return v;
+    }
+
+    public void clickMethods(){
+
+        final String loc = searchLocTv.getText().toString().trim();
+
+        searchLocImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri gmmIntentUri = Uri.parse("geo:0,0?q="+loc);
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                startActivity(mapIntent);
+            }
+        });
+
+        searchLocTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri gmmIntentUri = Uri.parse("geo:0,0?q="+loc);
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                startActivity(mapIntent);
+            }
+        });
     }
 
 }

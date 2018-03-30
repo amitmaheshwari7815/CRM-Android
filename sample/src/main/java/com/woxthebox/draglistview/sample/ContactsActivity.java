@@ -86,20 +86,6 @@ public class ContactsActivity extends FragmentActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (importFab.getVisibility() == View.VISIBLE && newFab.getVisibility() == View.VISIBLE) {
-//                    importFab.setVisibility(View.GONE);
-//                    newFab.setVisibility(View.GONE);
-//                    importFab.startAnimation(fab_close);
-//                    newFab.setAnimation(fab_close);
-//                    fab.startAnimation(rotate_Backward);
-//                    fab.startAnimation(fab_open);
-//                } else {
-//                    importFab.setVisibility(View.VISIBLE);
-//                    newFab.setVisibility(View.VISIBLE);
-//                    importFab.startAnimation(fab_open);
-//                    newFab.setAnimation(fab_open);
-//                    fab.startAnimation(rotate_forward);
-//                }
                 if (fabExpanded == true) {
                     closeSubMenusFab();
                 } else {
@@ -114,10 +100,6 @@ public class ContactsActivity extends FragmentActivity {
         fabImport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ContactsActivity.this, "Ok", Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(Intent.ACTION_VIEW);
-//                Uri data = Uri.parse("content://contacts/people/");
-//                intent.setData(data);
                 startActivity(new Intent(ContactsActivity.this, ContactsListActivity.class));
             }
         });
@@ -155,7 +137,7 @@ public class ContactsActivity extends FragmentActivity {
     }
 
     protected void getUser(){
-        String serverURL = "http://10.0.2.2:8000/api/clientRelationships/contact/?format=json";
+        String serverURL = "http://192.168.43.9:8000/api/clientRelationships/contact/?format=json";
         client.get(serverURL, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, final JSONArray response) {

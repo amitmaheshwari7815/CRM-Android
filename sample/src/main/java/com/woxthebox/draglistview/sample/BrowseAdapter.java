@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -53,6 +54,7 @@ public class BrowseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private boolean isLoading;
     private int visibleThreshold = 5;
+    private int pos ;
     private int lastVisibleItem, totalItemCount;
 
     Context context;
@@ -176,9 +178,29 @@ public class BrowseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             browseEmail = itemView.findViewById(R.id.contacts_email_browse);
             viewDetails = itemView.findViewById(R.id.view_details);
 
+            browseMob.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(Intent.ACTION_DIAL);
+                    i.setData(Uri.parse("tel:" + mobile));
+                    context.startActivity(i);
+                }
+            });
+
+            browseEmail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+                    emailIntent.setData(Uri.parse("mailto:"+email));
+                    context.startActivity(emailIntent);
+                }
+            });
+
             editProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    pos = getLayoutPosition();
+                    hashmapMethod();
                     Intent intent = new Intent(context, EditContactActivity.class);
 //                    intent.putExtra("image", contact_images[getLayoutPosition()]);
                     intent.putExtra("name", name);
@@ -193,6 +215,8 @@ public class BrowseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             viewDetails.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    pos = getLayoutPosition();
+                    hashmapMethod();
                     Toast.makeText(context, ""+getLayoutPosition(), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(context, ViewDetailsActivity.class);
 //                    intent.putExtra("image", contact_images[getLayoutPosition()]);
@@ -218,6 +242,22 @@ public class BrowseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     public void setLoaded() {
         isLoading = false;
+    }
+
+    void hashmapMethod(){
+        HashMap hm = (HashMap) ContactsActivity.contactList.get(pos);
+        name  = (String) hm.get("name");
+        company = (String) hm.get("company");
+//         street  = (String) hm.get("street");
+//         city = (String) hm.get("city");
+//         state = (String) hm.get("state");
+//         pincode = (String) hm.get("pincode");
+//         country = (String) hm.get("country");
+//         telephone = (String) hm.get("telephone");
+        email = (String) hm.get("email");
+        mobile = (String) hm.get("mobile");
+        designation = (String) hm.get("designation");
+
     }
 }
 

@@ -80,14 +80,14 @@
                     android:id="@+id/chips_input_ip"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:hint="Internal People"
+                    app:hint="Search and select a user to add him/her in this group"
                     app:maxRows="3" />
 
-                <TextView
-                    android:id="@+id/chip_list_ip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"/>
+                <!--<TextView-->
+                <!--android:id="@+id/chip_list_ip"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="16dp"/>-->
 
             </LinearLayout>
             <TextView
@@ -109,14 +109,14 @@
                     android:id="@+id/chips_input_crm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:hint="Within CRM"
+                    app:hint="Search and select a user to add him/her in this group"
                     app:maxRows="3" />
 
-                <TextView
-                    android:id="@+id/chip_list_crm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"/>
+                <!--<TextView-->
+                <!--android:id="@+id/chip_list_crm"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="16dp"/>-->
 
             </LinearLayout>
 

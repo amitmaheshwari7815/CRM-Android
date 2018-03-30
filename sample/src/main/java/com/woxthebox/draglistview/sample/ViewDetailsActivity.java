@@ -1,15 +1,22 @@
 package com.woxthebox.draglistview.sample;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -21,7 +28,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.pchmn.materialchips.ChipsInput;
+import com.pchmn.materialchips.model.ChipInterface;
+import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.woxthebox.draglistview.sample.edittag.ContactChip;
+
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class ViewDetailsActivity extends FragmentActivity {
     ImageView contactImage;
@@ -38,7 +53,11 @@ public class ViewDetailsActivity extends FragmentActivity {
 
     int c_yr, c_month, c_day, c_hr, c_min;
 
+    private static final String TAG = ViewDetailsActivity.class.toString();
+    private List<ContactChip> mContactList;
+    ChipsInput scheduleInternalPeople, scheduleOS, taskOtherStake;
 
+    ArrayList noteList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +70,7 @@ public class ViewDetailsActivity extends FragmentActivity {
         String company = b.getString("company");
         String designation = b.getString("designation");
         String cno = b.getString("cno");
-        String email = b.getString("email");
+        final String email = b.getString("email");
 
         nameTv = findViewById(R.id.view_d_name);
         companyTv = findViewById(R.id.view_d_comapany);
@@ -80,6 +99,9 @@ public class ViewDetailsActivity extends FragmentActivity {
         designationTv.setText(designation);
         cnoTv.setText(cno);
         emailTv.setText(email);
+
+        mContactList = new ArrayList<>();
+        noteList = new ArrayList<>();
 
         tl = findViewById(R.id.tl_view);
         tl.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -137,19 +159,18 @@ public class ViewDetailsActivity extends FragmentActivity {
         fabSchedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final EditText scheduleDate, scheduleTime, scheduleInternalPeople, scheduleOS, scheduleLocation, scheduleEventDetails;
-                Button scheduleAddIP, scheduleAddOS, scheduleCancel, scheduleSave;
+//                mContactList = new ArrayList<>();
+                final EditText scheduleDate, scheduleTime, scheduleLocation, scheduleEventDetails;
+                Button scheduleCancel, scheduleSave;
                 View v = getLayoutInflater().inflate(R.layout.layout_schedule_style, null, false);
 
                 scheduleDate = v.findViewById(R.id.schedule_date);
                 scheduleTime = v.findViewById(R.id.schedule_time);
-                scheduleOS = v.findViewById(R.id.schedule_other_stakeholders);
-                scheduleInternalPeople = v.findViewById(R.id.schedule_internal_people);
+                scheduleOS = v.findViewById(R.id.chips_input_os_schedule);
+                scheduleInternalPeople = v.findViewById(R.id.chips_input_ip_schedule);
                 scheduleLocation = v.findViewById(R.id.schedule_loction);
                 scheduleEventDetails = v.findViewById(R.id.schedule_event_details);
 
-                scheduleAddOS = v.findViewById(R.id.add_schedule_other_stakeholders);
-                scheduleAddIP = v.findViewById(R.id.add_schedule_internal_people);
                 scheduleCancel = v.findViewById(R.id.schedule_cancel);
                 scheduleSave = v.findViewById(R.id.schedule_save);
 
@@ -158,7 +179,7 @@ public class ViewDetailsActivity extends FragmentActivity {
                 scheduleDate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        DatePickerDialog dpd = new DatePickerDialog(ViewDetailsActivity.this, android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
+                        DatePickerDialog dpd = new DatePickerDialog(ViewDetailsActivity.this, new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                                 scheduleDate.setText(dayOfMonth+"/"+(month+1)+"/"+year);
@@ -174,7 +195,7 @@ public class ViewDetailsActivity extends FragmentActivity {
                 scheduleTime.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        TimePickerDialog tpd = new TimePickerDialog(ViewDetailsActivity.this, android.R.style.Theme_DeviceDefault_Dialog, new TimePickerDialog.OnTimeSetListener() {
+                        TimePickerDialog tpd = new TimePickerDialog(ViewDetailsActivity.this, new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                                 if (hourOfDay > 12) {
@@ -187,6 +208,46 @@ public class ViewDetailsActivity extends FragmentActivity {
                         tpd.show();
                     }
                 });
+
+                // get contact list
+                new RxPermissions(ViewDetailsActivity.this).request(Manifest.permission.READ_CONTACTS).subscribe();
+                getContactList();
+
+                // chips listener
+                scheduleInternalPeople.addChipsListener(new ChipsInput.ChipsListener() {
+                    @Override
+                    public void onChipAdded(ChipInterface chip, int newSize) {
+                        Log.e(TAG, "chip added, " + newSize);
+                    }
+
+                    @Override
+                    public void onChipRemoved(ChipInterface chip, int newSize) {
+                        Log.e(TAG, "chip removed, " + newSize);
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence text) {
+                        Log.e(TAG, "text changed: " + text.toString());
+                    }
+                });
+                // chips listener
+                scheduleOS.addChipsListener(new ChipsInput.ChipsListener() {
+                    @Override
+                    public void onChipAdded(ChipInterface chip, int newSize) {
+                        Log.e(TAG, "chip added, " + newSize);
+                    }
+
+                    @Override
+                    public void onChipRemoved(ChipInterface chip, int newSize) {
+                        Log.e(TAG, "chip removed, " + newSize);
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence text) {
+                        Log.e(TAG, "text changed: " + text.toString());
+                    }
+                });
+
                 AlertDialog.Builder adb = new AlertDialog.Builder(ViewDetailsActivity.this);
                 adb.setView(v);
                 adb.setCancelable(false);
@@ -204,14 +265,14 @@ public class ViewDetailsActivity extends FragmentActivity {
         fabTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final EditText taskDate, taskOtherStake, taskDetails;
-                Button scheduleAddIP, scheduleAddOS, taskCancel, scheduleSave;
+
+                final EditText taskDate, taskDetails;
+                Button taskCancel, scheduleSave;
                 View v = getLayoutInflater().inflate(R.layout.layout_task_style, null, false);
                 taskDate = v.findViewById(R.id.task_date);
-                taskOtherStake = v.findViewById(R.id.task_other_stakeholders);
+                taskOtherStake = v.findViewById(R.id.chips_input_os_task);
                 taskDetails = v.findViewById(R.id.task_details);
 
-                scheduleAddOS = v.findViewById(R.id.add_task_other_stakeholders);
                 taskCancel= v.findViewById(R.id.task_cancel);
                 scheduleSave = v.findViewById(R.id.task_save);
 
@@ -219,7 +280,7 @@ public class ViewDetailsActivity extends FragmentActivity {
                 taskDate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        DatePickerDialog dpd = new DatePickerDialog(ViewDetailsActivity.this, android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
+                        DatePickerDialog dpd = new DatePickerDialog(ViewDetailsActivity.this, new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                                 taskDate.setText(dayOfMonth+"/"+(month+1)+"/"+year);
@@ -229,6 +290,28 @@ public class ViewDetailsActivity extends FragmentActivity {
 //                dp.setMinDate(System.currentTimeMillis()-10*24*60*60*1000);
 //                dp.setMaxDate(System.currentTimeMillis());
                         dpd.show();
+                    }
+                });
+
+                // get contact list
+                new RxPermissions(ViewDetailsActivity.this).request(Manifest.permission.READ_CONTACTS).subscribe();
+                getContactList();
+
+                // chips listener
+                taskOtherStake.addChipsListener(new ChipsInput.ChipsListener() {
+                    @Override
+                    public void onChipAdded(ChipInterface chip, int newSize) {
+                        Log.e(TAG, "chip added, " + newSize);
+                    }
+
+                    @Override
+                    public void onChipRemoved(ChipInterface chip, int newSize) {
+                        Log.e(TAG, "chip removed, " + newSize);
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence text) {
+                        Log.e(TAG, "text changed: " + text.toString());
                     }
                 });
 
@@ -243,80 +326,13 @@ public class ViewDetailsActivity extends FragmentActivity {
                     }
                 });
                 ad.show();
+//                taskOtherStake.setFilterableList(mContactList);
             }
         });
 
         fabMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                final EditText meetingDate, meetingTime, meetingInternalPeople, meetingCRM, meetingDuration, meetingPlace;
-//                Button meetingAddIP, meetingAddCRM, meetingCancel, meetingSave;
-//                View v = getLayoutInflater().inflate(R.layout.layout_meeting_style, null, false);
-//                getWindow().setSoftInputMode(
-//
-//                        WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN
-//
-//                );
-//                editor = (Editor) v.findViewById(R.id.editor);
-////                setUpEditor();
-//                meetingDate = v.findViewById(R.id.meeting_date);
-//                meetingTime = v.findViewById(R.id.meeting_time);
-//                meetingInternalPeople = v.findViewById(R.id.meeting_internal_people);
-//                meetingCRM = v.findViewById(R.id.meeting_within_crm);
-//                meetingDuration = v.findViewById(R.id.meeting_duration);
-//                meetingPlace = v.findViewById(R.id.meeting_place);
-//
-//                meetingAddIP = v.findViewById(R.id.add_meeting_internal_people);
-//                meetingAddCRM = v.findViewById(R.id.add_meeting_within_crm);
-//                meetingCancel = v.findViewById(R.id.meeting_cancel);
-//                meetingSave = v.findViewById(R.id.meeting_save);
-//
-//                meetingDate.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        DatePickerDialog dpd = new DatePickerDialog(ViewDetailsActivity.this, android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
-//                            @Override
-//                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-//                                meetingDate.setText(dayOfMonth+"/"+(month+1)+"/"+year);
-//                            }
-//                        },c_yr,c_month,c_day);
-//                        DatePicker dp = dpd.getDatePicker();
-////                dp.setMinDate(System.currentTimeMillis()-10*24*60*60*1000);
-////                dp.setMaxDate(System.currentTimeMillis());
-//                        dpd.show();
-//                    }
-//                });
-//
-//                meetingTime.setOnClickListener(new View.OnClickListener() {
-//                   @Override
-//                   public void onClick(View v) {
-//                       TimePickerDialog tpd = new TimePickerDialog(ViewDetailsActivity.this, android.R.style.Theme_DeviceDefault_Dialog, new TimePickerDialog.OnTimeSetListener() {
-//                           @Override
-//                           public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-//                               if (hourOfDay > 12) {
-//                                   meetingTime.setText((hourOfDay-12) + ":" + minute+" PM");
-//                               } else {
-//                                   meetingTime.setText(hourOfDay + ":" + minute+" AM");
-//                               }
-//                           }
-//                       }, c_hr, c_min,false);
-//                       tpd.show();
-//                   }
-//                });
-//
-//
-//
-//                AlertDialog.Builder adb = new AlertDialog.Builder(ViewDetailsActivity.this);
-//                adb.setView(v);
-//                adb.setCancelable(false);
-//                final AlertDialog ad = adb.create();
-//                meetingCancel.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        ad.dismiss();
-//                    }
-//                });
-//                ad.show();
                 startActivity(new Intent(ViewDetailsActivity.this, MeetingActivity.class));
             }
         });
@@ -324,6 +340,7 @@ public class ViewDetailsActivity extends FragmentActivity {
         fabNotes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 ImageView attachFile;
                 final EditText noteDetails;
                 Button noteCancel, noteSend;
@@ -349,6 +366,7 @@ public class ViewDetailsActivity extends FragmentActivity {
                 noteCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        String details = noteDetails.getText().toString().trim();
                         ad.dismiss();
                     }
                 });
@@ -389,6 +407,66 @@ public class ViewDetailsActivity extends FragmentActivity {
         fabExpanded = true;
     }
 
+    private void getContactList() {
+        Cursor phones = this.getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null,null,null, null);
 
+        // loop over all contacts
+        if(phones != null) {
+            while (phones.moveToNext()) {
+                // get contact info
+                String phoneNumber = null;
+                String id = phones.getString(phones.getColumnIndex(ContactsContract.Contacts._ID));
+                String name = phones.getString(phones.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                String avatarUriString = phones.getString(phones.getColumnIndex(ContactsContract.Contacts.PHOTO_THUMBNAIL_URI));
+                Uri avatarUri = null;
+                if(avatarUriString != null)
+                    avatarUri = Uri.parse(avatarUriString);
+
+                // get phone number
+                if (Integer.parseInt(phones.getString(phones.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
+                    Cursor pCur = this.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                            null,
+                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[] { id }, null);
+
+                    while (pCur != null && pCur.moveToNext()) {
+                        phoneNumber = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                    }
+
+                    pCur.close();
+
+                }
+
+                ContactChip contactChip = new ContactChip(id, avatarUri, name, phoneNumber);
+                // add contact to the list
+                mContactList.add(contactChip);
+            }
+            phones.close();
+        }
+
+        // pass contact list to chips input
+
+
+        if (fabSchedule.isClickable()) {
+            scheduleOS.setFilterableList(mContactList);
+            scheduleInternalPeople.setFilterableList(mContactList);
+        } else if (fabTask.isClickable()){
+            taskOtherStake.setFilterableList(mContactList);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 101){
+            if (resultCode == RESULT_OK){
+                Uri uri = data.getData();
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 }
 

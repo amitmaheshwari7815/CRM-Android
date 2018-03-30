@@ -59,11 +59,6 @@ public class MeetingActivity extends AppCompatActivity {
 
     int c_yr, c_month, c_day, c_hr, c_min;
 
-//    EditTag editTagView;
-
-    private SwitchCompat statusSwitchView;
-
-    private List<String> tagStrings = new ArrayList<>();
 
     Editor editor;
 
@@ -72,11 +67,6 @@ public class MeetingActivity extends AppCompatActivity {
     ChipsInput mChipsInputIP;
     @BindView(R.id.chips_input_crm)
     ChipsInput mChipsInputCRM;
-    //    @BindView(R.id.validate) Button mValidateButton;
-    @BindView(R.id.chip_list_ip)
-    TextView mChipListTextIP;
-    @BindView(R.id.chip_list_crm)
-    TextView mChipListTextCRM;
     private List<ContactChip> mContactList;
 
     @Override
@@ -91,69 +81,22 @@ public class MeetingActivity extends AppCompatActivity {
 
         meetingDate = findViewById(R.id.meeting_date);
         meetingTime = findViewById(R.id.meeting_time);
-//        meetingInternalPeople = findViewById(R.id.meeting_internal_people);
-//        meetingCRM = findViewById(R.id.meeting_within_crm);
         meetingDuration = findViewById(R.id.meeting_duration);
         decrease = findViewById(R.id.decrease_duration);
         increase = findViewById(R.id.increase_duration);
 
         meetingPlace = findViewById(R.id.meeting_place);
-
-//        meetingAddIP = findViewById(R.id.add_meeting_internal_people);
-//        meetingAddCRM = findViewById(R.id.add_meeting_within_crm);
-//        meetingCancel = findViewById(R.id.meeting_cancel);
         meetingSave = findViewById(R.id.meeting_save);
 
         meetingDuration.setText("0");
         clickMethods();
 
-//        editTagView = (EditTag) findViewById(R.id.edit_tag_view);
-//        statusSwitchView = (SwitchCompat) findViewById(R.id.status_switch);
-//        statusSwitchView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                editTagView.setEditable(isChecked);
-//            }
-//        });
-//
-//        for (int i = 0; i < 10; i++) {
-//            tagStrings.add("test" + i);
-//        }
-//        //Set tag add callback before set tag list
-//        editTagView.setTagAddCallBack(new EditTag.TagAddCallback() {
-//            @Override
-//            public boolean onTagAdd(String tagValue) {
-//                if ("test1".equals(tagValue)) {
-//                    return false;
-//                } else {
-//                    return true;
-//                }
-//            }
-//        });
-//        editTagView.setTagDeletedCallback(new EditTag.TagDeletedCallback() {
-//            @Override
-//            public void onTagDelete(String deletedTagValue) {
-//                Toast.makeText(MeetingActivity.this, deletedTagValue, Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        editTagView.setTagList(tagStrings);
-//
-//        editTagView.addTag("hello world!");
-//        editTagView.removeTag("test3");
         ButterKnife.bind(this);
         mContactList = new ArrayList<>();
 
         // get contact list
-        new RxPermissions(this)
-                .request(Manifest.permission.READ_CONTACTS)
-                .subscribe();//granted -> {
-//                    if(granted && mContactList.size() == 0)
+        new RxPermissions(this).request(Manifest.permission.READ_CONTACTS).subscribe();
         getContactList();
-
-//                }, err -> {
-//                    Log.e(TAG, err.getMessage());
-//                    Toast.makeText(ContactListActivity.this, "Error get contacts, see logs", Toast.LENGTH_LONG).show();
-//                });
 
         // chips listener
         mChipsInputIP.addChipsListener(new ChipsInput.ChipsListener() {
@@ -384,25 +327,13 @@ public class MeetingActivity extends AppCompatActivity {
             }
         });
 
-//        findViewById(R.id.action_map).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                editor.insertMap();
-//            }
-//        });
-
         findViewById(R.id.action_erase).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 editor.clearAllContents();
             }
         });
-        //editor.dividerBackground=R.drawable.divider_background_dark;
-        //editor.setFontFace(R.string.fontFamily__serif);
-        Map<Integer, String> headingTypeface = getHeadingTypeface();
-        Map<Integer, String> contentTypeface = getContentface();
-        editor.setHeadingTypeface(headingTypeface);
-        editor.setContentTypeface(contentTypeface);
+
         editor.setDividerLayout(R.layout.tmpl_divider_layout);
         editor.setEditorImageLayout(R.layout.tmpl_image_view);
         editor.setListItemLayout(R.layout.tmpl_list_item);
@@ -421,18 +352,7 @@ public class MeetingActivity extends AppCompatActivity {
             }
         });
         editor.render();  // this method must be called to start the editor
-//        findViewById(R.id.btnRender).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                /*
-//                Retrieve the content as serialized, you could also say getContentAsHTML();
-//                */
-//                String text = editor.getContentAsSerialized();
-//                Intent intent = new Intent(getApplicationContext(), RenderTestActivity.class);
-//                intent.putExtra("content", text);
-//                startActivity(intent);
-//            }
-//        });
+
     }
 
     public static void setGhost(Button button) {
@@ -517,29 +437,4 @@ public class MeetingActivity extends AppCompatActivity {
                 .setNegativeButton("No", null)
                 .show();
     }
-
-//    @Override
-//    protected void onPostCreate(Bundle savedInstanceState) {
-//        super.onPostCreate(savedInstanceState);
-//        setGhost((Button) findViewById(R.id.btnRender));
-//    }
-
-    public Map<Integer, String> getHeadingTypeface() {
-        Map<Integer, String> typefaceMap = new HashMap<>();
-        typefaceMap.put(Typeface.NORMAL, "fonts/GreycliffCF-Bold.ttf");
-        typefaceMap.put(Typeface.BOLD, "fonts/GreycliffCF-Heavy.ttf");
-        typefaceMap.put(Typeface.ITALIC, "fonts/GreycliffCF-Heavy.ttf");
-        typefaceMap.put(Typeface.BOLD_ITALIC, "fonts/GreycliffCF-Bold.ttf");
-        return typefaceMap;
-    }
-
-    public Map<Integer, String> getContentface() {
-        Map<Integer, String> typefaceMap = new HashMap<>();
-        typefaceMap.put(Typeface.NORMAL, "fonts/Lato-Medium.ttf");
-        typefaceMap.put(Typeface.BOLD, "fonts/Lato-Bold.ttf");
-        typefaceMap.put(Typeface.ITALIC, "fonts/Lato-MediumItalic.ttf");
-        typefaceMap.put(Typeface.BOLD_ITALIC, "fonts/Lato-BoldItalic.ttf");
-        return typefaceMap;
-    }
-
 }

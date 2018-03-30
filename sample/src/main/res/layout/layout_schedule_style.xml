@@ -6,11 +6,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--<TextView-->
-        <!--style="@style/text_view_style"-->
-        <!--android:layout_gravity="left"-->
-        <!--android:text="When"-->
-        <!--android:textSize="15dp"-->
-        <!--android:textColor="#000000"/>-->
+    <!--style="@style/text_view_style"-->
+    <!--android:layout_gravity="left"-->
+    <!--android:text="When"-->
+    <!--android:textSize="15dp"-->
+    <!--android:textColor="#000000"/>-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,58 +49,66 @@
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 
-    <LinearLayout
+    <TextView
+        style="@style/text_view_style"
+        android:layout_gravity="left"
+        android:text="Other stakeholders"
+        android:textSize="15dp"
+        android:textColor="@color/text_color"/>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginBottom="2dp">
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/schedule_other_stakeholders"
-                android:ems="10"
-                android:hint="Other stakeholders"
-                android:inputType="text"/>
-        </android.support.design.widget.TextInputLayout>
-        <Button
-            android:layout_width="wrap_content"
+        android:padding="10dp"
+        >
+
+        <com.pchmn.materialchips.ChipsInput
+            android:id="@+id/chips_input_os_schedule"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add"
-            android:id="@+id/add_schedule_other_stakeholders"
-            android:drawableRight="@drawable/ic_add_company"
-            style="?android:attr/borderlessButtonStyle"/>
+            app:hint="Search and select a user to add him/her in this group"
+            app:maxRows="3" />
+
+        <!--<TextView-->
+        <!--android:id="@+id/chip_list_ip"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="16dp"/>-->
+
     </LinearLayout>
 
-    <LinearLayout
+    <TextView
+        style="@style/text_view_style"
+        android:layout_gravity="left"
+        android:text="Internal People"
+        android:textSize="15dp"
+        android:textColor="@color/text_color"/>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginBottom="2dp">
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/schedule_internal_people"
-                android:ems="10"
-                android:hint="Internal People"
-                android:inputType="text"/>
-        </android.support.design.widget.TextInputLayout>
-        <Button
-            android:layout_width="wrap_content"
+        android:padding="10dp"
+        >
+
+        <com.pchmn.materialchips.ChipsInput
+            android:id="@+id/chips_input_ip_schedule"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add"
-            android:id="@+id/add_schedule_internal_people"
-            android:drawableRight="@drawable/ic_add_company"
-            style="?android:attr/borderlessButtonStyle"/>
+            app:hint="Search and select a user to add him/her in this group"
+            app:maxRows="3" />
+
+        <!--<TextView-->
+        <!--android:id="@+id/chip_list_ip"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="16dp"/>-->
+
     </LinearLayout>
 
     <android.support.design.widget.TextInputLayout

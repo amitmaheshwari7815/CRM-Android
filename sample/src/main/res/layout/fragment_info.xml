@@ -5,103 +5,172 @@
     android:background="@color/project_color"
     tools:context="com.woxthebox.draglistview.sample.InfoFragment">
 
-    <LinearLayout
+    <ScrollView android:id="@+id/contacts_form"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
-
-        <!-- TODO: Update blank fragment layout -->
-        <TextView
-            style="@style/text_view_style"
-            android:layout_gravity="left"
-            android:text="When"
-            android:textSize="15dp"
-            android:textColor="#000000"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginBottom="2dp">
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Date"
-                android:drawableRight="@drawable/ic_date"/>
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Time"
-                android:drawableRight="@drawable/ic_time"/>
-        </LinearLayout>
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="outsideOverlay"
+        android:paddingLeft="@dimen/cardCornerRadius"
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:gravity="center"
-            android:layout_marginBottom="2dp">
-            <EditText
-                android:layout_width="0dp"
-                android:layout_weight="1"
+            android:layout_marginBottom="3dp"
+            android:layout_marginLeft="2dp">
+
+            <!-- TODO: Update blank fragment layout -->
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/male"
+                android:id="@+id/info_image"/>
+
+            <TextView
+                style="@style/text_view_style"
+                android:text="Primary"
+                android:layout_gravity="left"
+                android:textSize="15dp"
+                android:textColor="#666161" />
+
+            <RelativeLayout android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Internal People"
+                android:layout_margin="5dp"
+                >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_smartphone"
+                    android:id="@+id/imageView" />
+
+                <TextView
+                    android:id="@+id/info_mobno"
+                    style="@style/text_view_style"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="3dp"
+                    android:layout_toEndOf="@+id/imageView"
+                    android:text="9781342197"
+                    android:textColor="#3c4650"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_email"
+                    android:id="@+id/email_icon"/>
+
+                <TextView
+                    style="@style/text_view_style"
+                    android:id="@+id/info_email"
+                    android:text="SamuelDPollock@teleworm.us"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="3dp"
+                    android:layout_toEndOf="@+id/email_icon"
+                    android:textColor="#3c4650"
+                    />
+
+            </RelativeLayout>
+
+            <TextView
+                style="@style/text_view_style"
+                android:text="Organisation"
+                android:layout_gravity="left"
+                android:textSize="15dp"
+                android:textColor="#666161"
+                android:layout_marginTop="20dp"
+                android:drawableLeft="@drawable/ic_organisation"
+                android:drawablePadding="3dp"/>
+
+            <TextView
+                style="@style/text_view_style"
+                android:id="@+id/info_company"
+                android:text="First Choice Yard Help"
+                android:layout_gravity="left"
+                android:textSize="15dp"
+                android:textColor="#000000"
+                android:layout_margin="10dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="3dp"
+                >
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="left"
+                    android:src="@drawable/ic_location"
+                    android:id="@+id/info_iv_address"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="left"
+
+                    >
+                    <TextView
+                        style="@style/text_view_style"
+                        android:id="@+id/info_tv_address"
+                        android:text="2426 Pritchard Court
+Windson
+MN
+56101
+US"
+                        android:layout_gravity="left"
+                        android:textSize="15dp"
+                        android:textColor="#000000"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/text_view_style"
+                android:text="In Network"
+                android:layout_gravity="left"
+                android:textSize="15dp"
+                android:textColor="#666161"
+                android:layout_marginTop="20dp"
                 />
 
-            <Button
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Add"
-                android:drawableRight="@drawable/ic_add_company"
-                style="?android:attr/borderlessButtonStyle"/>
+                android:layout_margin="5dp"
+                >
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/male"
+                    android:id="@+id/info_frnd_img"/>
+
+                <TextView
+                    style="@style/text_view_style"
+                    android:id="@+id/info_frnd_name"
+                    android:text="Robert Y. Griffin"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="3dp"
+                    android:layout_toEndOf="@+id/info_frnd_img"
+                    android:textColor="#3c4650"
+                    />
+
+            </RelativeLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginBottom="2dp">
-            <EditText
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Within CRM"
-                />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add"
-                android:drawableRight="@drawable/ic_add_company"
-                style="?android:attr/borderlessButtonStyle"/>
-        </LinearLayout>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Duration"
-            android:layout_gravity="center"
-            android:textAlignment="center"
-            android:drawableStart="@drawable/ic_arrow_drop_up"
-            android:drawableEnd="@drawable/ic_arrow_drop_down"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Place"
-            />
-
-    </LinearLayout>
-
-
+    </ScrollView>
 
 </FrameLayout>
