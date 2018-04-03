@@ -46,7 +46,7 @@ public class OpportunitiesActivity extends AppCompatActivity {
 
         client = new AsyncHttpClient();
         opportunities = new ArrayList();
-        getData();
+        getOpprtunities();
 
 
         if (savedInstanceState == null) {
@@ -89,28 +89,29 @@ public class OpportunitiesActivity extends AppCompatActivity {
 //
 //        return super.onOptionsItemSelected(item);
 //    }
-    protected void getData() {
-        String serverURL = "http://10.0.2.2:8000/api/clientRelationships/relationships/?format=json";
-        client.get(serverURL, new JsonHttpResponseHandler() {
+    protected void getOpprtunities() {
+        String serverURL = "http://10.0.2.2:8000/api/clientRelationships/deal/?format=json";
+         client.get(serverURL, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, final JSONArray response) {
                 for (int i = 0; i < response.length(); i++) {
-                    JSONObject Obj = null;
+                    JSONObject jsonObject = null;
                     try {
-                        Obj = response.getJSONObject(i);
+                        jsonObject = response.getJSONObject(i);
+                        String name = jsonObject.getString("name");
 
-                        JSONArray contacts = Obj.getJSONArray("contacts");
+                        JSONObject contacts = jsonObject.getJSONObject("contacts");
                         Log.e("contactslength",""+contacts.length());
-                        for (int j=0; j<contacts.length();j++) {
-                            JSONObject jsonObject = contacts.getJSONObject(j);
-                            String Cname = jsonObject.getString("name");
-                            String company = jsonObject.getString("company");
-                            String email = jsonObject.getString("email");
-                            String cmobile = jsonObject.getString("mobile");
-                            String designation = jsonObject.getString("designation");
-                            boolean male = jsonObject.getBoolean("male");
-                        }
-                        HashMap hashMap = new HashMap();
+                            String Cname = contacts.getString("name");
+                            String company = contacts.getString("company");
+                            String email = contacts.getString("email");
+                            String cmobile = contacts.getString("mobile");
+                            String designation = contacts.getString("designation");
+                            boolean male = contacts.getBoolean("male");
+                        } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    HashMap hashMap = new HashMap();
 
 //                        hashMap.put("name", name);
 //                        hashMap.put("logo", logo);
@@ -133,11 +134,19 @@ public class OpportunitiesActivity extends AppCompatActivity {
 //                        pk.put(country, "country");
                         opportunities.add(hashMap);
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
                 }
             }
+             @Override
+             public void onFinish() {
+                 System.out.println("finished 001");
+
+             }
+
+             @Override
+             public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject errorResponse) {
+                 // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+                 System.out.println("finished failed 001");
+             }
 
         });
     }

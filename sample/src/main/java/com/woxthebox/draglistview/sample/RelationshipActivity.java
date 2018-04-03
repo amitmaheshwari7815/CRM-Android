@@ -78,11 +78,11 @@ public class RelationshipActivity extends Activity {
 
                         JSONObject address = Obj.getJSONObject("address");
                         String street = address.getString("street");
-//                        String city = Obj.getString("city");
-//                        String state = Obj.getString("state");
-//                        String pincode = Obj.getString("pincode");
-//                        String p = String.valueOf("pincode");
-//                        String country = Obj.getString("country");
+                        String city = address.getString("city");
+                        String state = address.getString("state");
+                        String pincode = address.getString("pincode");
+                        String p = String.valueOf("pincode");
+                        String country = address.getString("country");
 
                         HashMap hashMap = new HashMap();
 
