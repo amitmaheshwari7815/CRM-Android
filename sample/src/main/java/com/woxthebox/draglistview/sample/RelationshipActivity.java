@@ -70,18 +70,21 @@ public class RelationshipActivity extends Activity {
                     JSONObject Obj = null;
                     try {
                         Obj = response.getJSONObject(i);
-//                        String user = usrObj.getString("user");
+                        String pk = Obj.getString("pk");
                         String name = Obj.getString("name");
                         String logo = Obj.getString("logo");
                         String mobile = Obj.getString("mobile");
                         String web = Obj.getString("web");
 
                         JSONObject address = Obj.getJSONObject("address");
+
+                        String pk1 = address.getString("pk");
                         String street = address.getString("street");
                         String city = address.getString("city");
                         String state = address.getString("state");
                         String pincode = address.getString("pincode");
-                        String p = String.valueOf("pincode");
+                        String lat = address.getString("lat");
+                        String lon = address.getString("lon");
                         String country = address.getString("country");
 
                         HashMap hashMap = new HashMap();
@@ -90,12 +93,11 @@ public class RelationshipActivity extends Activity {
                         hashMap.put("logo", logo);
                         hashMap.put("mobile", mobile);
                         hashMap.put("web", web);
-//                        pk.put(address, "address");
                         hashMap.put("street", street);
-//                        pk.put(city, "city");
-//                        pk.put(state, "state");
-//                        pk.put(pincode, "pincode");
-//                        pk.put(country, "country");
+                        hashMap.put(city, "city");
+                        hashMap.put(state, "state");
+                        hashMap.put(pincode, "pincode");
+                        hashMap.put(country, "country");
                         relationship.add(hashMap);
 
                     } catch (JSONException e) {

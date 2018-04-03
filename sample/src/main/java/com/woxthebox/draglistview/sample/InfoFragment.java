@@ -19,7 +19,7 @@ import android.widget.TextView;
  */
 public class InfoFragment extends Fragment {
     ImageView searchLocImage;
-    TextView searchLocTv;
+    TextView searchLocTv, infoCompany;
 
 
 
@@ -32,10 +32,17 @@ public class InfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         View v = inflater.inflate(R.layout.fragment_info, container, false);
 
         searchLocImage = v.findViewById(R.id.info_iv_address);
+        infoCompany = v.findViewById(R.id.info_company);
         searchLocTv = v.findViewById(R.id.info_tv_address);
+
+        infoCompany.setText(""+ViewDetailsActivity.company);
+
+        String address = ViewDetailsActivity.street+" "+ViewDetailsActivity.city+" "+ViewDetailsActivity.state+" "+ViewDetailsActivity.pincode+" "+ViewDetailsActivity.country;
+        searchLocTv.setText(address);
 
         clickMethods();
 

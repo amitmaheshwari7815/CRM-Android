@@ -148,7 +148,7 @@ public class ContactsActivity extends FragmentActivity {
 //                int a=10;
 //                if (0<res)
                 int s;
-                for (s = 0; s < 10; s++) {
+                for (s = 0; s < res; s++) {
 
                         JSONObject usrObj = null;
                         try {
@@ -158,46 +158,57 @@ public class ContactsActivity extends FragmentActivity {
                             String email = usrObj.getString("email");
                             String mobile = usrObj.getString("mobile");
                             String designation = usrObj.getString("designation");
+                            boolean gender = usrObj.getBoolean("male");
 
                             JSONObject company = usrObj.getJSONObject("company");
                             String companyName = company.getString("name");
+                            String cin = company.getString("cin");
+                            String tin = company.getString("tin");
+                            String telephone = company.getString("telephone");
+                            String cMobile = company.getString("mobile");
+                            String about = company.getString("about");
+                            String web = company.getString("web");
+//                            String doc = company.getString("doc");
+
+
+                            JSONObject a = company.getJSONObject("address");
 //
-//                        JSONArray comapany = usrObj.getJSONArray("company");
-//                        for (int j = 0; j < comapany.length(); j++) {
-//                            JSONObject innerElem = comapany.getJSONObject(j);
-//
-//                            String user1 = innerElem.getString("name");
-////                        String pk1 = innerElem.getString("pk");
-//
-//
-//                            JSONArray address = usrObj.getJSONArray("address");
-//                            for (int k = 0; k < address.length(); k++) {
-//                                JSONObject a = address.getJSONObject(k);
-//
-//                                String street = a.getString("street");
-//                                String city = a.getString("city");
-//                                String state = a.getString("state");
-//                                String pincode = a.getString("pincode");
-//                                String g = String.valueOf(pincode);
-//                                String country = a.getString("country");
-//                                String telephone = a.getString("telephone");
+                                String street = a.getString("street");
+                                String city = a.getString("city");
+                                String state = a.getString("state");
+                                String pincode = a.getString("pincode");
+                                String country = a.getString("country");
+
 
 
                             // tmp hash map for single contact
-                            HashMap pk = new HashMap();
+                            HashMap hm = new HashMap();
 
 
                             // adding each child node to HashMap key => value
 //                            pk.put("user", user);
-                            pk.put("name", name);
-                            pk.put("company", companyName);
-                            pk.put("mobile", mobile);
-                            pk.put("email", email);
-                            pk.put("designation", designation);
+                            hm.put("name", name);
+                            hm.put("company", companyName);
+                            hm.put("mobile", mobile);
+                            hm.put("email", email);
+                            hm.put("designation", designation);
+                            hm.put("gender",gender);
+                            hm.put("cin",cin);
+                            hm.put("tin",tin);
+                            hm.put("mob",cMobile);
+                            hm.put("tel",telephone);
+                            hm.put("about",about);
+                            hm.put("web",web);
+                            hm.put("street",street);
+                            hm.put("city",city);
+                            hm.put("state",state);
+                            hm.put("pincode",pincode);
+                            hm.put("country",country);
+
 
 
                             // adding contact to contact list
-                            contactList.add(pk);
+                            contactList.add(hm);
 
 //                            }
 
@@ -213,97 +224,97 @@ public class ContactsActivity extends FragmentActivity {
                 browseAdapter = new BrowseAdapter(ContactsActivity.this);
                 browse_rv.setAdapter(browseAdapter);
 
-                browseAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
-                    @Override
-                    public void onLoadMore() {
-
-
-                        Log.e("haint", "Load More");
-                        contactList.add(null);
-                        browseAdapter.notifyItemInserted(contactList.size() - 1);
-
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                Log.e("haint", "Load More 2");
-
-                                //Remove loading item
-                                contactList.remove(contactList.size() - 1);
-                                browseAdapter.notifyItemRemoved(contactList.size());
-
-                                //Load data
-//                            pDialog.setVisibility(View.VISIBLE);
-                                int index = contactList.size();
-                                int in = index + 9;
-                                if (in < res) {
-                                    for (int i = index; i < in; i++) {
-//                                pDialog.setVisibility(View.GONE);
-                                        JSONObject usrObj = null;
-                                        try {
-                                            usrObj = response.getJSONObject(i);
-//                        String user = usrObj.getString("user");
-                                            String name = usrObj.getString("name");
-                                            String email = usrObj.getString("email");
-                                            String mobile = usrObj.getString("mobile");
-                                            String designation = usrObj.getString("designation");
-
-                                            JSONObject company = usrObj.getJSONObject("company");
-                                            String companyName = company.getString("name");
-//
-//                        JSONArray comapany = usrObj.getJSONArray("company");
-//                        for (int j = 0; j < comapany.length(); j++) {
-//                            JSONObject innerElem = comapany.getJSONObject(j);
-//
-//                            String user1 = innerElem.getString("name");
-////                        String pk1 = innerElem.getString("pk");
+//                browseAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
+//                    @Override
+//                    public void onLoadMore() {
 //
 //
-//                            JSONArray address = usrObj.getJSONArray("address");
-//                            for (int k = 0; k < address.length(); k++) {
-//                                JSONObject a = address.getJSONObject(k);
+//                        Log.e("haint", "Load More");
+//                        contactList.add(null);
+//                        browseAdapter.notifyItemInserted(contactList.size() - 1);
 //
-//                                String street = a.getString("street");
-//                                String city = a.getString("city");
-//                                String state = a.getString("state");
-//                                String pincode = a.getString("pincode");
-//                                String g = String.valueOf(pincode);
-//                                String country = a.getString("country");
-//                                String telephone = a.getString("telephone");
-
-
-                                            // tmp hash map for single contact
-                                            HashMap pk = new HashMap();
-
-
-                                            // adding each child node to HashMap key => value
-//                            pk.put("user", user);
-                                            pk.put("name", name);
-                                            pk.put("company", companyName);
-                                            pk.put("mobile", mobile);
-                                            pk.put("email", email);
-                                            pk.put("designation", designation);
-
-
-                                            // adding contact to contact list
-                                            contactList.add(pk);
-
+//                        new Handler().postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                Log.e("haint", "Load More 2");
+//
+//                                //Remove loading item
+//                                contactList.remove(contactList.size() - 1);
+//                                browseAdapter.notifyItemRemoved(contactList.size());
+//
+//                                //Load data
+////                            pDialog.setVisibility(View.VISIBLE);
+//                                int index = contactList.size();
+//                                int in = index + 9;
+//                                if (in < res) {
+//                                    for (int i = index; i < in; i++) {
+////                                pDialog.setVisibility(View.GONE);
+//                                        JSONObject usrObj = null;
+//                                        try {
+//                                            usrObj = response.getJSONObject(i);
+////                        String user = usrObj.getString("user");
+//                                            String name = usrObj.getString("name");
+//                                            String email = usrObj.getString("email");
+//                                            String mobile = usrObj.getString("mobile");
+//                                            String designation = usrObj.getString("designation");
+//
+//                                            JSONObject company = usrObj.getJSONObject("company");
+//                                            String companyName = company.getString("name");
+////
+////                        JSONArray comapany = usrObj.getJSONArray("company");
+////                        for (int j = 0; j < comapany.length(); j++) {
+////                            JSONObject innerElem = comapany.getJSONObject(j);
+////
+////                            String user1 = innerElem.getString("name");
+//////                        String pk1 = innerElem.getString("pk");
+////
+////
+////                            JSONArray address = usrObj.getJSONArray("address");
+////                            for (int k = 0; k < address.length(); k++) {
+////                                JSONObject a = address.getJSONObject(k);
+////
+////                                String street = a.getString("street");
+////                                String city = a.getString("city");
+////                                String state = a.getString("state");
+////                                String pincode = a.getString("pincode");
+////                                String g = String.valueOf(pincode);
+////                                String country = a.getString("country");
+////                                String telephone = a.getString("telephone");
+//
+//
+//                                            // tmp hash map for single contact
+//                                            HashMap pk = new HashMap();
+//
+//
+//                                            // adding each child node to HashMap key => value
+////                            pk.put("user", user);
+//                                            pk.put("name", name);
+//                                            pk.put("company", companyName);
+//                                            pk.put("mobile", mobile);
+//                                            pk.put("email", email);
+//                                            pk.put("designation", designation);
+//
+//
+//                                            // adding contact to contact list
+//                                            contactList.add(pk);
+//
+////                            }
+//
+////                        }
+//                                        } catch (org.json.JSONException e) {
+//                                            e.printStackTrace();
+//                                            Log.e("JSONException", "123456");
+//                                        }
+//                                    }
+//                                    browseAdapter.notifyDataSetChanged();
+//                                    browseAdapter.setLoaded();
+//                                }else
+//                                    Toast.makeText(ContactsActivity.this, "JSONException", Toast.LENGTH_SHORT).show();
 //                            }
-
-//                        }
-                                        } catch (org.json.JSONException e) {
-                                            e.printStackTrace();
-                                            Log.e("JSONException", "123456");
-                                        }
-                                    }
-                                    browseAdapter.notifyDataSetChanged();
-                                    browseAdapter.setLoaded();
-                                }else
-                                    Toast.makeText(ContactsActivity.this, "JSONException", Toast.LENGTH_SHORT).show();
-                            }
-                        }, 3000);
-//
-                    }
-                });
+//                        }, 3000);
+////
+//                    }
+//                });
 
 //                Log.e("caslnasnxnx", ""+contactList.size());
 

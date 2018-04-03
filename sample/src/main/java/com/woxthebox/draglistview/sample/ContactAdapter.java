@@ -88,11 +88,11 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 public void onClick(View v) {
                     Intent intent = new Intent(context, EditContactActivity.class);
 //                    intent.putExtra("image", contact_images[getLayoutPosition()]);
-//                    intent.putExtra("name", name);
-//                    intent.putExtra("designation", designation);
-//                    intent.putExtra("company", company);
-//                    intent.putExtra("cno", mobile);
-//                    intent.putExtra("email", email);
+                    intent.putExtra("name", name);
+                    intent.putExtra("designation", designation);
+                    intent.putExtra("company", company);
+                    intent.putExtra("cno", mobile);
+                    intent.putExtra("email", email);
                     context.startActivity(intent);
                 }
             });
@@ -103,11 +103,11 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     Toast.makeText(context, ""+getLayoutPosition(), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(context, ViewDetailsActivity.class);
 //                    intent.putExtra("image", contact_images[getLayoutPosition()]);
-//                    intent.putExtra("name", name);
-//                    intent.putExtra("designation", designation);
-//                    intent.putExtra("company", company);
-//                    intent.putExtra("cno", mobile);
-//                    intent.putExtra("email", email);
+                    intent.putExtra("name", name);
+                    intent.putExtra("designation", designation);
+                    intent.putExtra("company", company);
+                    intent.putExtra("cno", mobile);
+                    intent.putExtra("email", email);
                     context.startActivity(intent);
                 }
             });

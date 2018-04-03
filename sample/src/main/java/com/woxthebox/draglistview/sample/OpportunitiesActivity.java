@@ -91,7 +91,7 @@ public class OpportunitiesActivity extends AppCompatActivity {
 //    }
     protected void getOpprtunities() {
         String serverURL = "http://10.0.2.2:8000/api/clientRelationships/deal/?format=json";
-         client.get(serverURL, new JsonHttpResponseHandler() {
+        client.get(serverURL, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, final JSONArray response) {
                 for (int i = 0; i < response.length(); i++) {
@@ -151,3 +151,4 @@ public class OpportunitiesActivity extends AppCompatActivity {
         });
     }
 }
+

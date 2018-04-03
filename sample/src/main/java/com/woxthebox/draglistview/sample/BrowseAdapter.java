@@ -59,7 +59,8 @@ public class BrowseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     Context context;
 
-    String name,Cname,street,city,state,pincode,country,email,mobile,designation,company;
+    String name,street,city,state,pincode,country,email,mobile,designation,company,telephone, cMobile, cin, tin, about, web;
+    boolean gender;
 
     public BrowseAdapter(Context context){
         this.context = context;
@@ -103,20 +104,25 @@ public class BrowseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof MyHolder) {
-//            User user = mUsers.get(position);
             MyHolder myHolder = (MyHolder) holder;
             HashMap hm = (HashMap) ContactsActivity.contactList.get(position);
-            name  = (String) hm.get("name");
+            name = (String) hm.get("name");
             company = (String) hm.get("company");
-//         street  = (String) hm.get("street");
-//         city = (String) hm.get("city");
-//         state = (String) hm.get("state");
-//         pincode = (String) hm.get("pincode");
-//         country = (String) hm.get("country");
-//         telephone = (String) hm.get("telephone");
             email = (String) hm.get("email");
             mobile = (String) hm.get("mobile");
             designation = (String) hm.get("designation");
+            street = (String) hm.get("street");
+            city = (String) hm.get("city");
+            state = (String) hm.get("state");
+            pincode = (String) hm.get("pincode");
+            country = (String) hm.get("country");
+            telephone = (String) hm.get("tel");
+            gender = (Boolean)hm.get("gender");
+            cin = (String)hm.get("cin");
+            tin = (String) hm.get("tin");
+            cMobile = (String)hm.get("mob");
+            about = (String)hm.get("about");
+            web = (String)hm.get("web");
 
 //        holder.browseImage.setImageResource(contact_images[position]);
             myHolder.browseName.setText(name);
@@ -130,7 +136,6 @@ public class BrowseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             loadingViewHolder.progressBar.setIndeterminate(true);
         }
     }
-
 //    @Override
 //    public void onBindViewHolder(@NonNull MyHolder holder, final int position) {
 //        HashMap hm = (HashMap) ContactsActivity.contactList.get(position);
@@ -154,12 +159,12 @@ public class BrowseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 //        holder.browseMob.setText(mobile);
 //        holder.browseEmail.setText(email);
 //    }
-
     @Override
     public int getItemCount() {
 //        Log.e("caslnasnxnx", "sdffs"+ContactsActivity.contactList.size());
         return  ContactsActivity.contactList.size();
     }
+
 
     public class MyHolder extends RecyclerView.ViewHolder {
 
@@ -208,6 +213,18 @@ public class BrowseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     intent.putExtra("company", company);
                     intent.putExtra("cno", mobile);
                     intent.putExtra("email", email);
+                    intent.putExtra("gender",gender);
+                    intent.putExtra("cin",cin);
+                    intent.putExtra("tin",tin);
+                    intent.putExtra("mob",cMobile);
+                    intent.putExtra("tel",telephone);
+                    intent.putExtra("about",about);
+                    intent.putExtra("web",web);
+                    intent.putExtra("street",street);
+                    intent.putExtra("city",city);
+                    intent.putExtra("state",state);
+                    intent.putExtra("pincode", pincode);
+                    intent.putExtra("country",country);
                     context.startActivity(intent);
                 }
             });
@@ -225,6 +242,18 @@ public class BrowseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     intent.putExtra("company", company);
                     intent.putExtra("cno", mobile);
                     intent.putExtra("email", email);
+                    intent.putExtra("gender",gender);
+                    intent.putExtra("cin",cin);
+                    intent.putExtra("tin",tin);
+                    intent.putExtra("mob",cMobile);
+                    intent.putExtra("tel",telephone);
+                    intent.putExtra("about",about);
+                    intent.putExtra("web",web);
+                    intent.putExtra("street",street);
+                    intent.putExtra("city",city);
+                    intent.putExtra("state",state);
+                    intent.putExtra("pincode", pincode);
+                    intent.putExtra("country",country);
                     context.startActivity(intent);
                 }
             });

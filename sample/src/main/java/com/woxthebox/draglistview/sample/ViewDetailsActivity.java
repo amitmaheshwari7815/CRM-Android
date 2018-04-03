@@ -59,6 +59,8 @@ public class ViewDetailsActivity extends FragmentActivity {
 
     ArrayList noteList;
 
+    public static String name,street,city,state,pincode,country,email,mobile,designation,company,telephone, cMobile, cin, tin, about, web;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,11 +68,23 @@ public class ViewDetailsActivity extends FragmentActivity {
 
         Bundle b = getIntent().getExtras();
         int image = b.getInt("image");
-        final String name = b.getString("name");
-        String company = b.getString("company");
-        String designation = b.getString("designation");
-        String cno = b.getString("cno");
-        final String email = b.getString("email");
+        name = b.getString("name");
+        company = b.getString("company");
+        designation = b.getString("designation");
+        mobile = b.getString("cno");
+        email = b.getString("email");
+        final boolean gender = b.getBoolean("gender");
+        street = b.getString("street");
+        city = b.getString("city");
+        pincode = b.getString("pincode");
+        state = b.getString("state");
+        country = b.getString("country");
+        telephone = b.getString("tel");
+        cMobile = b.getString("mob");
+        cin = b.getString("cin");
+        tin = b.getString("tin");
+        about = b.getString("about");
+        web = b.getString("web");
 
         nameTv = findViewById(R.id.view_d_name);
         companyTv = findViewById(R.id.view_d_comapany);
@@ -97,7 +111,7 @@ public class ViewDetailsActivity extends FragmentActivity {
         nameTv.setText(name);
         companyTv.setText(company);
         designationTv.setText(designation);
-        cnoTv.setText(cno);
+        cnoTv.setText(cMobile);
         emailTv.setText(email);
 
         mContactList = new ArrayList<>();

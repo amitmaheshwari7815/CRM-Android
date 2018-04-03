@@ -35,6 +35,9 @@ public class EditContactActivity extends Activity {
     TextView dialog_arrowUp, dialog_arrowDown;
     LinearLayout dialog_showAdvanceDetails;
 
+    public static String name,street,city,state,pincode,country,email,mobile,designation,company,telephone, cMobile, cin, tin, about, web;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,11 +45,23 @@ public class EditContactActivity extends Activity {
 
         Bundle b = getIntent().getExtras();
         int image = b.getInt("image");
-        final String name = b.getString("name");
-        String company = b.getString("company");
-        String designation = b.getString("designation");
-        String cno = b.getString("cno");
-        String email = b.getString("email");
+        name = b.getString("name");
+        company = b.getString("company");
+        designation = b.getString("designation");
+        mobile = b.getString("cno");
+        email = b.getString("email");
+        final boolean gender = b.getBoolean("gender");
+        street = b.getString("street");
+        city = b.getString("city");
+        pincode = b.getString("pincode");
+        state = b.getString("state");
+        country = b.getString("country");
+        telephone = b.getString("tel");
+        cMobile = b.getString("mob");
+        cin = b.getString("cin");
+        tin = b.getString("tin");
+        about = b.getString("about");
+        web = b.getString("web");
 
         findAllIds();
         addCompany();
@@ -82,7 +97,7 @@ public class EditContactActivity extends Activity {
         editFullName.setText(name);
         editCompany.setText(company);
         editDesignation.setText(designation);
-        editMobNo.setText(cno);
+        editMobNo.setText(cMobile);
         editEmail.setText(email);
     }
 
@@ -162,6 +177,18 @@ public class EditContactActivity extends Activity {
         dialogLogo = v.findViewById(R.id.dialog_new_logo);
         dialogWeb = v.findViewById(R.id.dialog_new_web);
         saveDialogDetails = v.findViewById(R.id.dialog_new_save);
+
+        dialogTel.setText(telephone);
+        dialogAbout.setText(about);
+        dialogMob.setText(cMobile);
+        dialogStreet.setText(street);
+        dialogCity.setText(city);
+        dialogState.setText(state);
+        dialogPincode.setText(pincode);
+        dialogCountry.setText(country);
+        dialogCIN.setText(cin);
+        dialogTIN.setText(tin);
+        dialogWeb.setText(web);
 
         dialog_arrowDown.setOnClickListener(new View.OnClickListener() {
             @Override

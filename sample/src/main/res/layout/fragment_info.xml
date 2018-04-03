@@ -31,58 +31,6 @@
 
             <TextView
                 style="@style/text_view_style"
-                android:text="Primary"
-                android:layout_gravity="left"
-                android:textSize="15dp"
-                android:textColor="#666161" />
-
-            <RelativeLayout android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                >
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_smartphone"
-                    android:id="@+id/imageView" />
-
-                <TextView
-                    android:id="@+id/info_mobno"
-                    style="@style/text_view_style"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="3dp"
-                    android:layout_toEndOf="@+id/imageView"
-                    android:text="9781342197"
-                    android:textColor="#3c4650"
-                    />
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                >
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_email"
-                    android:id="@+id/email_icon"/>
-
-                <TextView
-                    style="@style/text_view_style"
-                    android:id="@+id/info_email"
-                    android:text="SamuelDPollock@teleworm.us"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="3dp"
-                    android:layout_toEndOf="@+id/email_icon"
-                    android:textColor="#3c4650"
-                    />
-
-            </RelativeLayout>
-
-            <TextView
-                style="@style/text_view_style"
                 android:text="Organisation"
                 android:layout_gravity="left"
                 android:textSize="15dp"
