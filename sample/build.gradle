@@ -20,6 +20,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.android.support:support-v4:27.1.0'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':library')
     compile project(':library2')

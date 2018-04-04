@@ -111,7 +111,7 @@ public class ViewDetailsActivity extends FragmentActivity {
         nameTv.setText(name);
         companyTv.setText(company);
         designationTv.setText(designation);
-        cnoTv.setText(cMobile);
+        cnoTv.setText(mobile);
         emailTv.setText(email);
 
         mContactList = new ArrayList<>();

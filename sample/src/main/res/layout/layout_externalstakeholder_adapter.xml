@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/stakeholder_image"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="40dp"
+            android:src="@drawable/ic_owner" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:text="Samuel D"
+                android:textColor="#000"
+                android:id="@+id/holder_name" />
+
+            <TextView
+                android:id="@+id/holder_designation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/holder_name"
+                android:layout_below="@+id/holder_name"
+                android:text="Information System manager"
+                android:textColor="#000" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

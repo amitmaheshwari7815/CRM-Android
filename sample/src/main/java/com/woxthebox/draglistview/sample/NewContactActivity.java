@@ -21,7 +21,17 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.util.ArrayList;
+
+import cz.msebera.android.httpclient.Header;
 
 public class NewContactActivity extends Activity {
 
@@ -29,7 +39,9 @@ public class NewContactActivity extends Activity {
     EditText newFullName, newEmail, newMobNo, newEmailDuplicate, newMobNoDuplicate, newDesignation, newNotes, newLinkedin, newFb;
     AutoCompleteTextView newCompany;
     Button addNewCompany, updateCompany;
-    String items[] = {"CIOC FMCG Pvt Ltd","First Choice Yard Help","Muscle Factory","ABC Pvt Ltd","DXC Technology"};
+    //    String items[] = {"CIOC FMCG Pvt Ltd","First Choice Yard Help","Muscle Factory","ABC Pvt Ltd","DXC Technology"};
+    ArrayList<String> companiesList;
+    public AsyncHttpClient client;
     TextView newDp, newDpAttach;
     Button saveNewContact;
     Switch genderSwitch;
@@ -45,6 +57,9 @@ public class NewContactActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_contact);
+
+        companiesList = new ArrayList<String>();
+        client = new AsyncHttpClient();
 
         Bundle b = getIntent().getExtras();
         if (b != null){
@@ -130,7 +145,37 @@ public class NewContactActivity extends Activity {
     }
 
     public void addCompany(){
-        ArrayAdapter arrayAdapter = new ArrayAdapter(NewContactActivity.this, android.R.layout.simple_dropdown_item_1line, items);
+        String serverURL = "http://10.0.2.2:8000/api/ERP/service/?format=json";
+        client.get(serverURL, new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+//                super.onSuccess(statusCode, headers, response);
+                for(int i=0; i<response.length(); i++){
+                    try {
+                        JSONObject json = response.getJSONObject(i);
+                        String companyName = json.getString("name");
+
+                        companiesList.add(companyName);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                System.out.println("finished EditContact");
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                System.out.println("finished failed EditContact");
+            }
+        });
+
+
+        ArrayAdapter arrayAdapter = new ArrayAdapter(NewContactActivity.this, android.R.layout.simple_dropdown_item_1line, companiesList);
         newCompany.setAdapter(arrayAdapter);
 
         newCompany.addTextChangedListener(new TextWatcher() {
@@ -148,8 +193,8 @@ public class NewContactActivity extends Activity {
             public void afterTextChanged(Editable s) {
                 addNewCompany.setVisibility(View.VISIBLE);
                 updateCompany.setVisibility(View.GONE);
-                for (int i=0; i<items.length; i++){
-                    if (s.toString().equals(items[i])){
+                for (int i=0; i<companiesList.size(); i++){
+                    if (s.toString().equals(companiesList.get(i))){
                         addNewCompany.setVisibility(View.GONE);
                         updateCompany.setVisibility(View.VISIBLE);
                     }

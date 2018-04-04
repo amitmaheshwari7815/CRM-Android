@@ -13,12 +13,11 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TimelineFragment extends Fragment {
+public class ExternalStakeholderFragment extends Fragment {
+    RecyclerView recyclerView;
 
-    RecyclerView recyclerViewTimeline;
 
-
-    public TimelineFragment() {
+    public ExternalStakeholderFragment() {
         // Required empty public constructor
     }
 
@@ -27,12 +26,14 @@ public class TimelineFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_timeline, container, false);
+        View view = inflater.inflate(R.layout.fragment_external_stakeholder, container, false);
 
-        recyclerViewTimeline = v.findViewById(R.id.timeline_rv);
-        recyclerViewTimeline.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView = view.findViewById(R.id.stakeholder_rv);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        ExternalStakeholderAdapter externalStakeholderAdapter = new ExternalStakeholderAdapter(getContext());
+        recyclerView.setAdapter(externalStakeholderAdapter);
 
-
-        return v;
+        return view;
     }
+
 }
