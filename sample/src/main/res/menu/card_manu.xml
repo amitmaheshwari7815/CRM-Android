@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:id="@+id/quoted"
+    android:title="Quoted"/>
+    <item android:id="@+id/approved"
+        android:title="Approved"/>
+    <item android:id="@+id/billed"
+        android:title="Billed"/>
+    <item android:id="@+id/received"
+        android:title="Received"/>
+    <item android:id="@+id/cancelled"
+        android:title="Cancelled"/>
+    <item android:id="@+id/due_Elapsed"
+        android:title="Due Elapsed"/>
+
+</menu>

@@ -94,10 +94,10 @@ public class RelationshipActivity extends Activity {
                         hashMap.put("mobile", mobile);
                         hashMap.put("web", web);
                         hashMap.put("street", street);
-                        hashMap.put(city, "city");
-                        hashMap.put(state, "state");
-                        hashMap.put(pincode, "pincode");
-                        hashMap.put(country, "country");
+                        hashMap.put("city", city);
+                        hashMap.put("state", state);
+                        hashMap.put("pincode", pincode);
+                        hashMap.put("country", country);
                         relationship.add(hashMap);
 
                     } catch (JSONException e) {

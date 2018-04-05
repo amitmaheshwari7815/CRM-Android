@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="    Name :"
-                android:textColor="#000"/>
+                  android:textColor="#000"/>
             <TextView
                 android:id="@+id/name_first"
                 android:layout_width="wrap_content"

@@ -22,5 +22,7 @@
 
     <color name="project_color">#ffffff</color>
     <color name="text_color">#39495e</color>
+    <color name="gray">#d9d9d9</color>
+    <color name="pink">#f97bf5</color>
 
 </resources>
