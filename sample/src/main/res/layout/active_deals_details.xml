@@ -3,20 +3,22 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/project_color">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp">
 
     <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:layout_gravity="center"
         android:src="@drawable/ic_deal" />
 
     <TextView
-        android:id="@+id/deal_id"
+        android:id="@+id/deal_name"
         android:layout_marginStart="5dp"
         android:layout_gravity="center"
         android:text="First"
@@ -32,12 +34,12 @@
 
         <TextView
             style="@style/text_view_style"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="10dp"
             android:text="VALUATION " />
 
         <TextView
             style="@style/text_view_style"
-            android:layout_marginStart="130dp"
+            android:layout_marginStart="100dp"
             android:text="CLOSING DATE"/>
     </LinearLayout>
 
@@ -50,7 +52,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
                 android:src="@drawable/ic_money" />
 
             <TextView
@@ -58,12 +60,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginStart="3dp"
                 android:text="5000" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="130dp"
+                android:layout_marginStart="100dp"
                 android:src="@drawable/ic_date"/>
             <TextView
                 android:id="@+id/closing_date"
@@ -80,14 +83,15 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginStart="10dp"
-            android:src="@drawable/ic_owner"/>
+            android:src="@drawable/img_avatar_card"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginStart="3dp"
             android:text="Admin CIOC"
             android:textStyle="bold"/>
     </LinearLayout>
@@ -98,31 +102,39 @@
         android:layout_marginTop="2dp"/>
 
     <android.support.design.widget.TabLayout
+        android:id="@+id/deal_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/deal_view"
-        app:tabSelectedTextColor="@color/project_color"
-        app:tabTextColor="@color/gray"
+        app:tabBackground="@color/colorPrimary"
         app:tabIndicatorColor="@color/pink"
         app:tabIndicatorHeight="3dp"
-        app:tabBackground="@color/colorPrimary">
+        app:tabSelectedTextColor="@color/project_color"
+        app:tabTextColor="@color/gray">
 
         <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/deal_info"
-            android:text="INFO"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_info"/>
+
 
         <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/external_stakeholders"
-            android:text="External Stakeholders"/>
-        <android.support.design.widget.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:icon="@drawable/ic_stakeholder"/>
+
+        <android.support.design.widget.TabItem
             android:id="@+id/finances"
-            android:text="Finances"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_finances"/>
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/requirements"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_requirements"/>
 
     </android.support.design.widget.TabLayout>
 <fragment

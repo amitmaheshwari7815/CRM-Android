@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -27,43 +29,50 @@ import cz.msebera.android.httpclient.Header;
 
 public class ActiveDealsActivity extends Activity {
     RecyclerView rv1;
-    TextView companyname;
+    TextView companyname,web;
     public static ArrayList deal;
     public AsyncHttpClient client;
+    public static String c_pk,company,street,city,astate,pincode,country,requirements;
+    public static int pos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.active_deals);
         companyname = findViewById(R.id.comapny_name);
-
+        web = findViewById(R.id.web_text);
+        rv1 = findViewById(R.id.activedearl_recyclerView);
         client = new AsyncHttpClient();
         deal = new ArrayList();
         getDeal();
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            String company = bundle.getString("company_name");
+            company = bundle.getString("company_name");
+            c_pk = bundle.getString("pk");
+            String web1 = bundle.getString("web");
             companyname.setText(company);
+            web.setText(web1);
+
         }
-
-
-        rv1 = findViewById(R.id.activedearl_recyclerView);
-        rv1.setLayoutManager(new LinearLayoutManager(this));
-
-        ActiveDealsAdapter activeDealsAdapter = new ActiveDealsAdapter(this);
-        rv1.setAdapter(activeDealsAdapter);
 
         rv1.addOnItemTouchListener(
                 new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        // TODO Handle item click
                         Toast.makeText(ActiveDealsActivity.this, "" + position, Toast.LENGTH_SHORT).show();
-//                        String itemPosition = (String) arrayList.get(position);
-
+                        pos=position;
+                        HashMap hm = (HashMap) deal.get(position);
+                        String dealName = (String) hm.get("name");
+                        String value = (String) hm.get("value");
+                        String closingDate = (String) hm.get("closeDate");
                         Intent intent = new Intent(ActiveDealsActivity.this, ActiveDealsDetailsActivity.class);
+                        intent.putExtra("name",dealName);
+                        intent.putExtra("value",value);
+                        intent.putExtra("closeDate",closingDate);
                         startActivity(intent);
+
+
                     }
                 })
         );
@@ -78,47 +87,121 @@ public class ActiveDealsActivity extends Activity {
                     JSONObject Obj = null;
                     try {
                         Obj = response.getJSONObject(i);
-                        String pk = Obj.getString("pk");
-                        String name = Obj.getString("name");
-                        String value = Obj.getString("value");
-                        String currency = Obj.getString("currency");
-                        String internalUsers = Obj.getString("internalUsers");
-                        String requirements = Obj.getString("requirements");
-                        String probability = Obj.getString("probability");
-                        String active = Obj.getString("active");
-                        String result = Obj.getString("result");
-                        String doc = Obj.getString("doc");
-                        String state = Obj.getString("state");
-                        String duePeriod = Obj.getString("duePeriod");
-                        String duePenalty = Obj.getString("duePenalty");
+                        String pk = Obj.getString("pk");// id
+
+                            String name = Obj.getString("name");//name
+                            String value = Obj.getString("value"); //value
+                            String currency = Obj.getString("currency");
+                            String internalUsers = Obj.getString("internalUsers");
+
+                            String probability = Obj.getString("probability");
+                            String closingDate = Obj.getString("closeDate");
+                            String active = Obj.getString("active");
+                            String result = Obj.getString("result");
+                            String doc = Obj.getString("doc");
+                            String state = Obj.getString("state");
+                            String duePeriod = Obj.getString("duePeriod");
+                            String duePenalty = Obj.getString("duePenalty");
 
                         JSONObject company = Obj.getJSONObject("company");
-                        String cname = company.getString("name");
-                        String mobile = company.getString("mobile");
+                        String pkc = company.getString("pk");// id
+
+                            String cname = company.getString("name");// company name
+                            String mobile = company.getString("mobile");
 
 
-                        JSONObject address = Obj.getJSONObject("address");
-                        String pk1 = address.getString("pk");
-                        String street = address.getString("street");
-                        String city = address.getString("city");
-                        String astate = address.getString("state");
-                        String pincode = address.getString("pincode");
-                        String lat = address.getString("lat");
-                        String lon = address.getString("lon");
-                        String country = address.getString("country");
-
-                        JSONObject contacts = Obj.getJSONObject("contacts");
-                        String pk2 = contacts.getString("pk");
-                        String namec = contacts.getString("name");
+                            JSONObject address = company.getJSONObject("address");
+                            String pk1 = address.getString("pk");
 
 
+                            JSONArray jsonArray = Obj.getJSONArray("contacts");
+                            for (int j = 0; j < jsonArray.length(); j++) {
+                                JSONObject contacts = jsonArray.getJSONObject(j);
+
+                                String pk2 = contacts.getString("pk");
+                                String namec = contacts.getString("name");// contact name
+                                String companyc = contacts.getString("company");
+                                if (c_pk.equals(companyc)) {requirements = Obj.getString("requirements");
+                                String email = contacts.getString("email");
+                                String mobilec = contacts.getString("mobile");
+                                String designation = contacts.getString("designation");
+                                String dp = contacts.getString("dp");
+                                boolean gender = contacts.getBoolean("male");
+                                    street = address.getString("street");
+                                    city = address.getString("city");
+                                    astate = address.getString("state");
+                                    pincode = address.getString("pincode");
+                                    String lat = address.getString("lat");
+                                    String lon = address.getString("lon");
+                                    country = address.getString("country");
+
+//                                JSONArray jsonArray1 = Obj.getJSONArray("contracts");
+//                                for (int k = 0; k < jsonArray1.length(); k++) {
+//                                    JSONObject contracts = jsonArray1.getJSONObject(k);
 
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                                    HashMap hashMap = new HashMap();
+                                    hashMap.put("pk", pk);
+                                    hashMap.put("name", name);
+                                    hashMap.put("value", value);
+                                    hashMap.put("currency", currency);
+                                    hashMap.put("internalUsers", internalUsers);
+                                    hashMap.put("requirements", requirements);
+                                    hashMap.put("probability", probability);
+                                    hashMap.put("closeDate",closingDate);
+                                    hashMap.put("active", active);
+                                    hashMap.put("doc", doc);
+                                    hashMap.put("result", result);
+                                    hashMap.put("state", state);
+                                    hashMap.put("duePeriod", duePeriod);
+                                    hashMap.put("duePenalty", duePenalty);
+                                    hashMap.put("company", cname);
+                                    hashMap.put("mobile", mobile);
+                                    hashMap.put("street", street);
+                                    hashMap.put("add_state", astate);
+                                    hashMap.put("city", city);
+                                    hashMap.put("pincode", pincode);
+                                    hashMap.put("country", country);
+                                    hashMap.put("name_con", namec);
+                                    hashMap.put("company_con", companyc);
+                                    hashMap.put("email", email);
+                                    hashMap.put("mobile_con", mobilec);
+                                    hashMap.put("designation", designation);
+                                    hashMap.put("male", gender);
+
+                                    deal.add(hashMap);
+                                    Log.d("deal",deal.size()+"");
+
+                                }else {
+                                    Log.d("pk"," - not matching");
+//                            }
+                        }
+                        }
+
+                        } catch(JSONException e){
+                            e.printStackTrace();
+                        }
                     }
-                }
+                rv1.setLayoutManager(new LinearLayoutManager(ActiveDealsActivity.this));
+                ActiveDealsAdapter activeDealsAdapter = new ActiveDealsAdapter(ActiveDealsActivity.this);
+                rv1.setAdapter(activeDealsAdapter);
             }
+                @Override
+                public void onFinish() {
+                    System.out.println("finished 001");
+
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject errorResponse) {
+                    // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+                    System.out.println("finished failed 001");
+                }
+
         });
+
     }
+
 }
+
+

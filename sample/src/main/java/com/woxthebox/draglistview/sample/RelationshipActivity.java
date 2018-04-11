@@ -30,6 +30,7 @@ public class RelationshipActivity extends Activity {
     RecyclerView rv;
     public static ArrayList relationship;
     public AsyncHttpClient client;
+    public static int pos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +52,15 @@ public class RelationshipActivity extends Activity {
                         // TODO Handle item click
                         Toast.makeText(RelationshipActivity.this, "" + position, Toast.LENGTH_SHORT).show();
 //                        String itemPosition = (String) arrayList.get(position);
+                        pos = position;
                         HashMap hm = (HashMap) relationship.get(position);
-                        String companyName = (String) hm.get("name");;
+                        String companyName = (String) hm.get("name");
+                        String companyPk = (String) hm.get("pk");
+                        String web = (String) hm.get("web");
                         Intent intent = new Intent(RelationshipActivity.this,ActiveDealsActivity.class);
                         intent.putExtra("company_name",companyName);
+                        intent.putExtra("pk",companyPk);
+                        intent.putExtra("web",web);
                         startActivity(intent);
                     }
                 })
@@ -70,7 +76,7 @@ public class RelationshipActivity extends Activity {
                     JSONObject Obj = null;
                     try {
                         Obj = response.getJSONObject(i);
-                        String pk = Obj.getString("pk");
+                        String company_pk = Obj.getString("pk");
                         String name = Obj.getString("name");
                         String logo = Obj.getString("logo");
                         String mobile = Obj.getString("mobile");
@@ -89,6 +95,7 @@ public class RelationshipActivity extends Activity {
 
                         HashMap hashMap = new HashMap();
 
+                        hashMap.put("pk", company_pk);
                         hashMap.put("name", name);
                         hashMap.put("logo", logo);
                         hashMap.put("mobile", mobile);

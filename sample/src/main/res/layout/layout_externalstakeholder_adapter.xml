@@ -17,7 +17,7 @@
             android:layout_width="60dp"
             android:layout_height="match_parent"
             android:layout_marginStart="40dp"
-            android:src="@drawable/ic_owner" />
+            android:src="@drawable/img_avatar_card" />
 
         <RelativeLayout
             android:layout_width="match_parent"
