@@ -1,9 +1,12 @@
 package com.woxthebox.draglistview.sample;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * Created by amit on 4/4/18.
@@ -49,6 +53,7 @@ public class FinancesAdapter extends RecyclerView.Adapter<FinancesAdapter.MyHold
         return myHolder;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final FinancesAdapter.MyHolder holder, int position) {
         if (holder instanceof MyHolder) {
@@ -57,20 +62,15 @@ public class FinancesAdapter extends RecyclerView.Adapter<FinancesAdapter.MyHold
 
             fid = (String) hm.get("pk");
             fcreated = (String)hm.get("created");
-            fupdated = (String)hm.get("updated");
-            fvalue = (String)hm.get("value");
-            fstatus = (String)hm.get("status");
-            String startDate = null;
-            for (int i=0; i<fcreated.length();i++){
-                if (i<10){
-                    startDate = ""+fcreated.charAt(i);
-                }
-            }
-
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String dtc = fcreated;
+            SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss", Locale.ENGLISH);
+            SimpleDateFormat sdf2 = new SimpleDateFormat("dd MMMM",Locale.ENGLISH);
             Date date = null;
-            try {
-                date = simpleDateFormat.parse(startDate);
+            try{
+                date = sdf1.parse(dtc);
+                String newDate = sdf2.format(date);
+                System.out.println(newDate);
+                Log.e("Date",newDate);
 
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -81,12 +81,38 @@ public class FinancesAdapter extends RecyclerView.Adapter<FinancesAdapter.MyHold
 
             long diff = today - thatDay.getTimeInMillis();
             long days = diff/(24*60*60*1000);
+            fupdated = (String)hm.get("updated");
+            fvalue = (String)hm.get("value");
+            fstatus = (String)hm.get("status");
+
+            String dt = fupdated;
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss", Locale.ENGLISH);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM",Locale.ENGLISH);
+            Date date1 = null;
+            try{
+                date1 = simpleDateFormat.parse(dt);
+                String newDate1 = sdf.format(date);
+                System.out.println(newDate1);
+                Log.e("Date",newDate1);
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Calendar thatDay1 = Calendar.getInstance();
+            thatDay.setTime(date1);
+            long today1 = System.currentTimeMillis();
+
+            long diff1 = today1 - thatDay1.getTimeInMillis();
+            long days1 = diff1/(24*60*60*1000);
+
+
+
 
             myHolder.idDeal.setText(fid);
 //            holder.items.setText(dealitem[position]);
             myHolder.value.setText(fvalue);
-            myHolder.created.setText(""+days);
-            myHolder.update.setText(fupdated);
+            myHolder.created.setText(days+ " Days");
+            myHolder.update.setText(days1+ " Days");
             myHolder.status.setText(fstatus);
 
             holder.menu.setOnClickListener(new View.OnClickListener() {
@@ -169,5 +195,4 @@ public class FinancesAdapter extends RecyclerView.Adapter<FinancesAdapter.MyHold
         }
 
     }
-
 }

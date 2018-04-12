@@ -44,9 +44,6 @@ public class FinancesFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_finances, container, false);
         rv = v.findViewById(R.id.finances_rv);
-
-        long msDiff = Calendar.getInstance().getTimeInMillis();
-        long daysDiff = TimeUnit.MILLISECONDS.toDays(msDiff);
         serverUrl = new ServerUrl();
         client = new AsyncHttpClient();
         finance = new ArrayList();
@@ -57,7 +54,7 @@ public class FinancesFragment extends Fragment {
     }
     protected void getFinances() {
         String serverURL = serverUrl.url;
-        client.get(serverURL+ "api/clientRelationships/contract/"+ActiveDealsActivity.pkc+"/?format=json", new JsonHttpResponseHandler() {
+        client.get(serverURL+ "api/clientRelationships/contract/?format=json", new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, final JSONArray response) {
 //                for (int i = 0; i < response.length(); i++) {

@@ -33,6 +33,7 @@ public class ActiveDealsActivity extends Activity {
     public static ArrayList deal;
     public AsyncHttpClient client;
     public static String c_pk,company,street,city,astate,pincode,country,pkc,requirements;
+    public static JSONObject contracts;
     public static int pos;
     ServerUrl serverUrl;
     @Override
@@ -140,10 +141,11 @@ public class ActiveDealsActivity extends Activity {
                                     String lat = address.getString("lat");
                                     String lon = address.getString("lon");
                                     country = address.getString("country");
+//
+//                                    JSONArray jsonArray1 = Obj.getJSONArray("contracts");
+//                                    for (int k = 0; k < jsonArray1.length(); k++) {
+//                                    contracts = jsonArray1.getJSONObject(k);
 
-//                                JSONArray jsonArray1 = Obj.getJSONArray("contracts");
-//                                for (int k = 0; k < jsonArray1.length(); k++) {
-//                                    JSONObject contracts = jsonArray1.getJSONObject(k);
 //                                    JSONArray internalUsers = Obj.getJSONArray("internalUsers");
 //                                    for (int k=0; k < jsonArray.length(); j++) {
 //                                        JSONObject internal  = jsonArray.getJSONObject(k);

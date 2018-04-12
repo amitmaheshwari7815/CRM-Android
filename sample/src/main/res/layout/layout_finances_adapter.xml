@@ -161,6 +161,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
+            android:layout_centerVertical="true"
             android:text="Status  :"
             android:textColor="#000"
             android:textStyle="bold"
@@ -174,6 +175,26 @@
             android:layout_marginStart="12dp"
             android:layout_toEndOf="@+id/textView8"
             android:text="Received" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="Due Date  :"
+            android:visibility="gone"
+            android:textColor="#000"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="35dp"
+            android:layout_toStartOf="@+id/popup_menu"
+            android:text="03-Mar-2018"
+            android:visibility="gone"/>
 
         <ImageButton
             android:id="@+id/popup_menu"
