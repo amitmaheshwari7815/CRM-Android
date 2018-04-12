@@ -32,7 +32,7 @@ public class ActiveDealsActivity extends Activity {
     TextView companyname,web;
     public static ArrayList deal;
     public AsyncHttpClient client;
-    public static String c_pk,company,street,city,astate,pincode,country,requirements;
+    public static String c_pk,company,street,city,astate,pincode,country,pkc,requirements;
     public static int pos;
 
     @Override
@@ -92,7 +92,7 @@ public class ActiveDealsActivity extends Activity {
                             String name = Obj.getString("name");//name
                             String value = Obj.getString("value"); //value
                             String currency = Obj.getString("currency");
-                            String internalUsers = Obj.getString("internalUsers");
+
 
                             String probability = Obj.getString("probability");
                             String closingDate = Obj.getString("closeDate");
@@ -104,7 +104,6 @@ public class ActiveDealsActivity extends Activity {
                             String duePenalty = Obj.getString("duePenalty");
 
                         JSONObject company = Obj.getJSONObject("company");
-                        String pkc = company.getString("pk");// id
 
                             String cname = company.getString("name");// company name
                             String mobile = company.getString("mobile");
@@ -121,12 +120,17 @@ public class ActiveDealsActivity extends Activity {
                                 String pk2 = contacts.getString("pk");
                                 String namec = contacts.getString("name");// contact name
                                 String companyc = contacts.getString("company");
-                                if (c_pk.equals(companyc)) {requirements = Obj.getString("requirements");
-                                String email = contacts.getString("email");
-                                String mobilec = contacts.getString("mobile");
-                                String designation = contacts.getString("designation");
-                                String dp = contacts.getString("dp");
-                                boolean gender = contacts.getBoolean("male");
+                                if (c_pk.equals(companyc)) {
+                                    pkc = company.getString("pk");// id
+
+                                    requirements = Obj.getString("requirements");
+
+
+                                    String email = contacts.getString("email");
+                                    String mobilec = contacts.getString("mobile");
+                                    String designation = contacts.getString("designation");
+                                    String dp = contacts.getString("dp");
+                                    boolean gender = contacts.getBoolean("male");
                                     street = address.getString("street");
                                     city = address.getString("city");
                                     astate = address.getString("state");
@@ -138,6 +142,9 @@ public class ActiveDealsActivity extends Activity {
 //                                JSONArray jsonArray1 = Obj.getJSONArray("contracts");
 //                                for (int k = 0; k < jsonArray1.length(); k++) {
 //                                    JSONObject contracts = jsonArray1.getJSONObject(k);
+//                                    JSONArray internalUsers = Obj.getJSONArray("internalUsers");
+//                                    for (int k=0; k < jsonArray.length(); j++) {
+//                                        JSONObject internal  = jsonArray.getJSONObject(k);
 
 
                                     HashMap hashMap = new HashMap();
@@ -145,10 +152,10 @@ public class ActiveDealsActivity extends Activity {
                                     hashMap.put("name", name);
                                     hashMap.put("value", value);
                                     hashMap.put("currency", currency);
-                                    hashMap.put("internalUsers", internalUsers);
+//                                    hashMap.put("internalUsers", internalUsers);
                                     hashMap.put("requirements", requirements);
                                     hashMap.put("probability", probability);
-                                    hashMap.put("closeDate",closingDate);
+                                    hashMap.put("closeDate", closingDate);
                                     hashMap.put("active", active);
                                     hashMap.put("doc", doc);
                                     hashMap.put("result", result);
@@ -170,8 +177,8 @@ public class ActiveDealsActivity extends Activity {
                                     hashMap.put("male", gender);
 
                                     deal.add(hashMap);
-                                    Log.d("deal",deal.size()+"");
-
+                                    Log.d("deal", deal.size() + "");
+//                                }
                                 }else {
                                     Log.d("pk"," - not matching");
 //                            }

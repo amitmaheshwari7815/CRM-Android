@@ -13,24 +13,32 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+
 /**
  * Created by amit on 4/4/18.
  */
 
 public class FinancesAdapter extends RecyclerView.Adapter<FinancesAdapter.MyHolder> {
+    public static String fid, fitem, fvalue, fupdated, fcreated, fstatus;
 
-Context context;
-    String dealId[] = {"1", "1", "1"};
-    String dealitem[] = {"1","2","3"};
-    String values[] = {"2000","5000","3000"};
-    String create[] = {"200 Days","150 Days","100 Days"};
-    String update[] = {"22 Days","15 Days","10 Days"};
-    String status[] = {"Received","Approval","Billed"};
+    Context context;
+//    String dealId[] = {"1", "1", "1"};
+//    String dealitem[] = {"1", "2", "3"};
+//    String values[] = {"2000", "5000", "3000"};
+//    String create[] = {"200 Days", "150 Days", "100 Days"};
+//    String update[] = {"22 Days", "15 Days", "10 Days"};
+//    String status[] = {"Received", "Approval", "Billed"};
 
 
-    public FinancesAdapter(Context context){
+    public FinancesAdapter(Context context) {
         this.context = context;
     }
+
     @NonNull
     @Override
     public FinancesAdapter.MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -43,21 +51,47 @@ Context context;
 
     @Override
     public void onBindViewHolder(@NonNull final FinancesAdapter.MyHolder holder, int position) {
-        holder.idDeal.setText(dealId[position]);
-        holder.items.setText(dealitem[position]);
-        holder.value.setText(values[position]);
-        holder.created.setText(create[position]);
-        holder.update.setText(update[position]);
-        holder.status.setText(status[position]);
-        holder.menu.setOnClickListener(new View.OnClickListener() {
+        if (holder instanceof MyHolder) {
+            MyHolder myHolder = (MyHolder) holder;
+            HashMap hm = (HashMap) FinancesFragment.finance.get(position);
+
+            fid = (String) hm.get("pk");
+            fcreated = (String)hm.get("created");
+            fupdated = (String)hm.get("updated");
+            fvalue = (String)hm.get("value");
+            fstatus = (String)hm.get("status");
+
+            String startDate = "created";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            Date date = null;
+            try {
+                date = simpleDateFormat.parse(startDate);
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Calendar thatDay = Calendar.getInstance();
+            thatDay.setTime(date);
+
+            long diff = thatDay.getTimeInMillis();
+            long days = diff/(24*60*60*1000);
+
+            myHolder.idDeal.setText(fid);
+//            holder.items.setText(dealitem[position]);
+            myHolder.value.setText(fvalue);
+            myHolder.created.setText(fcreated);
+            myHolder.update.setText(fupdated);
+            myHolder.status.setText(fstatus);
+
+            holder.menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PopupMenu popupMenu = new PopupMenu(context,v);
+                PopupMenu popupMenu = new PopupMenu(context, v);
                 popupMenu.inflate(R.menu.card_manu);
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()){
+                        switch (item.getItemId()) {
                             case R.id.quoted:
                                 holder.status.setText("Quoted");
                                 break;
@@ -86,9 +120,13 @@ Context context;
 
     }
 
+}
+
+
+
     @Override
     public int getItemCount() {
-        return dealId.length;
+        return FinancesFragment.finance.size();
     }
     public class MyHolder extends RecyclerView.ViewHolder {
 

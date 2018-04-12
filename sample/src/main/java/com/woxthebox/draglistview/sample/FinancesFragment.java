@@ -17,6 +17,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -27,7 +30,7 @@ import cz.msebera.android.httpclient.Header;
 public class FinancesFragment extends Fragment {
     RecyclerView rv;
 
-    public static ArrayList info;
+    public static ArrayList finance;
     public AsyncHttpClient client;
 
     public FinancesFragment() {
@@ -41,47 +44,48 @@ public class FinancesFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_finances, container, false);
         rv = v.findViewById(R.id.finances_rv);
-        rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        FinancesAdapter financesAdapter = new FinancesAdapter(getContext());
-        rv.setAdapter(financesAdapter);
 
+        long msDiff = Calendar.getInstance().getTimeInMillis();
+        long daysDiff = TimeUnit.MILLISECONDS.toDays(msDiff);
 
         client = new AsyncHttpClient();
-        info = new ArrayList();
+        finance = new ArrayList();
         getFinances();
 
 
         return v;
     }
     protected void getFinances() {
-        String serverURL = "http://10.0.2.2:8000/api/clientRelationships/contract/?format=json";
+
+        String serverURL = "http://10.0.2.2:8000/api/clientRelationships/contract/"+ActiveDealsActivity.pkc+"/?format=json";
         client.get(serverURL, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, final JSONArray response) {
-                for (int i = 0; i < response.length(); i++) {
+//                for (int i = 0; i < response.length(); i++) {
                     JSONObject Obj = null;
-                    try {
-                        Obj = response.getJSONObject(i);
-                        String contract_pk = Obj.getString("pk");
-//                        String user = Obj.getString("user");
-                        String name = Obj.getString("name");
-                        String created = Obj.getString("created");
-                        String updated = Obj.getString("updated");
-                        String value = Obj.getString("value");
-                        String status = Obj.getString("status");
-                        String details = Obj.getString("details");
-                        JSONObject data = Obj.getJSONObject("details");
-                        String data1 = data.getString("details");
-                        String dueDate = Obj.getString("dueDate");
+                try {
+                    Obj = response.getJSONObject(0);
+                    String contract_pk = Obj.getString("pk");
+                    String user = Obj.getString("user");
+                    String created = Obj.getString("created");
+                    String updated = Obj.getString("updated");
+                    String value = Obj.getString("value");
+                    String status = Obj.getString("status");
+                    String details = Obj.getString("details");
+//                        JSONObject data = Obj.getJSONObject("data");
+//                        String data1 = data.getString("data");
+                    String dueDate = Obj.getString("dueDate");
 
 
+                    HashMap hashMap = new HashMap();
 
-//                      HashMap hashMap = new HashMap();
-
-//                        hashMap.put("pk", company_pk);
-//                        hashMap.put("name", name);
-//                        hashMap.put("cin", cin);
-//                        hashMap.put("tin", tin);
+                    hashMap.put("pk", contract_pk);
+                    hashMap.put("created", created);
+                    hashMap.put("updated", updated);
+                    hashMap.put("value", value);
+                    hashMap.put("status", status);
+                    hashMap.put("details", details);
+                    hashMap.put("dueDate", dueDate);
 //                        hashMap.put("telephone", telephone);
 //                        hashMap.put("about", about);
 //                        hashMap.put("doc", doc);
@@ -92,13 +96,15 @@ public class FinancesFragment extends Fragment {
 //                        hashMap.put("state", state);
 //                        hashMap.put("pincode", pincode);
 //                        hashMap.put("country", country);
-//                        info.add(hashMap);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
+                    finance.add(hashMap);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+                rv.setLayoutManager(new LinearLayoutManager(getContext()));
+                FinancesAdapter financesAdapter = new FinancesAdapter(getContext());
+                rv.setAdapter(financesAdapter);
             }
+//            }
             @Override
             public void onFinish() {
                 System.out.println("finished 001");

@@ -90,15 +90,15 @@ public class DealInfoFragment extends Fragment {
     }
 
     protected void getinfo() {
-        String n_pk = ActiveDealsActivity.c_pk;
-        String serverURL = "http://10.0.2.2:8000/api/ERP/service/?format=json";
+        String n_pk = ActiveDealsActivity.pkc;
+        String serverURL = "http://10.0.2.2:8000/api/ERP/service/"+n_pk+"/?format=json";
         client.get(serverURL, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, final JSONArray response) {
-                for (int i = 0; i < response.length(); i++) {
+//                for (int i = 0; i < response.length(); i++) {
                     JSONObject Obj = null;
                     try {
-                        Obj = response.getJSONObject(i);
+                        Obj = response.getJSONObject(0);
                         String company_pk = Obj.getString("pk");
                         String name = Obj.getString("name");
                         String logo = Obj.getString("logo");
@@ -147,7 +147,7 @@ public class DealInfoFragment extends Fragment {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }
+//                }
             }
             @Override
             public void onFinish() {

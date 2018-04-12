@@ -33,7 +33,6 @@ public class RequirementFragment extends Fragment {
 
 
         String requirements = ActiveDealsActivity.requirements;
-        Toast.makeText(getContext(), ""+requirements, Toast.LENGTH_SHORT).show();
 
 //        String htmlAsString = getString(R.string.hello_world);
         Spanned htmlAsSpanned = Html.fromHtml(String.valueOf(requirements));
