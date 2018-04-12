@@ -32,7 +32,7 @@ public class DealInfoFragment extends Fragment {
     public static String comanyName,infoAddress,infoWeb,ciN,tiN,infoMobile,infoTele,About;
     TextView companyname,address,web,cin,tin,mobile,telephone,about;
     Context context;
-
+    ServerUrl serverUrl;
 
     public static ArrayList info;
     public AsyncHttpClient client;
@@ -62,7 +62,7 @@ public class DealInfoFragment extends Fragment {
         mobile = view.findViewById(R.id.info_mobile);
         telephone = view.findViewById(R.id.info_tele);
         about = view.findViewById(R.id.about);
-
+        serverUrl = new ServerUrl();
         client = new AsyncHttpClient();
         info = new ArrayList();
         getinfo();
@@ -91,8 +91,8 @@ public class DealInfoFragment extends Fragment {
 
     protected void getinfo() {
         String n_pk = ActiveDealsActivity.pkc;
-        String serverURL = "http://10.0.2.2:8000/api/ERP/service/"+n_pk+"/?format=json";
-        client.get(serverURL, new JsonHttpResponseHandler() {
+        String serverURL = serverUrl.url;
+        client.get(serverURL+"api/ERP/service/\"+n_pk+\"/?format=json", new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, final JSONArray response) {
 //                for (int i = 0; i < response.length(); i++) {

@@ -34,14 +34,16 @@ public class ActiveDealsActivity extends Activity {
     public AsyncHttpClient client;
     public static String c_pk,company,street,city,astate,pincode,country,pkc,requirements;
     public static int pos;
-
+    ServerUrl serverUrl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.active_deals);
+
         companyname = findViewById(R.id.comapny_name);
         web = findViewById(R.id.web_text);
         rv1 = findViewById(R.id.activedearl_recyclerView);
+        serverUrl = new ServerUrl();
         client = new AsyncHttpClient();
         deal = new ArrayList();
         getDeal();
@@ -79,8 +81,8 @@ public class ActiveDealsActivity extends Activity {
     }
 
     protected void getDeal() {
-        String serverURL = "http://10.0.2.2:8000/api/clientRelationships/deal/?format=json";
-        client.get(serverURL, new JsonHttpResponseHandler() {
+        String serverURL = serverUrl.url;
+        client.get(serverURL+"api/clientRelationships/deal/?format=json", new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, final JSONArray response) {
                 for (int i = 0; i < response.length(); i++) {

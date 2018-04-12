@@ -37,13 +37,14 @@ import cz.msebera.android.httpclient.Header;
 public class OpportunitiesActivity extends AppCompatActivity {
     public static ArrayList opportunities;
     public AsyncHttpClient client;
-
+    ServerUrl serverUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_opportunities);
 
+        serverUrl = new ServerUrl();
         client = new AsyncHttpClient();
         opportunities = new ArrayList();
         getOpprtunities();
@@ -90,8 +91,8 @@ public class OpportunitiesActivity extends AppCompatActivity {
 //        return super.onOptionsItemSelected(item);
 //    }
     protected void getOpprtunities() {
-        String serverURL = "http://10.0.2.2:8000/api/clientRelationships/deal/?format=json";
-        client.get(serverURL, new JsonHttpResponseHandler() {
+        String serverURL = serverUrl.url;
+        client.get(serverURL+"api/clientRelationships/deal/?format=jsons", new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, final JSONArray response) {
                 String jsonString = "[{\"pk\":5,\"user\":1,\"created\":\"2017-09-14T07:33:36.729045Z\",\"updated\":\"2018-04-03T05:09:18.733648Z\",\"company\":{\"pk\":8,\"name\":\"Purity Supreme\",\"address\":{\"pk\":8,\"street\":\"2247 Poco Mas Drive\",\"city\":\"Dallas\",\"state\":\"TX\",\"pincode\":75219,\"lat\":null,\"lon\":null,\"country\":\"US\"},\"mobile\":null},\"value\":65300,\"currency\":\"INR\",\"state\":\"demo\",\"contacts\":[{\"pk\":10,\"user\":1,\"name\":\"Joyce A. Neal\",\"company\":8,\"email\":\"JoyceANeal@rhyta.com\",\"mobile\":\"9702438730\",\"designation\":\"Sales executive\",\"dp\":null,\"male\":true},{\"pk\":11,\"user\":1,\"name\":\"Matthew Green\",\"company\":8,\"email\":\"MatthewLGreen@dayrep.com\",\"mobile\":\"9731991435\",\"designation\":\"CTO\",\"dp\":null,\"male\":true}],\"internalUsers\":[8,10,13],\"requirements\":null,\"probability\":51,\"closeDate\":\"2017-09-14T18:29:59Z\",\"active\":true,\"name\":\"Blandit insolens pri ad\",\"result\":\"na\",\"contracts\":[11],\"doc\":null,\"duePeriod\":7,\"duePenalty\":0},{\"pk\":7,\"user\":1,\"created\":\"2017-09-14T07:35:29.067699Z\",\"updated\":\"2018-04-02T13:09:25.008770Z\",\"company\":{\"pk\":10,\"name\":\"Team Electronics\",\"address\":{\"pk\":10,\"street\":\"3298 Franklin Avenue\",\"city\":\"Daytona Beach\",\"state\":\"FL\",\"pincode\":32114,\"lat\":null,\"lon\":null,\"country\":\"US\"},\"mobile\":null},\"value\":15000,\"currency\":\"USD\",\"state\":\"conclusion\",\"contacts\":[{\"pk\":9,\"user\":1,\"name\":\"Wanda J. Aguirre\",\"company\":11,\"email\":\"pradeep.yadav@uipath.com\",\"mobile\":\"7840850111\",\"designation\":\"CMO\",\"dp\":null,\"male\":true},{\"pk\":15,\"user\":1,\"name\":\"Katherine J. Kilgore\",\"company\":10,\"email\":\"KatherineJKilgore@rhyta.com\",\"mobile\":\"386-248-9909\",\"designation\":\"Director\",\"dp\":null,\"male\":true}],\"internalUsers\":[6,7,12],\"requirements\":null,\"probability\":61,\"closeDate\":\"2017-09-14T18:29:59Z\",\"active\":true,\"name\":\"Duo in dolorum detracto\",\"result\":\"na\",\"contracts\":[10],\"doc\":null,\"duePeriod\":7,\"duePenalty\":0}]";

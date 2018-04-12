@@ -31,11 +31,13 @@ public class RelationshipActivity extends Activity {
     public static ArrayList relationship;
     public AsyncHttpClient client;
     public static int pos;
-
+    ServerUrl serverUrl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_relationships);
+
+        serverUrl = new ServerUrl();
 
         client = new AsyncHttpClient();
         relationship = new ArrayList();
@@ -68,8 +70,8 @@ public class RelationshipActivity extends Activity {
     }
 
     protected void getData() {
-        String serverURL = "http://10.0.2.2:8000/api/clientRelationships/relationships/?format=json";
-        client.get(serverURL, new JsonHttpResponseHandler() {
+        String serverURL = serverUrl.url;
+        client.get(serverURL+"api/clientRelationships/relationships/?format=json", new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, final JSONArray response) {
                 for (int i = 0; i < response.length(); i++) {

@@ -47,6 +47,7 @@ public class NewContactActivity extends Activity {
     Switch genderSwitch;
     ImageView switchProfile;
     TextView arrowUp, arrowDown;
+    ServerUrl serverUrl;
 
     EditText dialogTel, dialogAbout, dialogMob, dialogStreet, dialogCity, dialogState, dialogPincode, dialogCountry, dialogCIN, dialogTIN, dialogLogo, dialogWeb;
     Button saveDialogDetails;
@@ -58,6 +59,7 @@ public class NewContactActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_contact);
 
+        serverUrl = new ServerUrl();
         companiesList = new ArrayList<String>();
         client = new AsyncHttpClient();
 
@@ -145,8 +147,8 @@ public class NewContactActivity extends Activity {
     }
 
     public void addCompany(){
-        String serverURL = "http://10.0.2.2:8000/api/ERP/service/?format=json";
-        client.get(serverURL, new JsonHttpResponseHandler(){
+        String serverURL = serverUrl.url;
+        client.get(serverURL+"api/ERP/service/?format=json", new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
 //                super.onSuccess(statusCode, headers, response);

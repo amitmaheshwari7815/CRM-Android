@@ -60,9 +60,14 @@ public class FinancesAdapter extends RecyclerView.Adapter<FinancesAdapter.MyHold
             fupdated = (String)hm.get("updated");
             fvalue = (String)hm.get("value");
             fstatus = (String)hm.get("status");
+            String startDate = null;
+            for (int i=0; i<fcreated.length();i++){
+                if (i<10){
+                    startDate = ""+fcreated.charAt(i);
+                }
+            }
 
-            String startDate = "created";
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date date = null;
             try {
                 date = simpleDateFormat.parse(startDate);
@@ -72,14 +77,15 @@ public class FinancesAdapter extends RecyclerView.Adapter<FinancesAdapter.MyHold
             }
             Calendar thatDay = Calendar.getInstance();
             thatDay.setTime(date);
+            long today = System.currentTimeMillis();
 
-            long diff = thatDay.getTimeInMillis();
+            long diff = today - thatDay.getTimeInMillis();
             long days = diff/(24*60*60*1000);
 
             myHolder.idDeal.setText(fid);
 //            holder.items.setText(dealitem[position]);
             myHolder.value.setText(fvalue);
-            myHolder.created.setText(fcreated);
+            myHolder.created.setText(""+days);
             myHolder.update.setText(fupdated);
             myHolder.status.setText(fstatus);
 

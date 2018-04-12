@@ -32,7 +32,7 @@ public class FinancesFragment extends Fragment {
 
     public static ArrayList finance;
     public AsyncHttpClient client;
-
+    ServerUrl serverUrl;
     public FinancesFragment() {
         // Required empty public constructor
     }
@@ -47,7 +47,7 @@ public class FinancesFragment extends Fragment {
 
         long msDiff = Calendar.getInstance().getTimeInMillis();
         long daysDiff = TimeUnit.MILLISECONDS.toDays(msDiff);
-
+        serverUrl = new ServerUrl();
         client = new AsyncHttpClient();
         finance = new ArrayList();
         getFinances();
@@ -56,9 +56,8 @@ public class FinancesFragment extends Fragment {
         return v;
     }
     protected void getFinances() {
-
-        String serverURL = "http://10.0.2.2:8000/api/clientRelationships/contract/"+ActiveDealsActivity.pkc+"/?format=json";
-        client.get(serverURL, new JsonHttpResponseHandler() {
+        String serverURL = serverUrl.url;
+        client.get(serverURL+ "api/clientRelationships/contract/"+ActiveDealsActivity.pkc+"/?format=json", new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, final JSONArray response) {
 //                for (int i = 0; i < response.length(); i++) {

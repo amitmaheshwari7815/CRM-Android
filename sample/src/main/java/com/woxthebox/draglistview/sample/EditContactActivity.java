@@ -41,7 +41,7 @@ public class EditContactActivity extends Activity {
     TextView editDp, editDpAttach;
     Button saveEditContact;
     TextView arrowUp, arrowDown;
-
+    ServerUrl serverUrl;
     EditText dialogTel, dialogAbout, dialogMob, dialogStreet, dialogCity, dialogState, dialogPincode, dialogCountry, dialogCIN, dialogTIN, dialogLogo, dialogWeb;
     Button saveDialogDetails;
     TextView dialog_arrowUp, dialog_arrowDown;
@@ -57,6 +57,7 @@ public class EditContactActivity extends Activity {
 
         companiesList = new ArrayList<String>();
         client = new AsyncHttpClient();
+        serverUrl = new ServerUrl();
 
         Bundle b = getIntent().getExtras();
         int image = b.getInt("image");
@@ -140,8 +141,8 @@ public class EditContactActivity extends Activity {
     }
 
     public void addCompany(){
-        String serverURL = "http://10.0.2.2:8000/api/ERP/service/?format=json";
-        client.get(serverURL, new JsonHttpResponseHandler(){
+        String serverURL = serverUrl.url;
+        client.get(serverURL+"api/ERP/service/?format=json", new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
 //                super.onSuccess(statusCode, headers, response);

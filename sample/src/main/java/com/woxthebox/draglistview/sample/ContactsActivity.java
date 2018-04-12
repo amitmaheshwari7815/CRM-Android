@@ -51,7 +51,7 @@ public class ContactsActivity extends FragmentActivity {
     public static ArrayList contactList;
     public AsyncHttpClient client;
 
-
+    ServerUrl serverUrl;
 
     Animation rotate_forward, rotate_Backward, fab_open, fab_close;
 
@@ -61,6 +61,7 @@ public class ContactsActivity extends FragmentActivity {
         setContentView(R.layout.activity_contacts);
 
 //        contactList = new ArrayList<>();
+        serverUrl = new ServerUrl();
         client = new AsyncHttpClient();
         contactList = new ArrayList();
         getUser();
@@ -137,8 +138,8 @@ public class ContactsActivity extends FragmentActivity {
     }
 
     protected void getUser(){
-        String serverURL = "http://10.0.2.2:8000/api/clientRelationships/contact/?format=json";
-        client.get(serverURL, new JsonHttpResponseHandler() {
+        String serverURL = serverUrl.url;
+        client.get(serverURL+"api/clientRelationships/contact/?format=json", new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, final JSONArray response) {
 //                for (int i =0; i < 10 ;i++) {
@@ -204,8 +205,6 @@ public class ContactsActivity extends FragmentActivity {
                             hm.put("state",state);
                             hm.put("pincode",pincode);
                             hm.put("country",country);
-
-
 
                             // adding contact to contact list
                             contactList.add(hm);
