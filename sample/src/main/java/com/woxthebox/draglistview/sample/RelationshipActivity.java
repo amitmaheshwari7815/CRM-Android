@@ -86,7 +86,7 @@ public class RelationshipActivity extends Activity {
 
                         JSONObject address = Obj.getJSONObject("address");
 
-                        String pk1 = address.getString("pk");
+                        String add_pk = address.getString("pk");
                         String street = address.getString("street");
                         String city = address.getString("city");
                         String state = address.getString("state");

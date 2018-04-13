@@ -9,17 +9,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.HashMap;
+
 /**
  * Created by amit on 4/4/18.
  */
 
 public class ExternalStakeholderAdapter extends RecyclerView.Adapter<ExternalStakeholderAdapter.MyHolder> {
-
+ public  static String cName,cDesignation;
     Context context;
 
-  String uName[] = {"Samuel D. Pollock ", "Samuel D. Pollock", "Samuel D. Pollock "};
-  String uDesg[] = {"Information systems manager","Information systems manager","Information systems manager"};
-    int uImage[] = {R.drawable.img_avatar_card,R.drawable.img_avatar_card,R.drawable.img_avatar_card};
+//  String uName[] = {"Samuel D. Pollock ", "Samuel D. Pollock", "Samuel D. Pollock "};
+//  String uDesg[] = {"Information systems manager","Information systems manager","Information systems manager"};
+//    int uImage[] = {R.drawable.img_avatar_card,R.drawable.img_avatar_card,R.drawable.img_avatar_card};
 
 
 
@@ -41,14 +43,21 @@ public class ExternalStakeholderAdapter extends RecyclerView.Adapter<ExternalSta
 
     @Override
     public void onBindViewHolder(@NonNull ExternalStakeholderAdapter.MyHolder holder, int position) {
-        holder.holderName.setText(uName[position]);
-        holder.holderDesgnation.setText(uDesg[position]);
-        holder.imageView.setImageResource(uImage[position]);
-    }
+        if (holder instanceof MyHolder) {
+            MyHolder myHolder = (MyHolder) holder;
 
+            String name = ActiveDealsActivity.namec;
+            String designation = ActiveDealsActivity.designation;
+
+
+            myHolder.holderName.setText(name);
+            myHolder.holderDesgnation.setText(designation);
+//            holder.imageView.setImageResource(uImage[position]);
+        }
+    }
     @Override
     public int getItemCount() {
-        return uImage.length;
+        return ActiveDealsActivity.deal.size();
     }
     public class MyHolder extends RecyclerView.ViewHolder {
 

@@ -9,6 +9,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import cz.msebera.android.httpclient.Header;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,11 +41,15 @@ public class ExternalStakeholderFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_external_stakeholder, container, false);
 
         recyclerView = view.findViewById(R.id.stakeholder_rv);
+
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         ExternalStakeholderAdapter externalStakeholderAdapter = new ExternalStakeholderAdapter(getContext());
         recyclerView.setAdapter(externalStakeholderAdapter);
 
         return view;
     }
-
 }
+
+
+

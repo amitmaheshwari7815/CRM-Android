@@ -60,6 +60,7 @@ public class FinancesAdapter extends RecyclerView.Adapter<FinancesAdapter.MyHold
             MyHolder myHolder = (MyHolder) holder;
             HashMap hm = (HashMap) FinancesFragment.finance.get(position);
 
+
             fid = (String) hm.get("pk");
             fcreated = (String)hm.get("created");
             String dtc = fcreated;

@@ -32,8 +32,8 @@ public class ActiveDealsActivity extends Activity {
     TextView companyname,web;
     public static ArrayList deal;
     public AsyncHttpClient client;
-    public static String c_pk,company,street,city,astate,pincode,country,pkc,requirements;
-    public static JSONObject contracts;
+    public static String c_pk,company,street,city,astate,pincode,country,pkc,requirements,namec,designation;
+//    public static JSONObject contracts;
     public static int pos;
     ServerUrl serverUrl;
     @Override
@@ -91,26 +91,23 @@ public class ActiveDealsActivity extends Activity {
                     try {
                         Obj = response.getJSONObject(i);
                         String pk = Obj.getString("pk");// id
-
-                            String name = Obj.getString("name");//name
-                            String value = Obj.getString("value"); //value
-                            String currency = Obj.getString("currency");
-
-
-                            String probability = Obj.getString("probability");
-                            String closingDate = Obj.getString("closeDate");
-                            String active = Obj.getString("active");
-                            String result = Obj.getString("result");
-                            String doc = Obj.getString("doc");
-                            String state = Obj.getString("state");
-                            String duePeriod = Obj.getString("duePeriod");
-                            String duePenalty = Obj.getString("duePenalty");
+                        String user = Obj.getString("user");
+                        String Card_name = Obj.getString("name");//name
+                        String value = Obj.getString("value"); //value
+                        String currency = Obj.getString("currency");
+                        String probability = Obj.getString("probability");
+                        String closingDate = Obj.getString("closeDate");
+                        String active = Obj.getString("active");
+                        String result = Obj.getString("result");
+                        String doc = Obj.getString("doc");
+                        String state = Obj.getString("state");
+                        String duePeriod = Obj.getString("duePeriod");
+                        String duePenalty = Obj.getString("duePenalty");
 
                         JSONObject company = Obj.getJSONObject("company");
-
-                            String cname = company.getString("name");// company name
-                            String mobile = company.getString("mobile");
-
+                        String company_pk = company.getString("pk");
+                        String cname = company.getString("name");// company name
+                        String mobile = company.getString("mobile");
 
                             JSONObject address = company.getJSONObject("address");
                             String pk1 = address.getString("pk");
@@ -119,19 +116,19 @@ public class ActiveDealsActivity extends Activity {
                             JSONArray jsonArray = Obj.getJSONArray("contacts");
                             for (int j = 0; j < jsonArray.length(); j++) {
                                 JSONObject contacts = jsonArray.getJSONObject(j);
+                                String contact_user = contacts.getString("user");
+                                String c_company = contacts.getString("company");
+                                if (c_pk.equals(c_company)) {
+                                    pkc = company.getString("pk");
 
-                                String pk2 = contacts.getString("pk");
-                                String namec = contacts.getString("name");// contact name
-                                String companyc = contacts.getString("company");
-                                if (c_pk.equals(companyc)) {
-                                    pkc = company.getString("pk");// id
 
                                     requirements = Obj.getString("requirements");
 
+                                    namec = contacts.getString("name");// contact name
+                                    designation = contacts.getString("designation");
 
                                     String email = contacts.getString("email");
-                                    String mobilec = contacts.getString("mobile");
-                                    String designation = contacts.getString("designation");
+                                    String contact_mobile = contacts.getString("mobile");
                                     String dp = contacts.getString("dp");
                                     boolean gender = contacts.getBoolean("male");
                                     street = address.getString("street");
@@ -141,19 +138,21 @@ public class ActiveDealsActivity extends Activity {
                                     String lat = address.getString("lat");
                                     String lon = address.getString("lon");
                                     country = address.getString("country");
-//
+
 //                                    JSONArray jsonArray1 = Obj.getJSONArray("contracts");
 //                                    for (int k = 0; k < jsonArray1.length(); k++) {
-//                                    contracts = jsonArray1.getJSONObject(k);
+//                                    JSONObject contracts = jsonArray1.getJSONObject(k);
+//                                    String id1 = contracts.getString("0");
+////                                    String id2 = contracts.getString("1");
 
-//                                    JSONArray internalUsers = Obj.getJSONArray("internalUsers");
-//                                    for (int k=0; k < jsonArray.length(); j++) {
-//                                        JSONObject internal  = jsonArray.getJSONObject(k);
+////                                    JSONArray internalUsers = Obj.getJSONArray("internalUsers");
+////                                    for (int k=0; k < jsonArray.length(); j++) {
+////                                        JSONObject internal  = jsonArray.getJSONObject(k);
 
-
+//                                    }
                                     HashMap hashMap = new HashMap();
                                     hashMap.put("pk", pk);
-                                    hashMap.put("name", name);
+                                    hashMap.put("name", Card_name);
                                     hashMap.put("value", value);
                                     hashMap.put("currency", currency);
 //                                    hashMap.put("internalUsers", internalUsers);
@@ -174,25 +173,24 @@ public class ActiveDealsActivity extends Activity {
                                     hashMap.put("pincode", pincode);
                                     hashMap.put("country", country);
                                     hashMap.put("name_con", namec);
-                                    hashMap.put("company_con", companyc);
+                                    hashMap.put("company_con", c_company);
                                     hashMap.put("email", email);
-                                    hashMap.put("mobile_con", mobilec);
+                                    hashMap.put("mobile_con", contact_mobile);
                                     hashMap.put("designation", designation);
                                     hashMap.put("male", gender);
 
                                     deal.add(hashMap);
                                     Log.d("deal", deal.size() + "");
-//                                }
-                                }else {
+                                }
+                                else{
                                     Log.d("pk"," - not matching");
-//                            }
-                        }
-                        }
 
-                        } catch(JSONException e){
-                            e.printStackTrace();
-                        }
+                                }
+                            }
+                    } catch(JSONException e) {
+                        e.printStackTrace();
                     }
+                }
                 rv1.setLayoutManager(new LinearLayoutManager(ActiveDealsActivity.this));
                 ActiveDealsAdapter activeDealsAdapter = new ActiveDealsAdapter(ActiveDealsActivity.this);
                 rv1.setAdapter(activeDealsAdapter);
@@ -212,6 +210,7 @@ public class ActiveDealsActivity extends Activity {
         });
 
     }
+
 
 }
 
