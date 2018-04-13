@@ -39,7 +39,7 @@ public class NewContactActivity extends Activity {
     EditText newFullName, newEmail, newMobNo, newEmailDuplicate, newMobNoDuplicate, newDesignation, newNotes, newLinkedin, newFb;
     AutoCompleteTextView newCompany;
     Button addNewCompany, updateCompany;
-    //    String items[] = {"CIOC FMCG Pvt Ltd","First Choice Yard Help","Muscle Factory","ABC Pvt Ltd","DXC Technology"};
+//    String items[] = {"CIOC FMCG Pvt Ltd","First Choice Yard Help","Muscle Factory","ABC Pvt Ltd","DXC Technology"};
     ArrayList<String> companiesList;
     public AsyncHttpClient client;
     TextView newDp, newDpAttach;
@@ -47,7 +47,6 @@ public class NewContactActivity extends Activity {
     Switch genderSwitch;
     ImageView switchProfile;
     TextView arrowUp, arrowDown;
-    ServerUrl serverUrl;
 
     EditText dialogTel, dialogAbout, dialogMob, dialogStreet, dialogCity, dialogState, dialogPincode, dialogCountry, dialogCIN, dialogTIN, dialogLogo, dialogWeb;
     Button saveDialogDetails;
@@ -59,7 +58,6 @@ public class NewContactActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_contact);
 
-        serverUrl = new ServerUrl();
         companiesList = new ArrayList<String>();
         client = new AsyncHttpClient();
 
@@ -77,7 +75,7 @@ public class NewContactActivity extends Activity {
                 if (isChecked){
                     switchProfile.setImageResource(R.drawable.male);
                 }
-                else switchProfile.setImageResource(R.drawable.woman);
+                else switchProfile.setImageResource(R.drawable.female);
             }
         });
 
@@ -147,8 +145,8 @@ public class NewContactActivity extends Activity {
     }
 
     public void addCompany(){
-        String serverURL = serverUrl.url;
-        client.get(serverURL+"api/ERP/service/?format=json", new JsonHttpResponseHandler(){
+        String serverURL = "http://192.168.1.105:8000/api/ERP/service/?format=json";
+        client.get(serverURL, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
 //                super.onSuccess(statusCode, headers, response);
@@ -195,7 +193,7 @@ public class NewContactActivity extends Activity {
             public void afterTextChanged(Editable s) {
                 addNewCompany.setVisibility(View.VISIBLE);
                 updateCompany.setVisibility(View.GONE);
-                for (int i=0; i<companiesList.size(); i++){
+                for (int i=0; i<=companiesList.size(); i++){
                     if (s.toString().equals(companiesList.get(i))){
                         addNewCompany.setVisibility(View.GONE);
                         updateCompany.setVisibility(View.VISIBLE);

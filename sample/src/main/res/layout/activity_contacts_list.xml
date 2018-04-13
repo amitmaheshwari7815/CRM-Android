@@ -1,32 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--tools:context="com.cioc.crm.ContactsListActivity">-->
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/activity_main"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.woxthebox.draglistview.sample.ContactsListActivity"
+    android:padding="4dp">
+
+    <EditText
+        android:layout_width="match_parent"
+        style="@style/edit_text_style"
+        android:id="@+id/search_contact"
+        android:hint="search"
+        android:background="@drawable/search_button_shape"
+        android:paddingLeft="5dp"
+        android:paddingRight="10dp"
+        android:drawableLeft="@drawable/ic_search"
+        android:drawableRight="@drawable/ic_close_24dp"
+        android:layout_marginBottom="2dp"/>
+
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ContactsListActivity"
-        android:padding="4dp">
+        android:layout_centerHorizontal="true"
+        android:id="@+id/listview1"
+       />
 
-        <ListView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/listview1"
-            />
-
-
-
-        <!--<Button-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:id="@+id/button1"-->
-            <!--android:text="Click Here to load Contacts" />-->
-
-    </RelativeLayout>
-<!--</android.support.constraint.ConstraintLayout>-->
+</LinearLayout>

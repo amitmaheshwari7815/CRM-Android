@@ -29,11 +29,12 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:27.1.0'
     implementation 'com.android.support:design:27.1.0'
     compile 'org.greenrobot:greendao:3.2.2'
-    compile 'com.github.irshulx:laser-native-editor:2.1.0'
+    compile project(path: ':laser-native-editor')
     compile 'com.github.pchmn:MaterialChipsInput:1.0.8'
     compile 'io.reactivex.rxjava2:rxjava:2.0.8'
     compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.3@aar'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     compile 'com.loopj.android:android-async-http:1.4.9'
+    compile files('libs/volley.jar')
 
 }

@@ -35,13 +35,13 @@ public class EditContactActivity extends Activity {
     EditText editFullName, editEmail, editMobNo, editEmailDuplicate, editMobNoDuplicate, editDesignation, editNotes, editLinkedin, editFb;
     AutoCompleteTextView editCompany;
     Button addNewCompany, updateCompany;
-    //    String items[] = {"CIOC FMCG Pvt Ltd","First Choice Yard Help","Muscle Factory","ABC Pvt Ltd","DXC Technology"};
+//    String items[] = {"CIOC FMCG Pvt Ltd","First Choice Yard Help","Muscle Factory","ABC Pvt Ltd","DXC Technology"};
     ArrayList<String> companiesList;
     public AsyncHttpClient client;
     TextView editDp, editDpAttach;
     Button saveEditContact;
     TextView arrowUp, arrowDown;
-    ServerUrl serverUrl;
+
     EditText dialogTel, dialogAbout, dialogMob, dialogStreet, dialogCity, dialogState, dialogPincode, dialogCountry, dialogCIN, dialogTIN, dialogLogo, dialogWeb;
     Button saveDialogDetails;
     TextView dialog_arrowUp, dialog_arrowDown;
@@ -57,7 +57,6 @@ public class EditContactActivity extends Activity {
 
         companiesList = new ArrayList<String>();
         client = new AsyncHttpClient();
-        serverUrl = new ServerUrl();
 
         Bundle b = getIntent().getExtras();
         int image = b.getInt("image");
@@ -141,8 +140,8 @@ public class EditContactActivity extends Activity {
     }
 
     public void addCompany(){
-        String serverURL = serverUrl.url;
-        client.get(serverURL+"api/ERP/service/?format=json", new JsonHttpResponseHandler(){
+        String serverURL = "http://192.168.1.105:8000/api/ERP/service/?format=json";
+        client.get(serverURL, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
 //                super.onSuccess(statusCode, headers, response);
@@ -157,7 +156,7 @@ public class EditContactActivity extends Activity {
                         e.printStackTrace();
                     }
                 }
-                editcomanyname();
+                changeText();
             }
 
             @Override
@@ -171,13 +170,26 @@ public class EditContactActivity extends Activity {
             }
         });
 
+    }
+
+    public void changeText(){
         ArrayAdapter arrayAdapter = new ArrayAdapter(EditContactActivity.this, android.R.layout.simple_dropdown_item_1line, companiesList);
         editCompany.setAdapter(arrayAdapter);
 
         editCompany.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                updateCompany.setVisibility(View.VISIBLE);
+                for (int i=0; i<=companiesList.size(); i++){
+                    if (s.toString().equals(companiesList.get(i))){
+                        addNewCompany.setVisibility(View.GONE);
+                        updateCompany.setVisibility(View.VISIBLE);
+                    }
+                }
+                if (s.toString().equals("")){
+                    addNewCompany.setVisibility(View.GONE);
+                    updateCompany.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -201,9 +213,6 @@ public class EditContactActivity extends Activity {
                 }
             }
         });
-    }
-    public void editcomanyname (){
-
     }
 
     public void editUpdateNewCompany(View view){
