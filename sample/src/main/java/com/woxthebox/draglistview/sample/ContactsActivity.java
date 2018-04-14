@@ -41,6 +41,7 @@ public class ContactsActivity extends FragmentActivity {
 //    private ListView lv;
     public static ArrayList contactList;
     public AsyncHttpClient client;
+    ServerUrl serverUrl;
 
 
 
@@ -51,6 +52,7 @@ public class ContactsActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
 
+        serverUrl = new ServerUrl();
 //        contactList = new ArrayList<>();
         client = new AsyncHttpClient();
         contactList = new ArrayList();
@@ -125,8 +127,8 @@ public class ContactsActivity extends FragmentActivity {
     }
 
     protected void getUser(){
-        String serverURL = "http://192.168.1.105:8000/api/clientRelationships/contact/?format=json";//192.168.43.87
-        client.get(serverURL, new JsonHttpResponseHandler() {
+        String serverURL = serverUrl.url;
+        client.get(serverURL+"api/clientRelationships/contact/?format=json",new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, final JSONArray response) {
 //                for (int i =0; i < 10 ;i++) {

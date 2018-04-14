@@ -92,7 +92,7 @@ public class DealInfoFragment extends Fragment {
     protected void getinfo() {
         String n_pk = ActiveDealsActivity.pkc;
         String serverURL = serverUrl.url;
-        client.get(serverURL+"api/ERP/service/\"+n_pk+\"/?format=json", new JsonHttpResponseHandler() {
+        client.get(serverURL+"api/ERP/service/"+n_pk+"/?format=json", new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, final JSONArray response) {
 //                for (int i = 0; i < response.length(); i++) {

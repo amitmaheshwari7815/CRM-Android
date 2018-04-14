@@ -38,6 +38,7 @@ public class TimelineFragment extends Fragment {
     private static final String TAG = MainActivity.class.getSimpleName();
     RecyclerView recyclerViewTimeline;
     TimelineAdapter timelineAdapter;
+    ServerUrl serverUrl;
 
     private List<FeedItem> feedItems;
     private String URL_FEED = "https://api.androidhive.info/feed/feed.json";
@@ -56,12 +57,14 @@ public class TimelineFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_timeline, container, false);
 
 //        getContentValue();
-
+        serverUrl = new ServerUrl();
         feedItems = new ArrayList<FeedItem>();
         recyclerViewTimeline = v.findViewById(R.id.timeline_rv);
         recyclerViewTimeline.setLayoutManager(new LinearLayoutManager(getActivity()));
         timelineAdapter = new TimelineAdapter(getActivity(), feedItems);
         recyclerViewTimeline.setAdapter(timelineAdapter);
+
+        getContentValue();
 
         // We first check for cached request
         Cache cache = AppController.getInstance().getRequestQueue().getCache();
@@ -106,9 +109,9 @@ public class TimelineFragment extends Fragment {
         return v;
     }
 
-    void getContentValue(){
-        String serverURL = "http://192.168.43.87:8000/api/clientRelationships/activity/?format=json";
-        client.get(serverURL, new JsonHttpResponseHandler(){
+    protected void getContentValue(){
+        String serverURL = serverUrl.url;
+        client.get(serverURL+"api/clientRelationships/activity/?format=json",new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
 //                super.onSuccess(statusCode, headers, response);

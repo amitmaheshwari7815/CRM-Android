@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import cz.msebera.android.httpclient.Header;
 
 public class EditContactActivity extends Activity {
-
+    ServerUrl serverUrl;
     LinearLayout showAdvanceDetails;
     EditText editFullName, editEmail, editMobNo, editEmailDuplicate, editMobNoDuplicate, editDesignation, editNotes, editLinkedin, editFb;
     AutoCompleteTextView editCompany;
@@ -54,6 +54,8 @@ public class EditContactActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_contact);
+
+        serverUrl = new ServerUrl();
 
         companiesList = new ArrayList<String>();
         client = new AsyncHttpClient();
@@ -140,8 +142,8 @@ public class EditContactActivity extends Activity {
     }
 
     public void addCompany(){
-        String serverURL = "http://192.168.1.105:8000/api/ERP/service/?format=json";
-        client.get(serverURL, new JsonHttpResponseHandler(){
+        String serverURL = serverUrl.url;
+        client.get(serverURL+"/api/ERP/service/?format=json", new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
 //                super.onSuccess(statusCode, headers, response);
