@@ -1,7 +1,10 @@
 package com.woxthebox.draglistview.sample;
 
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,14 +15,9 @@ import android.view.ViewGroup;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -29,14 +27,29 @@ import cz.msebera.android.httpclient.Header;
  */
 public class FinancesFragment extends Fragment {
     RecyclerView rv;
-
-    public static ArrayList finance;
+    Context context;
+    private Contract r;
+    public static ArrayList<Contract> finance;
     public AsyncHttpClient client;
     ServerUrl serverUrl;
+    public String contractsPk;
+
+
+    @SuppressLint("ValidFragment")
+    public FinancesFragment(Context context){
+        this.context = context;
+    }
+
     public FinancesFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        contractsPk = getArguments().getString("pk");
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,7 +59,9 @@ public class FinancesFragment extends Fragment {
         rv = v.findViewById(R.id.finances_rv);
         serverUrl = new ServerUrl();
         client = new AsyncHttpClient();
-        finance = new ArrayList();
+        finance = new ArrayList<>();
+
+
         getFinances();
 
 
@@ -54,50 +69,21 @@ public class FinancesFragment extends Fragment {
     }
     protected void getFinances() {
         String serverURL = serverUrl.url;
-        client.get(serverURL+ "api/clientRelationships/contract/?format=json", new JsonHttpResponseHandler() {
+        client.get(serverURL+ "api/clientRelationships/contract/"+contractsPk+"?format=json", new JsonHttpResponseHandler() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, final JSONArray response) {
+            public void onSuccess(int statusCode, Header[] headers, final JSONObject response) {
 //                for (int i = 0; i < response.length(); i++) {
                     JSONObject Obj = null;
-                try {
-                    Obj = response.getJSONObject(0);
-                    String contract_pk = Obj.getString("pk");
-                    String user = Obj.getString("user");
-                    String created = Obj.getString("created");
-                    String updated = Obj.getString("updated");
-                    String value = Obj.getString("value");
-                    String status = Obj.getString("status");
-                    String details = Obj.getString("details");
-//                        JSONObject data = Obj.getJSONObject("data");
-//                        String data1 = data.getString("data");
-                    String dueDate = Obj.getString("dueDate");
+
+                    Obj = response;
+                    Contract r = new Contract(Obj);
+
+//
+                    finance.add(r);
 
 
-                    HashMap hashMap = new HashMap();
-
-                    hashMap.put("pk", contract_pk);
-                    hashMap.put("created", created);
-                    hashMap.put("updated", updated);
-                    hashMap.put("value", value);
-                    hashMap.put("status", status);
-                    hashMap.put("details", details);
-                    hashMap.put("dueDate", dueDate);
-//                        hashMap.put("telephone", telephone);
-//                        hashMap.put("about", about);
-//                        hashMap.put("doc", doc);
-//                        hashMap.put("mobile", mobile);
-//                        hashMap.put("web", web);
-//                        hashMap.put("street", street);
-//                        hashMap.put("city", city);
-//                        hashMap.put("state", state);
-//                        hashMap.put("pincode", pincode);
-//                        hashMap.put("country", country);
-                    finance.add(hashMap);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
                 rv.setLayoutManager(new LinearLayoutManager(getContext()));
-                FinancesAdapter financesAdapter = new FinancesAdapter(getContext());
+                FinancesAdapter financesAdapter = new FinancesAdapter(getContext(),finance);
                 rv.setAdapter(financesAdapter);
             }
 //            }

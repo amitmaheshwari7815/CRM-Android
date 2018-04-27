@@ -1,7 +1,6 @@
 package com.woxthebox.draglistview.sample;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,9 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by amit on 10/3/18.
@@ -23,9 +21,11 @@ public class ActiveDealsAdapter extends RecyclerView.Adapter<ActiveDealsAdapter.
     public static String  dealName,contactName,value,id,closingDate;
 
     Context context;
+    List<Deal>dealList;
 
-    public ActiveDealsAdapter(Context context) {
+    public ActiveDealsAdapter(Context context, List<Deal> dealList) {
         this.context = context;
+        this.dealList = dealList;
     }
 
     @NonNull
@@ -41,18 +41,28 @@ public class ActiveDealsAdapter extends RecyclerView.Adapter<ActiveDealsAdapter.
     public void onBindViewHolder(@NonNull ActiveDealsAdapter.MyHolder holder, int position) {
         if (holder instanceof MyHolder) {
             MyHolder myHolder = (MyHolder) holder;
-            HashMap hm = (HashMap) ActiveDealsActivity.deal.get(position);
-            id = (String)hm.get("pk");
-            dealName = (String)hm.get("name");
-            contactName =(String)hm.get("name_con");
-            value = (String)hm.get("value");
-            closingDate = (String)hm.get("closeDate");
+            final Deal d = dealList.get(position);
+//            id = (String)hm.get("pk");
+//            dealName = (String)hm.get("name");
+//            contactName =(String)hm.get("name_con");
+//            value = (String)hm.get("value");
+//            closingDate = (String)hm.get("closeDate");
 
-            myHolder.contactname.setText(contactName);
-            myHolder.dealid.setText(id);
-            myHolder.dealname.setText(dealName);
-            myHolder.moneyvalue.setText(value);
+            myHolder.contactname.setText(d.getContactName());
+            myHolder.dealid.setText(d.getPk());
+            myHolder.dealname.setText(d.getName());
+            myHolder.moneyvalue.setText(d.getValue());
 
+//            myHolder.itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+////                    Toast.makeText(context, ""+getLayoutPosition(), Toast.LENGTH_SHORT).show();
+//                    Intent intent = new Intent(context, ActiveDealsDetailsActivity.class);
+//                    intent.putExtra("name", d.getName());
+//                    intent.putExtra("value", d.getValue());
+//                    intent.putExtra("closeDate",d.getCloseDate());
+//                }
+//            });
         }
     }
 
@@ -78,16 +88,7 @@ public class ActiveDealsAdapter extends RecyclerView.Adapter<ActiveDealsAdapter.
 
 
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(context, ""+getLayoutPosition(), Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(context, ActiveDealsDetailsActivity.class);
-                    intent.putExtra("name", dealName);
-                    intent.putExtra("value", value);
-                    intent.putExtra("closeDate",closingDate);
-                }
-            });
+
         }
     }
 }

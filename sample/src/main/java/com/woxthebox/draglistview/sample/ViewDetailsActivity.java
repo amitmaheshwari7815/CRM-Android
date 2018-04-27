@@ -1,7 +1,6 @@
 package com.woxthebox.draglistview.sample;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -41,7 +40,7 @@ import java.util.List;
 public class ViewDetailsActivity extends FragmentActivity {
     ImageView contactImage;
     TextView nameTv, companyTv, designationTv, cnoTv, emailTv;
-
+    private Contact c;
     TabLayout tl;
     FloatingActionButton fabView, fabSchedule, fabTask, fabMeeting, fabNotes;
     private boolean fabExpanded = false;
@@ -108,11 +107,11 @@ public class ViewDetailsActivity extends FragmentActivity {
         fab_open = AnimationUtils.loadAnimation(this, R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(this, R.anim.fab_close);
 
-        nameTv.setText(name);
-        companyTv.setText(company);
-        designationTv.setText(designation);
-        cnoTv.setText(mobile);
-        emailTv.setText(email);
+//        /*nameTv.setText(c.getName());
+//        companyTv.setText(c.getCompanyName());
+//        designationTv.setText(c.getDesignation());
+//        cnoTv.setText(c.getCompanyMobile());
+//        emailTv.setText(c.getEmail());
 
         mContactList = new ArrayList<>();
         noteList = new ArrayList<>();

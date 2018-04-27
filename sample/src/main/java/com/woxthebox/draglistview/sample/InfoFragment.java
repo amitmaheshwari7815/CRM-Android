@@ -8,9 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 
@@ -39,9 +37,9 @@ public class InfoFragment extends Fragment {
         infoCompany = v.findViewById(R.id.info_company);
         searchLocTv = v.findViewById(R.id.info_tv_address);
 
-        infoCompany.setText(""+ViewDetailsActivity.company);
+        infoCompany.setText(""+ ViewDetailsActivity.company);
 
-        String address = ViewDetailsActivity.street+" "+ViewDetailsActivity.city+" "+ViewDetailsActivity.state+" "+ViewDetailsActivity.pincode+" "+ViewDetailsActivity.country;
+        String address = ViewDetailsActivity.street+" "+ ViewDetailsActivity.city+" "+ ViewDetailsActivity.state+" "+ ViewDetailsActivity.pincode+" "+ ViewDetailsActivity.country;
         searchLocTv.setText(address);
 
         clickMethods();

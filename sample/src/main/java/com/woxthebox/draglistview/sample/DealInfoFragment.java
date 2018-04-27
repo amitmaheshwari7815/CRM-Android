@@ -4,25 +4,21 @@ package com.woxthebox.draglistview.sample;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import cz.msebera.android.httpclient.Header;
-import io.reactivex.annotations.NonNull;
 
 
 /**
@@ -33,9 +29,12 @@ public class DealInfoFragment extends Fragment {
     TextView companyname,address,web,cin,tin,mobile,telephone,about;
     Context context;
     ServerUrl serverUrl;
-
+     private Deal d;
+     private Contact c;
+     private Service s;
     public static ArrayList info;
     public AsyncHttpClient client;
+    public String pk;
 
 
     @SuppressLint("ValidFragment")
@@ -47,6 +46,12 @@ public class DealInfoFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        pk = getArguments().getString("pk");
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,17 +70,11 @@ public class DealInfoFragment extends Fragment {
         serverUrl = new ServerUrl();
         client = new AsyncHttpClient();
         info = new ArrayList();
-        getinfo();
 
-        companyname.setText(ActiveDealsActivity.company);
-        String address1 = ActiveDealsActivity.street+" \n"+ActiveDealsActivity.city+" \n"+ActiveDealsActivity.astate+" \n"+ActiveDealsActivity.pincode+" \n"+ActiveDealsActivity.country;
-        address.setText(address1);
-        web.setText(ActiveDealsDetailsActivity.web);
-        cin.setText(ActiveDealsDetailsActivity.cin);
-        tin.setText(ActiveDealsDetailsActivity.tin);
-        mobile.setText(ActiveDealsDetailsActivity.mobile);
-        telephone.setText(ActiveDealsDetailsActivity.telephone);
-        about.setText(ActiveDealsDetailsActivity.about);
+
+        /*pk = getArguments().getString("pk");*/
+
+        getinfo();
 
 //        HashMap hm = (HashMap) info.get(ActiveDealsActivity.pos);
 //        infoWeb = (String)hm.get("web");
@@ -89,65 +88,24 @@ public class DealInfoFragment extends Fragment {
 
     }
 
+
+
+
     protected void getinfo() {
-        String n_pk = ActiveDealsActivity.pkc;
         String serverURL = serverUrl.url;
-        client.get(serverURL+"api/ERP/service/"+n_pk+"/?format=json", new JsonHttpResponseHandler() {
+
+        client.get(serverURL+"api/ERP/service/"+pk+"/?format=json", new JsonHttpResponseHandler() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, final JSONArray response) {
-//                for (int i = 0; i < response.length(); i++) {
-                    JSONObject Obj = null;
-                    try {
-                        Obj = response.getJSONObject(0);
-                        String company_pk = Obj.getString("pk");
-                        String name = Obj.getString("name");
-                        String logo = Obj.getString("logo");
-                        String cin1 = Obj.getString("cin");
-                        cin.setText(cin1);
-                        String tin1 = Obj.getString("tin");
-                        tin.setText(tin1);
-                        String mobile1 = Obj.getString("mobile");
-                        mobile.setText(mobile1);
-                        String telephone1 = Obj.getString("telephone");
-                        telephone.setText(telephone1);
-                        String about1 = Obj.getString("about");
-                        about.setText(about1);
-                        String doc = Obj.getString("doc");
-                        String web1 = Obj.getString("web");
-                        web.setText(web1);
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                JSONObject Obj = null;
 
-                        JSONObject address = Obj.getJSONObject("address");
+                    Obj  = response;
+                    s = new Service(Obj);
 
-                        String pk1 = address.getString("pk");
-                        String street = address.getString("street");
-                        String city = address.getString("city");
-                        String state = address.getString("state");
-                        String pincode = address.getString("pincode");
-                        String lat = address.getString("lat");
-                        String lon = address.getString("lon");
-                        String country = address.getString("country");
+                    info.add(s);
+                    setData();
 
-//                        HashMap hashMap = new HashMap();
-
-//                        hashMap.put("pk", company_pk);
-//                        hashMap.put("name", name);
-//                        hashMap.put("cin", cin);
-//                        hashMap.put("tin", tin);
-//                        hashMap.put("telephone", telephone);
-//                        hashMap.put("about", about);
-//                        hashMap.put("doc", doc);
-//                        hashMap.put("mobile", mobile);
-//                        hashMap.put("web", web);
-//                        hashMap.put("street", street);
-//                        hashMap.put("city", city);
-//                        hashMap.put("state", state);
-//                        hashMap.put("pincode", pincode);
-//                        hashMap.put("country", country);
-//                        info.add(hashMap);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-//                }
             }
             @Override
             public void onFinish() {
@@ -161,6 +119,19 @@ public class DealInfoFragment extends Fragment {
                 System.out.println("finished failed 001");
             }
         });
+    }
+
+    private  void setData(){
+        companyname.setText(s.getCompanyName());
+        String address1 = s.getStreet()+" \n"+s.getCity()+" \n"+s.getState()+" \n"+s.getPincode()+" \n"+s.getCountry();
+        address.setText(address1);
+        web.setText(s.getWeb());
+        cin.setText(s.getCin());
+        tin.setText(s.getTin());
+        mobile.setText(s.getMobile());
+        telephone.setText(s.getTelepone());
+        about.setText(s.getAbout());
+
     }
 
 }

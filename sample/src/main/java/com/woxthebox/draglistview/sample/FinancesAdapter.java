@@ -2,7 +2,6 @@ package com.woxthebox.draglistview.sample;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -12,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,7 +18,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -29,8 +27,9 @@ import java.util.Locale;
 
 public class FinancesAdapter extends RecyclerView.Adapter<FinancesAdapter.MyHolder> {
     public static String fid, fitem, fvalue, fupdated, fcreated, fstatus;
-
+    Deal d;
     Context context;
+    List<Contract> financeList;
 //    String dealId[] = {"1", "1", "1"};
 //    String dealitem[] = {"1", "2", "3"};
 //    String values[] = {"2000", "5000", "3000"};
@@ -39,9 +38,13 @@ public class FinancesAdapter extends RecyclerView.Adapter<FinancesAdapter.MyHold
 //    String status[] = {"Received", "Approval", "Billed"};
 
 
-    public FinancesAdapter(Context context) {
+    public FinancesAdapter(Context context,List<Contract> financeList) {
         this.context = context;
+        this.financeList = financeList;
+
+
     }
+
 
     @NonNull
     @Override
@@ -53,17 +56,17 @@ public class FinancesAdapter extends RecyclerView.Adapter<FinancesAdapter.MyHold
         return myHolder;
     }
 
+
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final FinancesAdapter.MyHolder holder, int position) {
         if (holder instanceof MyHolder) {
             MyHolder myHolder = (MyHolder) holder;
-            HashMap hm = (HashMap) FinancesFragment.finance.get(position);
+            Contract r = financeList.get(position);
 
-
-            fid = (String) hm.get("pk");
-            fcreated = (String)hm.get("created");
-            String dtc = fcreated;
+//            fid = (String) hm.get("pk");
+//            fcreated = (String)hm.get("created");
+            String dtc = r.getCreated();
             SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss", Locale.ENGLISH);
             SimpleDateFormat sdf2 = new SimpleDateFormat("dd MMMM",Locale.ENGLISH);
             Date date = null;
@@ -82,17 +85,17 @@ public class FinancesAdapter extends RecyclerView.Adapter<FinancesAdapter.MyHold
 
             long diff = today - thatDay.getTimeInMillis();
             long days = diff/(24*60*60*1000);
-            fupdated = (String)hm.get("updated");
-            fvalue = (String)hm.get("value");
-            fstatus = (String)hm.get("status");
+//            fupdated = (String)hm.get("updated");
+//            fvalue = (String)hm.get("value");
+//            fstatus = (String)hm.get("status");
 
-            String dt = fupdated;
+            String dt = r.getUpdated();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss", Locale.ENGLISH);
             SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM",Locale.ENGLISH);
             Date date1 = null;
             try{
                 date1 = simpleDateFormat.parse(dt);
-                String newDate1 = sdf.format(date);
+                String newDate1 = sdf.format(date1);
                 System.out.println(newDate1);
                 Log.e("Date",newDate1);
 
@@ -100,7 +103,7 @@ public class FinancesAdapter extends RecyclerView.Adapter<FinancesAdapter.MyHold
                 e.printStackTrace();
             }
             Calendar thatDay1 = Calendar.getInstance();
-            thatDay.setTime(date1);
+            thatDay1.setTime(date1);
             long today1 = System.currentTimeMillis();
 
             long diff1 = today1 - thatDay1.getTimeInMillis();
@@ -109,12 +112,12 @@ public class FinancesAdapter extends RecyclerView.Adapter<FinancesAdapter.MyHold
 
 
 
-            myHolder.idDeal.setText(fid);
+            myHolder.idDeal.setText(r.getPk());
 //            holder.items.setText(dealitem[position]);
-            myHolder.value.setText(fvalue);
+            myHolder.value.setText(r.getValue());
             myHolder.created.setText(days+ " Days");
             myHolder.update.setText(days1+ " Days");
-            myHolder.status.setText(fstatus);
+            myHolder.status.setText(r.getStatus());
 
             holder.menu.setOnClickListener(new View.OnClickListener() {
             @Override

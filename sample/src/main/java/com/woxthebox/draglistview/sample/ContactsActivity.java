@@ -21,7 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -39,9 +39,10 @@ public class ContactsActivity extends FragmentActivity {
 //    private String TAG = ContactsActivity.class.getSimpleName();
 //    private ProgressBar pDialog;
 //    private ListView lv;
-    public static ArrayList contactList;
+    public static List<Contact> contactList;
     public AsyncHttpClient client;
     ServerUrl serverUrl;
+    private Contact c;
 
 
 
@@ -52,10 +53,11 @@ public class ContactsActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
 
+
+
         serverUrl = new ServerUrl();
-//        contactList = new ArrayList<>();
+        contactList = new ArrayList<>();
         client = new AsyncHttpClient();
-        contactList = new ArrayList();
         browse_rv = findViewById(R.id.browse_recyclerView);
 
         getUser();
@@ -131,79 +133,16 @@ public class ContactsActivity extends FragmentActivity {
         client.get(serverURL+"api/clientRelationships/contact/?format=json",new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, final JSONArray response) {
-//                for (int i =0; i < 10 ;i++) {
-//                    pDialog.setVisibility(View.VISIBLE);
-
                 final int res = response.length();
-//                int a=10;
-//                if (0<res)
                 int s;
                 for (s = 0; s < 9; s++) {
-
                         JSONObject usrObj = null;
                         try {
                             usrObj = response.getJSONObject(s);
-//                        String user = usrObj.getString("user");
-                            String name = usrObj.getString("name");
-                            String email = usrObj.getString("email");
-                            String emailSecondary = usrObj.getString("emailSecondary");
-                            String mobile = usrObj.getString("mobile");
-                            String mobileSecondary = usrObj.getString("mobileSecondary");
-                            String designation = usrObj.getString("designation");
-                            String notes = usrObj.getString("notes");
-                            String linkedin = usrObj.getString("linkedin");
-                            String facebook = usrObj.getString("facebook");
-                            String dp = usrObj.getString("dp");
 
-                            boolean gender = usrObj.getBoolean("male");
+                            Contact c  = new Contact(usrObj);
 
-                            JSONObject company = usrObj.getJSONObject("company");
-                            String companyName = company.getString("name");
-                            String cin = company.getString("cin");
-                            String tin = company.getString("tin");
-                            String telephone = company.getString("telephone");
-                            String cMobile = company.getString("mobile");
-                            String about = company.getString("about");
-                            String web = company.getString("web");
-//                            String doc = company.getString("doc");
-
-                            JSONObject a = company.getJSONObject("address");
-//
-                                String street = a.getString("street");
-                                String city = a.getString("city");
-                                String state = a.getString("state");
-                                String pincode = a.getString("pincode");
-                                String country = a.getString("country");
-
-                            // tmp hash map for single contact
-                            final HashMap hm = new HashMap();
-
-                            // adding each child node to HashMap key => value
-//                            pk.put("user", user);
-                            hm.put("name", name);
-                            hm.put("company", companyName);
-                            hm.put("mobile", mobile);
-                            hm.put("mobileSecondary", mobileSecondary);
-                            hm.put("email", email);
-                            hm.put("emailSecondary", emailSecondary);
-                            hm.put("designation", designation);
-                            hm.put("notes", notes);
-                            hm.put("linkedin", linkedin);
-                            hm.put("facebook", facebook);
-                            hm.put("dp",dp);
-                            hm.put("gender",gender);
-                            hm.put("cin",cin);
-                            hm.put("tin",tin);
-                            hm.put("mob",cMobile);
-                            hm.put("tel",telephone);
-                            hm.put("about",about);
-                            hm.put("web",web);
-                            hm.put("street",street);
-                            hm.put("city",city);
-                            hm.put("state",state);
-                            hm.put("pincode",pincode);
-                            hm.put("country",country);
-                            contactList.add(hm);
+                            contactList.add(c);
 //                        }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -213,14 +152,12 @@ public class ContactsActivity extends FragmentActivity {
 
 
                 browse_rv.setLayoutManager(new LinearLayoutManager(ContactsActivity.this));
-                browseAdapter = new BrowseAdapter(ContactsActivity.this);
+                browseAdapter = new BrowseAdapter(ContactsActivity.this, contactList);
                 browse_rv.setAdapter(browseAdapter);
 
                 browseAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
                     @Override
                     public void onLoadMore() {
-
-
                         Log.e("haint", "Load More");
                         contactList.add(null);
                         browseAdapter.notifyItemInserted(contactList.size() - 1);
@@ -241,71 +178,12 @@ public class ContactsActivity extends FragmentActivity {
                                     for (int i = index; i < in; i++) {
 //                                pDialog.setVisibility(View.GONE);
                                         JSONObject usrObj = null;
+
                                         try {
                                             usrObj = response.getJSONObject(i);
-//                        String user = usrObj.getString("user");
-                                            String name = usrObj.getString("name");
-                                            String email = usrObj.getString("email");
-                                            String emailSecondary = usrObj.getString("emailSecondary");
-                                            String mobile = usrObj.getString("mobile");
-                                            String mobileSecondary = usrObj.getString("mobileSecondary");
-                                            String designation = usrObj.getString("designation");
-                                            String notes = usrObj.getString("notes");
-                                            String linkedin = usrObj.getString("linkedin");
-                                            String facebook = usrObj.getString("facebook");
-                                            String dp = usrObj.getString("dp");
-                                            boolean gender = usrObj.getBoolean("male");
-
-                                            JSONObject company = usrObj.getJSONObject("company");
-                                            String companyName = company.getString("name");
-                                            String cin = company.getString("cin");
-                                            String tin = company.getString("tin");
-                                            String telephone = company.getString("telephone");
-                                            String cMobile = company.getString("mobile");
-                                            String about = company.getString("about");
-                                            String web = company.getString("web");
-//                            String doc = company.getString("doc");
-
-                                            JSONObject a = company.getJSONObject("address");
-//
-                                            String street = a.getString("street");
-                                            String city = a.getString("city");
-                                            String state = a.getString("state");
-                                            String pincode = a.getString("pincode");
-                                            String country = a.getString("country");
-                                            // tmp hash map for single contact
-                                            HashMap hm = new HashMap();
-
-
-                                            // adding each child node to HashMap key => value
-//                            pk.put("user", user);
-                                            hm.put("name", name);
-                                            hm.put("company", companyName);
-                                            hm.put("mobile", mobile);
-                                            hm.put("mobileSecondary", mobileSecondary);
-                                            hm.put("email", email);
-                                            hm.put("emailSecondary", emailSecondary);
-                                            hm.put("designation", designation);
-                                            hm.put("notes", notes);
-                                            hm.put("linkedin", linkedin);
-                                            hm.put("facebook", facebook);
-                                            hm.put("dp",dp);
-                                            hm.put("gender",gender);
-                                            hm.put("cin",cin);
-                                            hm.put("tin",tin);
-                                            hm.put("mob",cMobile);
-                                            hm.put("tel",telephone);
-                                            hm.put("about",about);
-                                            hm.put("web",web);
-                                            hm.put("street",street);
-                                            hm.put("city",city);
-                                            hm.put("state",state);
-                                            hm.put("pincode",pincode);
-                                            hm.put("country",country);
-
-
+                                            Contact c = new Contact(usrObj);
                                             // adding contact to contact list
-                                            contactList.add(hm);
+                                            contactList.add(c);
 
 //                            }
 
@@ -342,143 +220,7 @@ public class ContactsActivity extends FragmentActivity {
 
 
     }
-//    private class GetContacts extends AsyncTask<Void, Void, Void> {
 //
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//            // Showing progress dialog
-//            pDialog = new ProgressDialog(ContactsActivity.this);
-//            pDialog.setMessage("Please wait...");
-//            pDialog.setCancelable(false);
-//            pDialog.show();
-//
-//        }
-//
-//        @Override
-//        protected Void doInBackground(Void... arg0) {
-//            HttpHandler sh = new HttpHandler();
-//
-//            // Making a request to url and getting response
-//            String jsonStr = sh.makeServiceCall(url);
-//            String list[] ={"0","1","2","3","4","5","6","7"};
-//            Log.e(TAG, "Response from url: " + jsonStr);
-//
-//            if (jsonStr != null) {
-//                try {
-//                    JSONObject jsonObj = new JSONObject(jsonStr);
-//                    for (int s = 0; s< list.length; s++){
-//
-//                    // Getting JSON Array node
-//                    JSONArray contacts = jsonObj.getJSONArray(list[s]);
-//
-//
-//                    // looping through All Contacts
-//
-//                        String user = c.getString("user");
-//                        String name = c.getString("name");
-//                        String email = c.getString("email");
-//                        String mobile = c.getString("mobile");
-//                        String designation = c.getString("designation");
-//
-//                        JSONArray comapany = response.getJSONArray("company");
-//
-//                        for (int j = 0; j < comapany.length(); j++) {
-//                            JSONObject innerElem = comapany.getJSONObject(j);
-//
-//                            String user1 = innerElem.getString("name");
-//                            String pk1 = innerElem.getString("pk");
-//
-//
-//                            JSONArray address = jsonObj.getJSONArray("address");
-//                            for (int k = 0; k < address.length(); k++) {
-//                                JSONObject a = address.getJSONObject(k);
-//
-//                                String street = a.getString("street");
-//                                String city = a.getString("city");
-//                                String state = a.getString("state");
-//                                int pincode = a.getInt("pincode");
-//                                String g = String.valueOf(pincode);
-//                                String country = a.getString("country");
-//                                int telephone = a.getInt("telephone");
-//                                String t = String.valueOf(telephone);
-
-//
-//                                // tmp hash map for single contact
-//                                HashMap<String, String> pk = new HashMap<>();
-//
-//
-//                                // adding each child node to HashMap key => value
-////                            pk.put("user", user);
-//                                pk.put("name", name);
-//                                pk.put("Cname",user1);
-//                                pk.put("street",street);
-//                                pk.put("city",city);
-//                                pk.put("state",state);
-//                                pk.put("pincode",g);
-//                                pk.put("country",country);
-//                                pk.put("mobile",mobile);
-//                                pk.put("email",email);
-//                                pk.put("designation",designation);
-//
-//
-//                                // adding contact to contact list
-//                                contactList.add(pk);
-//
-//
-//                            }
-//
-//                        }
-//                    }
-//                    }
-//                } catch (final JSONException e) {
-//                    Log.e(TAG, "Json parsing error: " + e.getMessage());
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            Toast.makeText(getApplicationContext(),
-//                                    "Json parsing error: " + e.getMessage(),
-//                                    Toast.LENGTH_LONG)
-//                                    .show();
-//                        }
-//                    });
-//
-//                }
-//            } else {
-//                Log.e(TAG, "Couldn't get json from server.");
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        Toast.makeText(getApplicationContext(),
-//                                "Couldn't get json from server. Check LogCat for possible errors!",
-//                                Toast.LENGTH_LONG)
-//                                .show();
-//                    }
-//                });
-//
-//            }
-//
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Void result) {
-//            super.onPostExecute(result);
-//            // Dismiss the progress dialog
-////            if (pDialog.isShowing())
-////                pDialog.dismiss();
-////            ListAdapter adapter = new SimpleAdapter(
-////                    MainActivity.this, contactList,
-////                    R.layout.list_item, new String[]{"name", "email",
-////                    "mobile"}, new int[]{R.id.name,
-////                    R.id.email, R.id.mobile});
-////
-////            lv.setAdapter(adapter);
-//
-//
-//        }
-//
-//    }
 
 
 }

@@ -26,13 +26,13 @@ import android.widget.ImageView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.woxthebox.draglistview.sample.edittag.ContactChip;
 import com.github.irshulx.Editor;
 import com.github.irshulx.EditorListener;
 import com.github.irshulx.models.EditorTextStyle;
 import com.pchmn.materialchips.ChipsInput;
 import com.pchmn.materialchips.model.ChipInterface;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.woxthebox.draglistview.sample.edittag.ContactChip;
 
 import java.io.IOException;
 import java.util.ArrayList;

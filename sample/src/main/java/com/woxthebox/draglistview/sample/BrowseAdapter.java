@@ -12,13 +12,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.woxthebox.draglistview.sample.app.AppController;
 
-import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Ashish on 3/7/2018.
@@ -36,12 +35,14 @@ public class BrowseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private int lastVisibleItem, totalItemCount;
 
     Context context;
+    List<Contact> contactList;
 
     String name,street,city,state,pincode,country,email,mobile,designation,dp,company,telephone, cMobile, cin, tin, about, web;
     boolean gender;
 
-    public BrowseAdapter(Context context){
+    public BrowseAdapter(Context context, List<Contact> contactList){
         this.context = context;
+        this.contactList = contactList;
         final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) ContactsActivity.browse_rv.getLayoutManager();
         ContactsActivity.browse_rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -92,64 +93,102 @@ public class BrowseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             String name,street,city,state,pincode,country,email,mobile,designation,company, dp, telephone, cMobile, cin, tin, about, web;
             boolean gender;
             MyHolder myHolder = (MyHolder) holder;
-                    HashMap hm = (HashMap) ContactsActivity.contactList.get(position);
-                    name = (String) hm.get("name");
-                    company = (String) hm.get("company");
-                    email = (String) hm.get("email");
-                    mobile = (String) hm.get("mobile");
-                    designation = (String) hm.get("designation");
-                    dp = (String) hm.get("dp");
-                    street = (String) hm.get("street");
-                    city = (String) hm.get("city");
-                    state = (String) hm.get("state");
-                    pincode = (String) hm.get("pincode");
-                    country = (String) hm.get("country");
-                    telephone = (String) hm.get("tel");
-                    gender = (Boolean) hm.get("gender");
-                    cin = (String) hm.get("cin");
-                    tin = (String) hm.get("tin");
-                    cMobile = (String) hm.get("mob");
-                    about = (String) hm.get("about");
-                    web = (String) hm.get("web");
+            final Contact c = contactList.get(position);
+            if (c.dp.equals("null")) {
+                if (c.male)
+                    myHolder.browseImage.setImageResource(R.drawable.male);
+                else
+                    myHolder.browseImage.setImageResource(R.drawable.female);
+            } else {
+                myHolder.browseImage.setImageUrl(c.dp, imageLoader);
+            }
+            myHolder.browseName.setText(c.getName());
+            myHolder.browseDesignation.setText(c.getDesignation());
+            myHolder.browseCompany.setText(c.getCompanyName());
+            myHolder.browseMob.setText(c.getMobile());
+            myHolder.browseEmail.setText(c.getEmail());
 
-                    if (dp.equals("null")) {
-                        if (gender)
-                            myHolder.browseImage.setImageResource(R.drawable.male);
-                        else
-                            myHolder.browseImage.setImageResource(R.drawable.female);
-                    } else {
-                        myHolder.browseImage.setImageUrl(dp, imageLoader);
-                    }
-                    myHolder.browseName.setText(name);
-                    myHolder.browseDesignation.setText(designation);
-                    myHolder.browseCompany.setText(company);
-                    myHolder.browseMob.setText(mobile);
-                    myHolder.browseEmail.setText(email);
+            final String finalMobile = c.mobile;
+            myHolder.browseMob.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(Intent.ACTION_DIAL);
+                    i.setData(Uri.parse("tel:" + finalMobile));
+                    context.startActivity(i);
+                }
+            });
 
-                    final String finalMobile = mobile;
-                    myHolder.browseMob.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent i = new Intent(Intent.ACTION_DIAL);
-                            i.setData(Uri.parse("tel:" + finalMobile));
-                            context.startActivity(i);
-                        }
-                    });
+            final String finalEmail = c.email;
+            myHolder.browseEmail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+                    emailIntent.setData(Uri.parse("mailto:" + finalEmail));
+                    context.startActivity(emailIntent);
+                }
+            });
+            myHolder.editProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    pos = getLayoutPosition();
+//                    hashmapMethod();
+                    Intent intent = new Intent(context, EditContactActivity.class);
+                    intent.putExtra("image",c.getDp());
+                    intent.putExtra("name", c.getName());
+                    intent.putExtra("designation",c.getDesignation());
+                    intent.putExtra("company", c.getCompanyName());
+                    intent.putExtra("cno", c.getCompanyMobile());
+                    intent.putExtra("email",c.getEmail());
+                    intent.putExtra("gender",c.getMale());
+                    intent.putExtra("cin",c.getCin());
+                    intent.putExtra("tin",c.getTin());
+                    intent.putExtra("mob",c.getMobile());
+                    intent.putExtra("tel",c.getTelephone());
+                    intent.putExtra("about",c.getAbout());
+                    intent.putExtra("web",c.getWeb());
+                    intent.putExtra("street",c.getStreet());
+                    intent.putExtra("city",c.getCity());
+                    intent.putExtra("state",c.getState());
+                    intent.putExtra("pincode",c.getPincode());
+                    intent.putExtra("country",c.getCountry());
+                    context.startActivity(intent);
+                }
+            });
 
-                    final String finalEmail = email;
-                    myHolder.browseEmail.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
-                            emailIntent.setData(Uri.parse("mailto:" + finalEmail));
-                            context.startActivity(emailIntent);
-                        }
-                    });
+            myHolder.viewDetails.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    pos = getLayoutPosition();
+//                    hashmapMethod();
+//                    Toast.makeText(context, ""+getLayoutPosition(), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context, ViewDetailsActivity.class);
+                    intent.putExtra("image",c.getDp());
+                    intent.putExtra("name", c.getName());
+                    intent.putExtra("designation",c.getDesignation());
+                    intent.putExtra("company", c.getCompanyName());
+                    intent.putExtra("cno", c.getCompanyMobile());
+                    intent.putExtra("email",c.getEmail());
+                    intent.putExtra("gender",c.getMale());
+                    intent.putExtra("cin",c.getCin());
+                    intent.putExtra("tin",c.getTin());
+                    intent.putExtra("mob",c.getMobile());
+                    intent.putExtra("tel",c.getTelephone());
+                    intent.putExtra("about",c.getAbout());
+                    intent.putExtra("web",c.getWeb());
+                    intent.putExtra("street",c.getStreet());
+                    intent.putExtra("city",c.getCity());
+                    intent.putExtra("state",c.getState());
+                    intent.putExtra("pincode",c.getPincode());
+                    intent.putExtra("country",c.getCountry());
+                    context.startActivity(intent);
+                }
+            });
 
         } else if (holder instanceof LoadingViewHolder) {
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
             loadingViewHolder.progressBar.setIndeterminate(true);
         }
+
     }
 
     @Override
@@ -175,62 +214,7 @@ public class BrowseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             browseEmail = itemView.findViewById(R.id.contacts_email_browse);
             viewDetails = itemView.findViewById(R.id.view_details);
 
-            editProfile.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    pos = getLayoutPosition();
-                    hashmapMethod();
-                    Intent intent = new Intent(context, EditContactActivity.class);
-                    intent.putExtra("image",dp);
-                    intent.putExtra("name", name);
-                    intent.putExtra("designation", designation);
-                    intent.putExtra("company", company);
-                    intent.putExtra("cno", mobile);
-                    intent.putExtra("email", email);
-                    intent.putExtra("gender",gender);
-                    intent.putExtra("cin",cin);
-                    intent.putExtra("tin",tin);
-                    intent.putExtra("mob",cMobile);
-                    intent.putExtra("tel",telephone);
-                    intent.putExtra("about",about);
-                    intent.putExtra("web",web);
-                    intent.putExtra("street",street);
-                    intent.putExtra("city",city);
-                    intent.putExtra("state",state);
-                    intent.putExtra("pincode", pincode);
-                    intent.putExtra("country",country);
-                    context.startActivity(intent);
-                }
-            });
 
-            viewDetails.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    pos = getLayoutPosition();
-                    hashmapMethod();
-                    Toast.makeText(context, ""+getLayoutPosition(), Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(context, ViewDetailsActivity.class);
-                    intent.putExtra("image", dp);
-                    intent.putExtra("name", name);
-                    intent.putExtra("designation", designation);
-                    intent.putExtra("company", company);
-                    intent.putExtra("cno", mobile);
-                    intent.putExtra("email", email);
-                    intent.putExtra("gender",gender);
-                    intent.putExtra("cin",cin);
-                    intent.putExtra("tin",tin);
-                    intent.putExtra("mob",cMobile);
-                    intent.putExtra("tel",telephone);
-                    intent.putExtra("about",about);
-                    intent.putExtra("web",web);
-                    intent.putExtra("street",street);
-                    intent.putExtra("city",city);
-                    intent.putExtra("state",state);
-                    intent.putExtra("pincode", pincode);
-                    intent.putExtra("country",country);
-                    context.startActivity(intent);
-                }
-            });
         }
     }
 
@@ -247,27 +231,27 @@ public class BrowseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         isLoading = false;
     }
 
-    void hashmapMethod(){
-        HashMap hm = (HashMap) ContactsActivity.contactList.get(pos);
-        name = (String) hm.get("name");
-        company = (String) hm.get("company");
-        email = (String) hm.get("email");
-        mobile = (String) hm.get("mobile");
-        designation = (String) hm.get("designation");
-        dp = (String) hm.get("dp");
-        street = (String) hm.get("street");
-        city = (String) hm.get("city");
-        state = (String) hm.get("state");
-        pincode = (String) hm.get("pincode");
-        country = (String) hm.get("country");
-        telephone = (String) hm.get("tel");
-        gender = (Boolean)hm.get("gender");
-        cin = (String)hm.get("cin");
-        tin = (String) hm.get("tin");
-        cMobile = (String)hm.get("mob");
-        about = (String)hm.get("about");
-        web = (String)hm.get("web");
-    }
+//    void hashmapMethod(){
+//        HashMap hm = (HashMap) ContactsActivity.contactList.get(pos);
+//        name = (String) hm.get("name");
+//        company = (String) hm.get("company");
+//        email = (String) hm.get("email");
+//        mobile = (String) hm.get("mobile");
+//        designation = (String) hm.get("designation");
+//        dp = (String) hm.get("dp");
+//        street = (String) hm.get("street");
+//        city = (String) hm.get("city");
+//        state = (String) hm.get("state");
+//        pincode = (String) hm.get("pincode");
+//        country = (String) hm.get("country");
+//        telephone = (String) hm.get("tel");
+//        gender = (Boolean)hm.get("gender");
+//        cin = (String)hm.get("cin");
+//        tin = (String) hm.get("tin");
+//        cMobile = (String)hm.get("mob");
+//        about = (String)hm.get("about");
+//        web = (String)hm.get("web");
+//    }
 }
 
 

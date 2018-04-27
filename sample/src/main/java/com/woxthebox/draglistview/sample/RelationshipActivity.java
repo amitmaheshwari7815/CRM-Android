@@ -1,14 +1,17 @@
 package com.woxthebox.draglistview.sample;
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -18,7 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -26,25 +29,36 @@ import cz.msebera.android.httpclient.Header;
  * Created by amit on 9/3/18.
  */
 
-public class RelationshipActivity extends Activity {
+/**
+ * Created by amit on 9/3/18.
+ */
+
+public class RelationshipActivity extends AppCompatActivity {
     RecyclerView rv;
-    public static ArrayList relationship;
+    RelationshipsAdapter relationshipsAdapter;
+    public static List<Relationships> relationship;
     public AsyncHttpClient client;
     public static int pos;
     ServerUrl serverUrl;
+    private SearchView searchView;
+    Relationships rel;
+
+
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_relationships);
-
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
         serverUrl = new ServerUrl();
-
         client = new AsyncHttpClient();
-        relationship = new ArrayList();
+        relationship = new ArrayList<>();
         getData();
 
         rv = findViewById(R.id.realtionship_recyclerView);
-        rv.setLayoutManager(new LinearLayoutManager(this));
+        rv.setLayoutManager(new LinearLayoutManager(RelationshipActivity.this));
+        rv.setItemAnimator(new DefaultItemAnimator());
 
 
         rv.addOnItemTouchListener(
@@ -52,69 +66,44 @@ public class RelationshipActivity extends Activity {
                     @Override
                     public void onItemClick(View view, int position) {
                         // TODO Handle item click
-                        Toast.makeText(RelationshipActivity.this, "" + position, Toast.LENGTH_SHORT).show();
-//                        String itemPosition = (String) arrayList.get(position);
+//                        Toast.makeText(RelationshipActivity.this, "" + position, Toast.LENGTH_SHORT).show();
                         pos = position;
-                        HashMap hm = (HashMap) relationship.get(position);
-                        String companyName = (String) hm.get("name");
-                        String companyPk = (String) hm.get("pk");
-                        String web = (String) hm.get("web");
-                        Intent intent = new Intent(RelationshipActivity.this,ActiveDealsActivity.class);
-                        intent.putExtra("company_name",companyName);
-                        intent.putExtra("pk",companyPk);
-                        intent.putExtra("web",web);
+                        Relationships rel = relationship.get(position);
+//                        d.getPk();
+//                        d.getName();
+//                        d.getContactName();
+                        Intent intent = new Intent(RelationshipActivity.this, ActiveDealsActivity.class);
+                        intent.putExtra("company_name", rel.getCompanyName());
+                        intent.putExtra("pk", rel.getPk());
+                        intent.putExtra("web", rel.getWeb());
                         startActivity(intent);
                     }
                 })
         );
     }
 
+
     protected void getData() {
         String serverURL = serverUrl.url;
-        client.get(serverURL+"api/clientRelationships/relationships/?format=json", new JsonHttpResponseHandler() {
+        client.get(serverURL + "api/clientRelationships/relationships/?&name__contains=&limit=&offset=0", new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, final JSONArray response) {
                 for (int i = 0; i < response.length(); i++) {
                     JSONObject Obj = null;
+
                     try {
                         Obj = response.getJSONObject(i);
-                        String company_pk = Obj.getString("pk");
-                        String name = Obj.getString("name");
-                        String logo = Obj.getString("logo");
-                        String mobile = Obj.getString("mobile");
-                        String web = Obj.getString("web");
 
-                        JSONObject address = Obj.getJSONObject("address");
-
-                        String add_pk = address.getString("pk");
-                        String street = address.getString("street");
-                        String city = address.getString("city");
-                        String state = address.getString("state");
-                        String pincode = address.getString("pincode");
-                        String lat = address.getString("lat");
-                        String lon = address.getString("lon");
-                        String country = address.getString("country");
-
-                        HashMap hashMap = new HashMap();
-
-                        hashMap.put("pk", company_pk);
-                        hashMap.put("name", name);
-                        hashMap.put("logo", logo);
-                        hashMap.put("mobile", mobile);
-                        hashMap.put("web", web);
-                        hashMap.put("street", street);
-                        hashMap.put("city", city);
-                        hashMap.put("state", state);
-                        hashMap.put("pincode", pincode);
-                        hashMap.put("country", country);
-                        relationship.add(hashMap);
-
+                        Relationships relationships = new Relationships(Obj);
+                        relationship.add(relationships);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+
                 }
-                RelationshipsAdapter relationshipsAdapter = new RelationshipsAdapter(RelationshipActivity.this);
+                RelationshipsAdapter relationshipsAdapter = new RelationshipsAdapter(RelationshipActivity.this, relationship);
                 rv.setAdapter(relationshipsAdapter);
+
             }
 
 
@@ -131,5 +120,37 @@ public class RelationshipActivity extends Activity {
             }
         });
     }
-}
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+        MenuItem search = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(search);
+        search(searchView);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void search(SearchView searchView) {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                if (relationshipsAdapter != null) relationshipsAdapter.getFilter().filter(newText);
+                return true;
+            }
+        });
+
+    }
+}

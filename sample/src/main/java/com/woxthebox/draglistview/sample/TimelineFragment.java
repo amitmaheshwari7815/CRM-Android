@@ -16,9 +16,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.woxthebox.draglistview.sample.app.AppController;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.woxthebox.draglistview.sample.app.AppController;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,7 +64,6 @@ public class TimelineFragment extends Fragment {
         timelineAdapter = new TimelineAdapter(getActivity(), feedItems);
         recyclerViewTimeline.setAdapter(timelineAdapter);
 
-        getContentValue();
 
         // We first check for cached request
         Cache cache = AppController.getInstance().getRequestQueue().getCache();
