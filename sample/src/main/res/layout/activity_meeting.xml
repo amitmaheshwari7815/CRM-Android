@@ -16,13 +16,13 @@
 
         <LinearLayout android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
             <TextView
                 style="@style/text_view_style"
                 android:layout_gravity="left"
                 android:text="When"
                 android:textSize="15dp"
+                android:layout_marginStart="5dp"
                 android:textColor="@color/text_color"/>
 
             <LinearLayout
@@ -65,6 +65,7 @@
                 style="@style/text_view_style"
                 android:layout_gravity="left"
                 android:text="Internal People"
+                android:layout_marginStart="5dp"
                 android:textSize="15dp"
                 android:textColor="@color/text_color"/>
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -94,6 +95,7 @@
                 style="@style/text_view_style"
                 android:layout_gravity="left"
                 android:text="Within CRM"
+                android:layout_marginStart="5dp"
                 android:textSize="15dp"
                 android:textColor="@color/text_color"/>
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -183,6 +185,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:text="Comments"
+                android:layout_marginStart="5dp"
                 android:textColor="@color/text_color"
                 android:textSize="15dp" />
             <RelativeLayout

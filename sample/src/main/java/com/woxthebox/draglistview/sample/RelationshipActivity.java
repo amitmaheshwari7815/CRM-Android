@@ -9,12 +9,22 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.woxthebox.draglistview.sample.app.AppController;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,6 +32,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -54,12 +65,14 @@ public class RelationshipActivity extends AppCompatActivity {
         serverUrl = new ServerUrl();
         client = new AsyncHttpClient();
         relationship = new ArrayList<>();
-        getData();
+
 
         rv = findViewById(R.id.realtionship_recyclerView);
         rv.setLayoutManager(new LinearLayoutManager(RelationshipActivity.this));
         rv.setItemAnimator(new DefaultItemAnimator());
-
+        RelationshipsAdapter relationshipsAdapter = new RelationshipsAdapter(RelationshipActivity.this, relationship);
+        rv.setAdapter(relationshipsAdapter);
+        getData();
 
         rv.addOnItemTouchListener(
                 new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
@@ -95,7 +108,12 @@ public class RelationshipActivity extends AppCompatActivity {
                         Obj = response.getJSONObject(i);
 
                         Relationships relationships = new Relationships(Obj);
-                        relationship.add(relationships);
+                        List<Relationships> items = new Gson().fromJson(response.toString(), new TypeToken<List<Relationships>>() {
+                        }.getType());
+                        relationship.clear();
+                        relationship.addAll(items);
+//                        relationshipsAdapter.notifyDataSetChanged();
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -103,6 +121,7 @@ public class RelationshipActivity extends AppCompatActivity {
                 }
                 RelationshipsAdapter relationshipsAdapter = new RelationshipsAdapter(RelationshipActivity.this, relationship);
                 rv.setAdapter(relationshipsAdapter);
+
 
             }
 
@@ -138,19 +157,75 @@ public class RelationshipActivity extends AppCompatActivity {
 
     private void search(SearchView searchView) {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
+                                              @Override
+                                              public boolean onQueryTextSubmit(String query) {
 
-                return false;
-            }
+                                                  return false;
+                                              }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
+                                              @Override
+                                              public boolean onQueryTextChange(String newText) {
+                                                  String serverURL = serverUrl.url + "api/clientRelationships/relationships/?&name__contains=" + newText + "&limit=&offset=0";
+                                                  JsonArrayRequest request = new JsonArrayRequest(serverURL,
+                                                          new Response.Listener<JSONArray>() {
+                                                              @Override
+                                                              public void onResponse(JSONArray response) {
+                                                                  for (int i = 0; i < response.length(); i++) {
+                                                                      JSONObject Obj = null;
+                                                                      try {
+                                                                          Obj = response.getJSONObject(i);
 
-                if (relationshipsAdapter != null) relationshipsAdapter.getFilter().filter(newText);
-                return true;
-            }
+
+                                                                          if (response == null) {
+                                                                              Toast.makeText(getApplicationContext(), "Couldn't fetch the contacts! Pleas try again.", Toast.LENGTH_LONG).show();
+                                                                              return;
+                                                                          }
+
+                                                                          List<Relationships> items = new Gson().fromJson(response.toString(), new TypeToken<List<Relationships>>() {
+                                                                          }.getType());
+
+                                                                          // adding contacts to contacts list
+                                                                          relationship.clear();
+                                                                          relationship.addAll(items);
+
+                                                                          // refreshing recycler view
+//                                                                  relationshipsAdapter.notifyDataSetChanged();
+                                                                      } catch (JSONException e) {
+                                                                          e.printStackTrace();
+                                                                      }
+                                                                  }
+                                                              }
+                                                                  }, new Response.ErrorListener() {
+                                                      @Override
+                                                      public void onErrorResponse(VolleyError error) {
+                                                          // error in getting json
+//                                                          Log.e(TAG, "Error: " + error.getMessage());
+//                                                          Toast.makeText(getApplicationContext(), "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+
+                                                       }
+                                                  });
+
+                                                  AppController.getInstance().addToRequestQueue(request);
+return true;
+
+//
+//            @Override
+//                    public void onFinish() {
+//                        System.out.println("finished 001");
+//
+//                    }
+//
+//                    @Override
+//                    public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject errorResponse) {
+//                        // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+//                        System.out.println("finished failed 001");
+//                    }
+//                });
+
+//                if (relationshipsAdapter != null) relationshipsAdapter.getFilter().filter(newText);
+
+                                              }
+
         });
-
     }
 }

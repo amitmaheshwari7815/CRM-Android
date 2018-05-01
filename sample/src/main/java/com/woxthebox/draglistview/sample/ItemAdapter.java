@@ -16,6 +16,8 @@
 
 package com.woxthebox.draglistview.sample;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +30,7 @@ import com.woxthebox.draglistview.DragItemAdapter;
 import java.util.ArrayList;
 
 class ItemAdapter extends DragItemAdapter<Pair<Long, String>, ItemAdapter.ViewHolder> {
-
+    Context context;
     private int mLayoutId;
     private int mGrabHandleId;
     private boolean mDragOnLongPress;
@@ -69,6 +71,8 @@ class ItemAdapter extends DragItemAdapter<Pair<Long, String>, ItemAdapter.ViewHo
 
         @Override
         public void onItemClicked(View view) {
+            Intent intent = new Intent(view.getContext(),StepView.class);
+            view.getContext().startActivity(intent);
             Toast.makeText(view.getContext(), "Item clicked", Toast.LENGTH_SHORT).show();
         }
 

@@ -24,10 +24,13 @@ public class RelationshipsAdapter extends RecyclerView.Adapter<RelationshipsAdap
 
 
 
+
+
     public RelationshipsAdapter(Context context, List<Relationships> relationshipList) {
         this.context = context;
         this.relationshipsList = relationshipList;
         this.mFilteredList = relationshipList;
+
 
     }
 
@@ -88,12 +91,14 @@ public class RelationshipsAdapter extends RecyclerView.Adapter<RelationshipsAdap
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults filterResults) {
-                mFilteredList = (List<Relationships>) filterResults.values;
+                mFilteredList = (ArrayList<Relationships>) filterResults.values;
                 notifyDataSetChanged();
 
             }
         };
     }
+
+
 
 
     public class MyHolder extends RecyclerView.ViewHolder {
@@ -107,9 +112,7 @@ public class RelationshipsAdapter extends RecyclerView.Adapter<RelationshipsAdap
             companyname = itemView.findViewById(R.id.company_name);
             accountdeal = itemView.findViewById(R.id.active_deal);
 
-
         }
 
     }
-
 }

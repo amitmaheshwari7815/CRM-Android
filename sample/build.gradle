@@ -36,5 +36,8 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     compile 'com.loopj.android:android-async-http:1.4.9'
     compile files('libs/volley.jar')
-
+//    implementation 'com.android.volley:volley:1.0.0'
+    implementation 'com.google.code.gson:gson:2.6.2'
+    compile 'com.github.baoyachi:StepView:1.9'
+    compile 'com.layer-net:step-indicator:1.1.0'
 }

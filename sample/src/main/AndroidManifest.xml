@@ -43,7 +43,13 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".OpportunitiesActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".StepView"
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity
             android:name=".RelationshipActivity"
             android:screenOrientation="portrait" />

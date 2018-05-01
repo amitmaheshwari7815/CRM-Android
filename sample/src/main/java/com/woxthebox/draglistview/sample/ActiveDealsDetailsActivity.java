@@ -4,10 +4,17 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by amit on 14/3/18.
@@ -54,15 +61,33 @@ public class ActiveDealsDetailsActivity extends FragmentActivity {
             d.contactName = nameC;
             d.contactDesignation = designation;
             d.closeDate = closedate;
+
+
         }
+
 
         Dealname = findViewById(R.id.deal_name);
         Valuation = findViewById(R.id.valuation_money);
         ClosingDate = findViewById(R.id.closing_date);
 
+
+      String close = closedate;
+      SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+      SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+      Date date1 = null;
+      String string = null;
+        try {
+            date1 = simpleDateFormat.parse(close);
+            string = dateFormat.format(date1);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            Log.e("ParseException",""+e);
+        }
+
+
         Dealname.setText(d.getName());
         Valuation.setText(d.getValue());
-        ClosingDate.setText(d.getCloseDate());
+        ClosingDate.setText(string);
 
         viewPager = findViewById(R.id.deal_viewpager);
 

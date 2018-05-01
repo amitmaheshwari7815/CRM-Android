@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
@@ -40,7 +41,7 @@
         <TextView
             style="@style/text_view_style"
             android:layout_marginStart="100dp"
-            android:text="CLOSING DATE"/>
+            android:text="CLOSING DATE" />
     </LinearLayout>
 
         <LinearLayout

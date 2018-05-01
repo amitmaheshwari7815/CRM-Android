@@ -64,8 +64,7 @@ public class FinancesAdapter extends RecyclerView.Adapter<FinancesAdapter.MyHold
             MyHolder myHolder = (MyHolder) holder;
             Contract r = financeList.get(position);
 
-//            fid = (String) hm.get("pk");
-//            fcreated = (String)hm.get("created");
+
             String dtc = r.getCreated();
             SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss", Locale.ENGLISH);
             SimpleDateFormat sdf2 = new SimpleDateFormat("dd MMMM",Locale.ENGLISH);
@@ -85,9 +84,6 @@ public class FinancesAdapter extends RecyclerView.Adapter<FinancesAdapter.MyHold
 
             long diff = today - thatDay.getTimeInMillis();
             long days = diff/(24*60*60*1000);
-//            fupdated = (String)hm.get("updated");
-//            fvalue = (String)hm.get("value");
-//            fstatus = (String)hm.get("status");
 
             String dt = r.getUpdated();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss", Locale.ENGLISH);

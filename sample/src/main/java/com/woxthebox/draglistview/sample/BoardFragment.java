@@ -53,7 +53,7 @@ public class BoardFragment extends Fragment {
     String items[] = {"Contacting","Demo / POC","Requirements","Proposal","Negotiation"," Conclusion"};
     int img[] = {R.drawable.ic_contact,R.drawable.ic_demo,R.drawable.ic_requirements,
             R.drawable.ic_proposal,R.drawable.ic_negotiation,R.drawable.ic_conclusion};
-    int color1[] = {Color.BLUE,Color.BLACK,Color.RED,Color.GREEN,Color.YELLOW,Color.GRAY};
+    int color1[] = {Color.rgb(22,160,133),Color.rgb(195,118,18),Color.rgb(255,180,36),Color.rgb(41,128,185),Color.rgb(39,174,96),Color.rgb(121,95,153)};
 
     public static BoardFragment newInstance() {
         return new BoardFragment();

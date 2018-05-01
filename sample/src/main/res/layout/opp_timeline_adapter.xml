@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:orientation="vertical" >
-
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -24,7 +21,7 @@
             android:paddingRight="@dimen/feed_item_padding_left_right" >
 
             <com.android.volley.toolbox.NetworkImageView
-                android:id="@+id/profilePic"
+                android:id="@+id/opp_profilePic"
                 android:layout_width="@dimen/feed_item_profile_pic"
                 android:layout_height="@dimen/feed_item_profile_pic"
                 android:scaleType="fitCenter" >
@@ -37,14 +34,14 @@
                 android:paddingLeft="@dimen/feed_item_profile_info_padd" >
 
                 <TextView
-                    android:id="@+id/name"
+                    android:id="@+id/opp_name"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/feed_item_profile_name"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/timestamp"
+                    android:id="@+id/opp_timestamp"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/timestamp"
@@ -53,7 +50,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/txtStatusMsg"
+            android:id="@+id/opp_txtStatusMsg"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="5dp"
@@ -62,7 +59,7 @@
             android:paddingTop="@dimen/feed_item_status_pad_top" />
 
         <TextView
-            android:id="@+id/txtUrl"
+            android:id="@+id/opp_txtUrl"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:linksClickable="true"
@@ -72,7 +69,7 @@
             android:textColorLink="@color/link" />
 
         <com.woxthebox.draglistview.sample.FeedImageView
-            android:id="@+id/feedImage1"
+            android:id="@+id/opp_feedImage1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
