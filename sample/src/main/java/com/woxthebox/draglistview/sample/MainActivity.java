@@ -5,6 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.woxthebox.draglistview.sample.contacts.ContactsActivity;
+import com.woxthebox.draglistview.sample.opportunities.OpportunitiesActivity;
+import com.woxthebox.draglistview.sample.relationships.RelationshipActivity;
+
 
 public class MainActivity extends Activity {
 

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/project_color"
-    tools:context="com.woxthebox.draglistview.sample.RequirementFragment">
+    tools:context="com.woxthebox.draglistview.sample.relationships.RequirementFragment">
 
     <TextView
         android:id="@+id/requirements_tv"

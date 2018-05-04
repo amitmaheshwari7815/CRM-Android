@@ -145,7 +145,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/dealinfo_fragment"
-    class="com.woxthebox.draglistview.sample.DealInfoFragment">
+    clacom.woxthebox.draglistview.sample.relationships.DealInfoFragmentment">
 
 </fragment>-->
 

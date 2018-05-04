@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/project_color"
-    tools:context="com.woxthebox.draglistview.sample.InfoFragment">
+    tools:context="com.woxthebox.draglistview.sample.contacts.InfoFragment">
 
     <ScrollView android:id="@+id/contacts_form"
         android:layout_width="match_parent"

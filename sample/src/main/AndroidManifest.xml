@@ -39,41 +39,41 @@
         </activity>
 
         <activity
-            android:name=".ContactsActivity"
+            android:name=".contacts.ContactsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".OpportunitiesActivity"
+            android:name=".opportunities.OpportunitiesActivity"
             android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".StepView"
+        <activity android:name=".opportunities.StepView"
             android:screenOrientation="portrait">
 
         </activity>
         <activity
-            android:name=".RelationshipActivity"
+            android:name=".relationships.RelationshipActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".EditContactActivity"
+            android:name=".contacts.EditContactActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ViewDetailsActivity"
+            android:name=".contacts.ViewDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".NewContactActivity"
+            android:name=".contacts.NewContactActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ContactsListActivity"
+            android:name=".contacts.ContactsListActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".MeetingActivity"
+        <activity android:name=".contacts.MeetingActivity"
             android:screenOrientation="portrait">
 
         </activity>
         <activity android:name=".edittag.ContactListActivity" />
-        <activity android:name=".ActiveDealsActivity"
+        <activity android:name=".relationships.ActiveDealsActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".ActiveDealsDetailsActivity"
+        <activity android:name=".relationships.ActiveDealsDetailsActivity"
             android:screenOrientation="portrait"/>
 
     </application>

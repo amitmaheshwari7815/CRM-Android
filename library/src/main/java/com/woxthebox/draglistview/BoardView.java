@@ -56,7 +56,7 @@ public class BoardView extends HorizontalScrollView implements AutoScroller.Auto
 
         void onItemChangedPosition(int oldColumn, int oldRow, int newColumn, int newRow);
 
-        void onItemChangedColumn(int oldColumn, int newColumn);
+        abstract void onItemChangedColumn(int oldColumn, int newColumn);
 
         void onFocusedColumnChanged(int oldColumn, int newColumn);
     }

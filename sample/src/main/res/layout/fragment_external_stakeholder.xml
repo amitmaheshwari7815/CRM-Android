@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.woxthebox.draglistview.sample.ExternalStakeholderFragment">
+    tools:context="com.woxthebox.draglistview.sample.relationships.ExternalStakeholderFragment">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

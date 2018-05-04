@@ -122,7 +122,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/view_fg"
-            class="com.woxthebox.draglistview.sample.TimelineFragment"/>
+            class="com.woxthebox.draglistview.sample.contacts.TimelineFragment"/>
     </LinearLayout>
 
     <include layout="@layout/layout_fab_viewdetails"/>

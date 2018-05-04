@@ -47,14 +47,14 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/opp_card_deal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="21dp"
                     android:layout_marginTop="16dp"
-                    android:text="CIOC FMCG PVt Ltd"
+                    android:text="Blandit insolens pri ad"
                     android:textColor="#000"
                     android:textSize="20dp"
                     android:textStyle="bold"
@@ -78,12 +78,13 @@
                         android:src="@drawable/ic_account" />
 
                     <TextView
+                        android:id="@+id/opp_card_company"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="12dp"
                         android:layout_toEndOf="@+id/imageView4"
-                        android:text="CIOC"
+                        android:text="Purity Supreme"
                         android:textSize="16sp" />
                 </RelativeLayout>
 
@@ -102,13 +103,12 @@
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:layout_marginStart="19dp"
-                        android:src="@drawable/ic_owner" />
+                        android:src="@drawable/male_circle" />
 
                     <TextView
                         android:id="@+id/text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         android:layout_centerVertical="true"
                         android:layout_marginStart="12dp"
                         android:layout_toEndOf="@+id/imageView3"
